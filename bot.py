@@ -1,19 +1,59 @@
+
+import random
+
 DEMO_MODE = True
-STARTING_BALANCE = 10000.0
-MARKETS = ["Binance", "Hyperliquid"]
-MAX_TRADE_PERCENT = 0.02
+STARTING_BALANCE = 10_000.0
+MARKETS = ("Binance", "Hyperliquid")
+MAX_POSITION_PCT = 0.02
+STOP_LOSS_PCT = 0.02
+DAILY_LOSS_LIMIT_PCT = 0.01
+SHORT_WINDOW = 5
+LONG_WINDOW = 20
 
 
-def run_demo():
-    print("DEMO MODE ONLY - NO REAL TRADES")
-    for market in MARKETS:
-        balance = STARTING_BALANCE
-        max_trade = balance * MAX_TRADE_PERCENT
-        print(f"{market}: starting virtual balance ${balance:.2f}")
-        print(f"Maximum simulated trade: ${max_trade:.2f}")
-        print("Exchange connection: disabled")
-        print("Real orders: disabled")
+def generate_prices(seed, count=120):
+    rng = random.Random(seed)
+    prices = [100.0]
+    for _ in range(count - 1):
+        change = rng.uniform(-0.015, 0.015)
+        prices.append(round(max(0.01, prices[-1] * (1 + change)), 4))
+    return prices
+
+
+def simulate(market, seed):
+    cash = STARTING_BALANCE
+    units = 0.0
+    entry_price = 0.0
+    trades = 0
+    prices = generate_prices(seed)
+    for index in range(LONG_WINDOW, len(prices)):
+        price = prices[index]
+        equity = cash + units * price
+        short_avg = sum(prices[index - SHORT_WINDOW + 1:index + 1]) / SHORT_WINDOW
+        long_avg = sum(prices[index - LONG_WINDOW + 1:index + 1]) / LONG_WINDOW
+
+        if units > 0 and (price <= entry_price * (1 - STOP_LOSS_PCT) or short_avg < long_avg):
+            cash += units * price
+            print(f"{market}: PAPER SELL {units:.6f} units at ${price:.2f}")
+            units = 0.0
+            entry_price = 0.0
+            trades += 1
+        elif units == 0 and short_avg > long_avg and equity > STARTING_BALANCE * (1 - DAILY_LOSS_LIMIT_PCT):
+            allocation = min(cash, equity * MAX_POSITION_PCT)
+            if allocation > 0:
+                units = allocation / price
+                cash -= allocation
+                entry_price = price
+                trades += 1
+                print(f"{market}: PAPER BUY {units:.6f} units at ${price:.2f}")
+
+    final_equity = cash + units * prices[-1]
+    print(f"{market}: virtual equity ${final_equity:.2f}; simulated orders {trades}")
 
 
 if __name__ == "__main__":
-    run_demo()
+    assert DEMO_MODE is True
+    print("OFFLINE PAPER SIMULATION ONLY - NO REAL ORDERS")
+    print("Synthetic prices; no exchange connections or real market data")
+    for number, market in enumerate(MARKETS, start=1):
+        simulate(market, number)
