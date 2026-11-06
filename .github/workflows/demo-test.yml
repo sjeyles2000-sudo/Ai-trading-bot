@@ -1,4 +1,5 @@
  
+
 name: Demo Trading Bot Test
 
 on:
@@ -18,11 +19,14 @@ jobs:
     steps:
       - name: Download repository
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Check Python syntax
         run: python -m py_compile bot.py
+
       - name: Run offline demo simulation
         run: python bot.py
