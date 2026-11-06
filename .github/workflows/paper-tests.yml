@@ -1,4 +1,4 @@
-name: Paper trading unit tests
+name: Paper trading safety and market data
 
 on:
   push:
@@ -26,3 +26,16 @@ jobs:
         run: python -m compileall -q bot.py tests
       - name: Run isolated paper-trading tests (mocked market data)
         run: python -m unittest discover -s tests -v
+
+  market-data-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check public data and replay virtual historical trades only
+        run: python bot.py
