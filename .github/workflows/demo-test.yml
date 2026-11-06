@@ -26,7 +26,7 @@ jobs:
           python-version: '3.11'
 
       - name: Check Python syntax
-        run: python -m py_compile bot.py
+        run: python -m unittest discover -s tests -p "test_*.py" -v
 
       - name: Run offline demo simulation
         run: python bot.py
