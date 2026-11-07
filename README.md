@@ -134,3 +134,35 @@ virtual fills, not real execution. There are no third-party JavaScript
 dependencies, authenticated APIs or buy/sell controls.
 
 Offline tests: `python -m unittest discover -s tests -v`.
+
+## Offline backtesting and performance reports (proposed PR #7)
+
+Run `python run_backtest.py` for **historical research only**. It requests the
+same completed 1h Binance BTC/USDT spot and Hyperliquid BTC perpetual candles
+used by `bot.py`. It creates standalone `backtest-results/binance.md` and
+`backtest-results/hyperliquid.md`; it does **not** access `ledger/`, update
+virtual accounts, or submit orders. Reports are generated only after both
+market feeds have passed validation and completed the tests.
+
+The baseline is a **fixed** long-only 5/20 moving-average crossover. Signals
+use completed candles and hypothetical next-bar open fills to avoid direct
+lookahead. The research simulation caps each buy at 2% virtual notional,
+uses a price stop, and assumes fees and slippage. The persistent paper
+trader has separate daily loss controls and is NOT replaced by this code.
+
+Each report distinguishes a chronological 70% training segment from a 30%
+holdout segment (with a price-history warmup). Returns, max drawdown, closed
+trades, win rate and profit factor are calculated from the simulation.
+Very few trades or losses produce **N/A**, not an inflated accuracy claim.
+The training and holdout results begin with independent virtual balances;
+neither includes real funding, actual order-book depth, spreads, leverage,
+liquidation, market impact, or true exchange fills.
+
+Short one-hour candle samples are insufficient to validate profitability.
+Do not tune strategies to the holdout set then present its return as
+unbiased evidence. For robust testing, use longer, segmented market
+histories with different regimes before considering any real capital.
+
+No external TA-Lib, VectorBT, QuantStats, or exchange credentials are
+needed. Run offline checks with
+`python -m unittest discover -s tests -v`.
