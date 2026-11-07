@@ -209,6 +209,28 @@ def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None,
             "open_position": bool(units), "events": events, "equity": equity}
 
 
+def passive_btc_reference(bars, first_bar, last_bar,
+                          fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
+    """Hypothetical 2%-allocated passive BTC position over the same interval.
+
+    Enter at the first bar open and notionally sell at the last bar close.
+    Fees and slippage apply on both sides. No leverage, funding or real orders.
+    """
+    if not (0 <= fee_pct <= 0.01 and 0 <= slippage_pct <= 0.01):
+        raise ValueError("Invalid hypothetical cost assumption")
+    if not (0 <= first_bar < last_bar <= len(bars)):
+        raise ValueError("Invalid passive reference window")
+    opening = bars[first_bar]["open"]
+    closing = bars[last_bar-1]["close"]
+    if not all(math.isfinite(x) and x > 0 for x in (opening, closing)):
+        raise MarketDataError("Invalid passive reference prices")
+    allocation = START_CASH * MAX_NOTIONAL
+    units = allocation/(opening*(1+slippage_pct)*(1+fee_pct))
+    proceeds = units*closing*(1-slippage_pct)*(1-fee_pct)
+    return {"return_pct": 100*(proceeds-allocation)/START_CASH,
+            "btc_price_change_pct": 100*(closing/opening-1)}
+
+
 def compare(bars, strategy, fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
     validate(bars, STRATEGIES[strategy][1], minimum=300)
     split = (len(bars)*7)//10
@@ -228,10 +250,15 @@ def compare(bars, strategy, fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
                             "stats": simulate(bars, strategy, first_bar=first,
                                               last_bar=last, fee_pct=fee_pct,
                                               slippage_pct=slippage_pct)})
+    holdout = simulate(bars, strategy, first_bar=split,
+                       fee_pct=fee_pct, slippage_pct=slippage_pct)
+    passive = passive_btc_reference(bars, split, len(bars),
+                                    fee_pct=fee_pct, slippage_pct=slippage_pct)
     return {"train": simulate(bars, strategy, last_bar=split,
                               fee_pct=fee_pct, slippage_pct=slippage_pct),
-            "holdout": simulate(bars, strategy, first_bar=split,
-                                fee_pct=fee_pct, slippage_pct=slippage_pct),
+            "holdout": holdout, "passive_reference": passive,
+            "excess_vs_passive_pct_points":
+                holdout["return_pct"]-passive["return_pct"],
             "windows": windows, "split": split}
 
 
@@ -276,6 +303,26 @@ def report(results, now_ms):
             lines.append(f"| {market} | {strategy} | {result['history_count']} | "
                          f"{result['holdout']['return_pct']:+.3f}% | "
                          f"{result['stress_holdout']['return_pct']:+.3f}% |")
+    lines.extend(["", "## Passive BTC reference on the same holdout period", "",
+                  "One virtual long at the first holdout candle open, capped at 2% "
+                  "of $10,000, hypothetically sold at the final candle close. "
+                  "Both sides include the stated fees and slippage. This is "
+                  "NOT a risk-matched trading strategy, does not model funding "
+                  "on Hyperliquid perps, and is not buy advice. The active "
+                  "strategy may still have an open position marked without final "
+                  "exit costs. Outperforming a losing reference does **not** "
+                  "mean the strategy is profitable.", "",
+                  "| Market | Strategy | BTC price change | Passive 2%-allocation return | Strategy holdout return | Difference (percentage points) |",
+                  "|---|---|---:|---:|---:|---:|"])
+    for market in MARKETS:
+        for strategy in STRATEGIES:
+            result = results[(market, strategy)]
+            passive = result["passive_reference"]
+            lines.append(f"| {market} | {strategy} | "
+                         f"{passive['btc_price_change_pct']:+.2f}% | "
+                         f"{passive['return_pct']:+.3f}% | "
+                         f"{result['holdout']['return_pct']:+.3f}% | "
+                         f"{result['excess_vs_passive_pct_points']:+.3f} |")
     lines.extend(["", "## Out-of-sample stability: three consecutive holdout windows", "",
                   "The fixed final 30% holdout is subdivided chronologically into "
                   "three disjoint windows. Each starts with fresh virtual $10,000; "
