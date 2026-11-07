@@ -13,9 +13,9 @@ from bot import FEE_PCT, SLIPPAGE_PCT
 VIRTUAL_START=10000.0
 
 
-def validate(candles):
-    if len(candles)<70:
-        raise ValueError("Need at least 70 consecutive completed hourly candles")
+def validate(candles,minimum=45):
+    if len(candles)<minimum:
+        raise ValueError(f"Need at least {minimum} consecutive completed hourly candles")
     prev=None
     for c in candles:
         ts=c["end_ms"]
@@ -45,6 +45,7 @@ def simulate(candles,short_window=5,long_window=20,position_pct=.02,stop_pct=.02
     events=[]
     for i in range(start,len(candles)):
         bar=candles[i]
+        exited=False
         close_history=[float(c["close"]) for c in candles[:i]]
         ma_short=sum(close_history[-short_window:])/short_window
         ma_long=sum(close_history[-long_window:])/long_window
@@ -65,10 +66,11 @@ def simulate(candles,short_window=5,long_window=20,position_pct=.02,stop_pct=.02
                 exits.append(pnl)
                 events.append((stamp,"STOP SELL" if stop_hit else "SIGNAL SELL",fill,pnl))
                 units=0.0
+                exited=True
                 entry_total=0.0
                 entry_time=None
                 stop=0.0
-        if not units and buy_signal:
+        if not units and not exited and buy_signal:
             budget=min(cash,cash*position_pct)
             if budget>0:
                 fill=opening*(1+SLIPPAGE_PCT)
@@ -101,9 +103,9 @@ def walk_forward(candles,short_window=5,long_window=20):
 
     No parameter selection on test data. Train/test segments are reported separately.
     """
-    validate(candles)
+    validate(candles,minimum=100)
     split=max(int(len(candles)*0.7),long_window+30)
-    if len(candles)-split<20:
+    if len(candles)-split<25:
         raise ValueError("Insufficient holdout candles")
     train=simulate(candles[:split],short_window,long_window)
     # Keep a warmup buffer only. Statistics start after the split.
