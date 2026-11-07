@@ -27,6 +27,10 @@ jobs:
           python-version: '3.11'
       - name: Compile Python sources
         run: python -m compileall -q bot.py tests
+      - name: Validate dashboard JavaScript syntax
+        run: |
+          node --check docs/dashboard.js
+          node --check docs/alerts.js
       - name: Run isolated paper-trading tests (mocked market data)
         run: python -m unittest discover -s tests -v
 
