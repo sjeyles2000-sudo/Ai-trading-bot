@@ -12,7 +12,7 @@ Primary references:
 - An exploratory close-confirmed breakout above the previous ten-day high after a prior narrow trading range, with a rising 20-day average and higher-than-normal volume.
 - Entry only at the next bar's opening price, not on the same close that generated the signal.
 - Maximum 2% **virtual notional** allocation; extra 0.25% theoretical equity-at-risk budget based on initial stop distance. Fees, slippage and gap-risk can make actual hypothetical loss exceed the estimate.
-- A protective stop based on prior ten-day lows; closing-average exit is evaluated from **completed prior bars**, never the current bar's close. A 1% marked-equity daily pause prevents new entries for the rest of that day.
+- A protective stop based on prior ten-day lows; closing-average exit is evaluated from **completed prior bars**, never the current bar's close. For daily candles, a 1% marked-equity loss triggers a one-bar cooldown for new entries on the next day (not a true intraday risk circuit breaker).
 - Separate 70/30 chronological training/holdout simulations, with independent virtual starting cash, plus doubled-cost holdout stress checks.
 - Offline synthetic regression tests in `tests/test_qulla_breakout_lab.py`.
 
