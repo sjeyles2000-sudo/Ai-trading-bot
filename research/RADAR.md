@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-07 04:54 UTC
+Updated 2026-11-07 06:24 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.02% | 0.43x | $75,873.99 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.01% | 9.49x | $75,858.00 |
+| Binance BTC spot | NO_SIGNAL | +0.02% | 0.36x | $76,049.46 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.02% | 0.16x | $76,028.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | scamsem | 3.7h | $79,776 | $1,548,808 | `41WpXn15fxQXEGhiKnkqHcoJn14tNXXgmymLKE57pump` |
+| bsc | GM | 2.5h | $379,868 | $9,124,020 | `0x3ffaE6988A1FCfaF00c51FB4950C1Cd69812180c` |
+| solana | MUTTAPE | 2.8h | $78,522 | $737,747 | `2SquPKDVfGw9rBFBBZjJ2QPzSaDYjfwBY72FGBHZpump` |
 
 ## Watched Hyperliquid wallets
 
