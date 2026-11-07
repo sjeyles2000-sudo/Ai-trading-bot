@@ -8,6 +8,7 @@
 <title>AI Trader | Virtual Trading Monitor</title>
 <link rel="stylesheet" href="./style.css">
 <script defer src="./dashboard.js"></script>
+<script defer src="./alerts.js"></script>
 </head>
 <body>
 <main>
@@ -36,6 +37,21 @@
 <section class="panel"><h2>Simulated transactions</h2><p id="trades-status" class="hint">Loading virtual ledger…</p><div id="trades-list" class="list"></div></section>
 <section class="panel"><h2>Public wallet research</h2><p id="wallet-status" class="hint">Loading read-only leaderboard…</p><div id="wallets-list" class="list"></div></section>
 </div>
+<section class="panel" id="alerts-panel">
+<div class="between"><h2>Automatic research alerts</h2><span class="tag" id="alert-mode">OFF</span></div>
+<p class="hint" id="alert-status" role="status">Alerts off. Press Enable to opt in. No automatic trades.</p>
+<div class="alert-grid">
+<label><input type="checkbox" id="alert-fomo"> FOMO risk warnings</label>
+<label><input type="checkbox" id="alert-momentum"> Bullish / bearish momentum research</label>
+<label><input type="checkbox" id="alert-paper"> New simulated BUY / SELL transactions</label>
+<label><input type="checkbox" id="alert-price"> BTC price movement warnings</label>
+<label for="alert-threshold">Price movement threshold
+<select id="alert-threshold"><option value="0.5">0.5%</option><option value="1" selected>1%</option><option value="2">2%</option></select></label>
+</div>
+<button type="button" id="alerts-toggle">Enable notifications</button>
+<p class="hint">Browser permission is requested only after you enable alerts. Notifications work while this dashboard remains open and your device/browser permits them; they are not guaranteed when closed, asleep or offline. Report alerts come from delayed GitHub snapshots. Old events are not announced when you first enable alerts.</p>
+<div id="alert-log" class="list" aria-live="polite"></div>
+</section>
 <section class="panel"><h2>What is live?</h2><p>BTC price quotes are requested about every 15 seconds while this page is open, if the public exchanges allow the browser connection. Saved paper results and radar reports are checked about every minute. The top-wallet research report is checked every five minutes. GitHub's paper simulation itself is scheduled hourly and may be delayed.</p><p><b>Nothing on this page places trades.</b> Quotes can be delayed or unavailable. The HTML is a public, read-only display. No exchange credentials or wallet keys belong here.</p></section>
 <footer>Prices USD · Dates displayed in your browser timezone · All virtual metrics are hypothetical, not proof of profitability. <a href="https://github.com/sjeyles2000-sudo/Ai-trading-bot">Source code</a></footer>
 </main>

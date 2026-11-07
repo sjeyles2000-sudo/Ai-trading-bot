@@ -32,3 +32,25 @@ This website is for *viewing only*. It cannot place real trades or run
 continuous order execution. No third-party libraries or paid subscriptions
 are required for the dashboard source. GitHub account Pages availability
 and limits are subject to GitHub policy.
+
+## Optional market and paper-transaction notifications
+
+Open your installed AI Trading Dashboard web app and find **Automatic research
+alerts**. Choose FOMO risk, bullish/bearish momentum watch, simulated BUY/SELL
+transactions, or public BTC price movement thresholds (0.5%, 1%, 2%).
+Click **Enable notifications** and allow notifications in Microsoft Edge if
+prompted. This permission must be granted by the user, not by code.
+
+Notifications require the page/app to remain open, a live internet connection,
+and OS/browser permissions. They will NOT reliably run after closing the app
+or while your laptop is asleep. There is no background push server, Telegram
+integration, SMS, email or promise of 24/7 alert delivery. If browser
+notifications are denied, new events are still listed inside the dashboard
+while it is open.
+
+The first successful report checks create baselines so stale paper transactions
+and old signals are not re-announced. Subsequent new reports are checked
+about once per minute; price movement watches sample quotes approximately
+every 15 seconds. Alerts are observations, not trade orders or investment
+recommendations. GitHub radar snapshots are produced approximately hourly,
+and can be delayed. No real orders or exchange keys are used.
