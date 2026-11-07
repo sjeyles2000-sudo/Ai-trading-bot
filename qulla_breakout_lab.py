@@ -69,7 +69,8 @@ def simulate(bars, first=42, last=None, fee=FEE, slippage=SLIPPAGE):
     """Historical, virtual only; signals at close, orders at NEXT bar open.
 
     Stop fills use the lower of stop and next open with slippage (gaps
-    may exceed intended risk). Daily pause blocks NEW entries; no order API.
+    may exceed intended risk). For daily bars, a 1% loss triggers a
+    one-full-next-bar entry pause; no order API.
     """
     validate(bars)
     last = len(bars) if last is None else last
@@ -79,12 +80,14 @@ def simulate(bars, first=42, last=None, fee=FEE, slippage=SLIPPAGE):
         raise ValueError("Invalid cost assumptions")
     cash, units, stop, cost = START_CASH, 0.0, 0.0, 0.0
     events, equity, pnls = [], [], []
-    day, day_start, paused = None, START_CASH, False
+    day, day_start, pause_next_bar = None, START_CASH, False
     for i in range(first,last):
         bar = bars[i]
         utc_day = datetime.fromtimestamp(bar["end_ms"]/1000, timezone.utc).date()
+        paused = pause_next_bar
+        pause_next_bar = False
         if day != utc_day:
-            day, day_start, paused = utc_day, cash+units*bar["open"], False
+            day, day_start = utc_day, cash+units*bar["open"]
         exited = False
         if units:
             # Protective stop may trigger intrabar, with conservative gap fill.
@@ -106,8 +109,9 @@ def simulate(bars, first=42, last=None, fee=FEE, slippage=SLIPPAGE):
             fill = bar["open"]*(1+slippage)
             if raw_stop < fill:
                 stop_fraction = (fill - raw_stop)/fill
-                budget = min(cash, cash*MAX_NOTIONAL,
-                             START_CASH*MAX_EQUITY_RISK/stop_fraction)
+                marked = cash + units*bar["open"]
+                budget = min(cash, marked*MAX_NOTIONAL,
+                             marked*MAX_EQUITY_RISK/stop_fraction)
                 if budget > 0:
                     units = budget/(fill*(1+fee))
                     cash -= budget
@@ -124,7 +128,7 @@ def simulate(bars, first=42, last=None, fee=FEE, slippage=SLIPPAGE):
         value = cash + units*bar["close"]
         equity.append(value)
         if value < day_start*(1-MAX_DAILY_LOSS):
-            paused = True
+            pause_next_bar = True
     high,dd=START_CASH,0.0
     for eq in equity:
         high=max(high,eq)
