@@ -28,10 +28,12 @@ python short_term_lab.py
 
 The report is written to `backtest-results/short-term.md` **locally only**, not committed to the real paper-trading ledger. Alternatively, run **Short-term strategy research (read-only)** from GitHub Actions or inspect its branch-push run and download the `short-term-paper-research` artifact.
 
-The report includes the strategy decision tree, simulated return, drawdown, closed trades, win rate, profit factor, and critical limitations. The dashboard and trading logic on `main` are unchanged until a reviewed merge, and even a merge **does not enable live orders or replace the hourly strategy**.
+The report includes the strategy decision tree, simulated return, drawdown, closed trades, win rate, profit factor, doubled-fee/slippage stress testing and critical limitations. The dashboard and trading logic on `main` are unchanged until a reviewed merge, and even a merge **does not enable live orders or replace the hourly strategy**.
 
 ## Interpretation
 
-A successful CI run proves the code completed and tested safely; it does **not** prove market profitability. The 1,000-candle request spans only about 3.5 days at 5 minutes or 10.4 days at 15 minutes. The four trials share BTC exposure and are not independent market regimes. Results omit funding, real order-book execution, exchange latency and market impact. Apparent wins from very few trades are not evidence of a durable edge.
+A successful CI run proves the code completed and tested safely; it does **not** prove market profitability. The 4,000-candle request spans only about 14 days at 5 minutes or 42 days at 15 minutes. Binance history is retrieved in bounded pages; Hyperliquid uses its latest available public candles. These are still too short to establish robust profitability. The four trials share BTC exposure and are not independent market regimes. Results omit funding, real order-book execution, exchange latency and market impact. Apparent wins from very few trades are not evidence of a durable edge.
 
-**Do not allocate real capital based on this report.** Extend the dataset, include sideways/trending/stressed periods, model funding and venue-specific costs, then run longer forward paper tests with monitored risk limits.
+**Latest read-only test (7 November 2026):** the new comparison passed all 49 repository checks and fetched 4,000 completed candles for each of the four cases. Every out-of-sample holdout return was negative after assumed transaction costs; the doubled-cost stress case was worse for all four. The full report is an artifact of the GitHub Actions workflow, not a profit guarantee.
+
+**Do not allocate real capital based on this report.** Extend the dataset further with separate training and validation periods, include sideways/trending/stressed regimes, model funding and venue-specific costs, then run longer forward paper tests with monitored risk limits.
