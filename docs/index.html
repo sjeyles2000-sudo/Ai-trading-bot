@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://data-api.binance.vision https://api.hyperliquid.xyz https://raw.githubusercontent.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>AI Trader | Virtual Trading Monitor</title>
+<link rel="stylesheet" href="./style.css">
+<script defer src="./dashboard.js"></script>
+</head>
+<body>
+<main>
+<header><div><p class="eyebrow">AI Trader · Binance + Hyperliquid</p><h1>Trading monitor</h1><p>Public market prices and simulated-account research</p></div><div class="tag">PAPER ONLY · NO LIVE ORDERS</div></header>
+<section class="message" aria-live="polite"><b>Market updates:</b> <span id="market-status">Connecting to public data...</span> · <span id="clock">—</span></section>
+<section class="cards">
+<article><p>Binance BTC/USDT · public quote</p><strong id="binance-price">—</strong><small id="binance-age">Not received</small></article>
+<article><p>Hyperliquid BTC perp · public quote</p><strong id="hyperliquid-price">—</strong><small id="hyperliquid-age">Not received</small></article>
+<article><p>Binance virtual account</p><strong id="binance-equity">—</strong><small id="binance-meta">Awaiting saved paper results</small></article>
+<article><p>Hyperliquid virtual account</p><strong id="hyperliquid-equity">—</strong><small id="hyperliquid-meta">Awaiting saved paper results</small></article>
+</section>
+<div class="columns">
+<section class="panel">
+<div class="between"><h2>Virtual equity history</h2><label for="market-select">Account <select id="market-select"><option value="binance">Binance</option><option value="hyperliquid">Hyperliquid</option></select></label></div>
+<svg id="equity-chart" viewBox="0 0 700 230" role="img" aria-label="Virtual equity chart"><text x="20" y="120" fill="#a7b8d0">No paper history loaded</text></svg>
+<p class="hint">Hourly saved snapshots, not live account balances. Each market began with $10,000 in virtual funds.</p>
+</section>
+<section class="panel">
+<h2>Momentum and FOMO research</h2>
+<div id="radar-status" class="hint">Awaiting research report</div>
+<div id="radar-cards" class="list"></div>
+<p class="hint">Research flags are not automatic buy/sell signals. FOMO is a risk warning.</p>
+</section>
+</div>
+<div class="columns">
+<section class="panel"><h2>Simulated transactions</h2><p id="trades-status" class="hint">Loading virtual ledger…</p><div id="trades-list" class="list"></div></section>
+<section class="panel"><h2>Public wallet research</h2><p id="wallet-status" class="hint">Loading read-only leaderboard…</p><div id="wallets-list" class="list"></div></section>
+</div>
+<section class="panel"><h2>What is live?</h2><p>BTC price quotes are requested about every 15 seconds while this page is open, if the public exchanges allow the browser connection. Saved paper results and radar reports are checked about every minute. The top-wallet research report is checked every five minutes. GitHub's paper simulation itself is scheduled hourly and may be delayed.</p><p><b>Nothing on this page places trades.</b> Quotes can be delayed or unavailable. The HTML is a public, read-only display. No exchange credentials or wallet keys belong here.</p></section>
+<footer>Prices USD · Dates displayed in your browser timezone · All virtual metrics are hypothetical, not proof of profitability. <a href="https://github.com/sjeyles2000-sudo/Ai-trading-bot">Source code</a></footer>
+</main>
+</body>
+</html>
