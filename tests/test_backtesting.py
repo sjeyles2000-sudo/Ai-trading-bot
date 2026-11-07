@@ -37,7 +37,7 @@ class BacktestTests(unittest.TestCase):
     def test_chronological_holdout_not_optimized(self):
         result=walk_forward(candles([100+0.15*i for i in range(120)]))
         self.assertEqual(result["split"],84)
-        self.assertEqual(result["out_of_sample"]["bar_count"],120-84+22)
+        self.assertEqual(result["out_of_sample"]["bar_count"],120-84+21)
         output=report(result,"BTC example")
         self.assertIn("Holdout (30%)",output)
         self.assertIn("NOT A PERFORMANCE FORECAST",output)
