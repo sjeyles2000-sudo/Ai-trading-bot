@@ -109,7 +109,7 @@ def walk_forward(candles,short_window=5,long_window=20):
         raise ValueError("Insufficient holdout candles")
     train=simulate(candles[:split],short_window,long_window)
     # Keep a warmup buffer only. Statistics start after the split.
-    warmup=long_window+2
+    warmup=long_window+1
     test=simulate(candles[split-warmup:],short_window,long_window)
     return {"in_sample":train,"out_of_sample":test,"split":split}
 
