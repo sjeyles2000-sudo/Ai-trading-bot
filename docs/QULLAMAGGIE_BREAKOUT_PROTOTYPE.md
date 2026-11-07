@@ -36,3 +36,17 @@ To compare actual historical crypto prices later, obtain a properly licensed, po
 ## Decision gate
 
 Do not merge this model into `bot.py` or `demo_runner.py` until a genuinely independent dataset supports repeatable net-of-cost results over different regimes and a sustained forward paper trial. No real money should be connected by this research PR.
+
+## Verified first public-market run (7 November 2026)
+
+GitHub Actions research run: https://github.com/sjeyles2000-sudo/Ai-trading-bot/actions/runs/42371009704
+
+- 50 offline repository regression tests passed.
+- Read-only public feeds delivered 900 consecutive completed daily candles for each of Binance BTCUSDT/ETHUSDT spot and Hyperliquid BTC/ETH perpetuals.
+- Data window: 2024-05-21 to 2026-11-06 (UTC).
+- **No breakout trades occurred**: both train and holdout portfolio returns are 0.000%, closed holdout trades = 0, and max holdout drawdown = 0.000% in all four cases.
+- A 2%-notional passive BTC/ETH position over the holdout returned approximately +0.156%, +0.121%, +0.157%, and +0.121% respectively after assumed fees and slippage. This is not a risk-matched benchmark; perpetual funding is omitted.
+- The tested breakout rules are **unproven**: zero trades do not demonstrate safety or profitability. Do **not** optimize these exact parameters on the already-observed holdout and call the result unbiased.
+- Any next hypothesis should be specified in advance and evaluated on a *new, untouched later* period, with realistic venue execution costs.
+
+The empirical report is uploaded as a temporary GitHub Actions artifact, not written to the existing persistent paper ledger. GitHub Actions schedules and external public feeds can fail or become unavailable.
