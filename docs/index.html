@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://data-api.binance.vision https://api.hyperliquid.xyz https://raw.githubusercontent.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; connect-src https://data-api.binance.vision https://api.hyperliquid.xyz https://raw.githubusercontent.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
 <title>AI Trader | Virtual Trading Monitor</title>
 <link rel="stylesheet" href="./style.css">
 <script defer src="./dashboard.js"></script>
@@ -49,7 +49,7 @@
 <select id="alert-threshold"><option value="0.5">0.5%</option><option value="1" selected>1%</option><option value="2">2%</option></select></label>
 </div>
 <button type="button" id="alerts-toggle">Enable notifications</button>
-<p class="hint">Browser permission is requested only after you enable alerts. Notifications work while this dashboard remains open and your device/browser permits them; they are not guaranteed when closed, asleep or offline. Report alerts come from delayed GitHub snapshots. Old events are not announced when you first enable alerts.</p>
+<p class="hint">Browser permission is requested only after you enable alerts. On Android, open this site in Chrome, use Add to Home screen, and enable site notifications. Notifications work while this dashboard remains open and your device/browser permits them; they are not guaranteed when closed, asleep or offline. Report alerts come from delayed GitHub snapshots. Old events are not announced when you first enable alerts.</p>
 <div id="alert-log" class="list" aria-live="polite"></div>
 </section>
 <section class="panel"><h2>What is live?</h2><p>BTC price quotes are requested about every 15 seconds while this page is open, if the public exchanges allow the browser connection. Saved paper results and radar reports are checked about every minute. The top-wallet research report is checked every five minutes. GitHub's paper simulation itself is scheduled hourly and may be delayed.</p><p><b>Nothing on this page places trades.</b> Quotes can be delayed or unavailable. The HTML is a public, read-only display. No exchange credentials or wallet keys belong here.</p></section>
