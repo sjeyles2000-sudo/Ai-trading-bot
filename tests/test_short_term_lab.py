@@ -128,7 +128,7 @@ class StrategyLabTests(unittest.TestCase):
                   for market in ("binance", "hyperliquid") for strategy in STRATEGIES}
         rendered = report(inputs, START)
         self.assertEqual(rendered.count("| holdout |"), 4)
-        self.assertIn("NO", rendered)
+        self.assertIn("no real orders", rendered)
         self.assertIn("N/A", rendered)
 
 
