@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-07 19:22 UTC
+Updated 2026-11-07 20:11 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.01% | 2.35x | $75,806.91 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.01% | 4.11x | $75,789.00 |
+| Binance BTC spot | NO_SIGNAL | +0.03% | 0.42x | $75,788.79 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.02% | 1.22x | $75,765.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| ethereum | Leonida | 2.4h | $198,761 | $1,621,736 | `0x0664C4433c20D3F6EA34f9688feE2d8d76B32475` |
+| solana | Jose | 20.9h | $146,574 | $3,258,290 | `5NRzuqfyd4r7dHHKDpMY9HdGM2BMgSQhcZAbXTcfLoat` |
+| ethereum | WEALTH | 2.3h | $173,646 | $878,593 | `0x6372A7b953f386cE82d91B1cAF3802b5CD088ab7` |
 
 ## Watched Hyperliquid wallets
 
