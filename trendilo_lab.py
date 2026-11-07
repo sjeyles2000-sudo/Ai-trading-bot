@@ -169,9 +169,9 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE_PCT, slip=SLIPPAGE_P
             sell("DAILY LIMIT EXIT",b["open"])
         elif units and exits[i-1]:
             sell("SIGNAL EXIT",b["open"])
-        pending_exit=False
         elif units and b["low"]<=stop:
             sell("STOP EXIT",min(b["open"],stop))
+        pending_exit=False
         if not units and not sold and not paused and buy[i-1]:
             budget=min(cash,START*POSITION)
             if budget>0:
