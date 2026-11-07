@@ -1,0 +1,29 @@
+name: Read-only trading infrastructure preflight
+on:
+  push:
+    branches:
+      - secure-readonly-autotrader-2026-11-08
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate code and run mocked test suite
+        run: |
+          python -m compileall -q bot.py read_only_preflight.py tests
+          python -m unittest discover -s tests -v
+      - name: Check public exchange market data only
+        run: python read_only_preflight.py
+      - name: Upload sanitized read-only market status
+        uses: actions/upload-artifact@v4
+        with:
+          name: exchange-readonly-preflight
+          path: preflight-results/STATUS.json
+          if-no-files-found: error
