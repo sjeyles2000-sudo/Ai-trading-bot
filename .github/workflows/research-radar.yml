@@ -1,0 +1,48 @@
+name: Read-only crypto research radar
+
+on:
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crypto-research-radar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out research code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check out research output branch
+        uses: actions/checkout@v4
+        with:
+          ref: research-results
+          path: research-output
+          persist-credentials: true
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run isolated safety tests
+        run: python -m unittest discover -s tests -v
+      - name: Read public market data, wallet fills, token metadata
+        run: python research_radar.py research-output
+      - name: Save read-only research report
+        working-directory: research-output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/RADAR.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Update read-only crypto research report"
+            git push origin HEAD:research-results
+          fi
