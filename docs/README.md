@@ -54,3 +54,24 @@ about once per minute; price movement watches sample quotes approximately
 every 15 seconds. Alerts are observations, not trade orders or investment
 recommendations. GitHub radar snapshots are produced approximately hourly,
 and can be delayed. No real orders or exchange keys are used.
+
+## Android phone alerts (same dashboard URL)
+
+On Android, open
+`https://sjeyles2000-sudo.github.io/Ai-trading-bot/`
+in Chrome. From the Chrome menu choose **Add to Home screen** / **Install app**
+(if offered), open it, find **Automatic research alerts**, tap
+**Enable notifications**, and approve Android/browser notification permission.
+The page now registers a small same-origin service worker, so browsers that
+support it (including Chrome on Android) can display system notifications.
+
+**Limit:** the worker does not have a Push subscription or background
+monitoring. The site must remain open and actively polling to discover
+new signals. Android may throttle tabs or stop work with screen locked.
+This is not guaranteed always-on, cross-device, or offline delivery.
+Each device needs separate permission and settings. Old events are not
+replayed on initial activation. No exchange credentials, live orders or
+wallet keys are involved.
+
+A later 24/7 solution would require a separate backend push provider or
+delivery channel with user-approved registration and secret handling.
