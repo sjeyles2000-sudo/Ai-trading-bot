@@ -286,7 +286,10 @@ def report(results, now_ms):
                   "|---|---|---:|---:|---:|---:|"])
     for market in MARKETS:
         for strategy in STRATEGIES:
-            for index, window in enumerate(results[(market, strategy)]["windows"], start=1):
+            windows = results[(market, strategy)]["windows"]
+            if not windows:
+                lines.append(f"| {market} | {strategy} | N/A (insufficient bars) | N/A | N/A | N/A |")
+            for index, window in enumerate(windows, start=1):
                 stats = window["stats"]
                 lines.append(f"| {market} | {strategy} | {index}/3 | "
                              f"{stats['return_pct']:+.3f}% | "
