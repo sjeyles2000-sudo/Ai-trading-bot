@@ -7,14 +7,48 @@ import statistics
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from bot import (fetch_binance, fetch_hyperliquid, FEE_PCT, SLIPPAGE_PCT,
-                 MarketDataError)
+from urllib.parse import urlencode
+from bot import (FEE_PCT, SLIPPAGE_PCT, MarketDataError, read_json,
+                 BINANCE_URL, HYPERLIQUID_URL)
 
 START = 10_000.0
 POSITION = .02
 DAILY_LIMIT = .01
 WARMUP = 60
 HOUR_MS = 3_600_000
+HISTORY = 600
+
+
+def fetch_history(market, now_ms):
+    """Public, unauthenticated, completed Binance/Hyperliquid BTC 1h bars."""
+    if market == "binance":
+        url = BINANCE_URL + "?" + urlencode({"symbol":"BTCUSDT","interval":"1h","limit":HISTORY+3})
+        raw = read_json(url)
+        if not isinstance(raw,list):
+            raise MarketDataError("Bad Binance response")
+        try:
+            bars = [{"end_ms":int(x[6]),"open":float(x[1]),"high":float(x[2]),
+                     "low":float(x[3]),"close":float(x[4])} for x in raw]
+        except (TypeError,ValueError,IndexError) as exc:
+            raise MarketDataError("Bad Binance candles") from exc
+    elif market == "hyperliquid":
+        raw=read_json(HYPERLIQUID_URL,{"type":"candleSnapshot",
+            "req":{"coin":"BTC","interval":"1h",
+                   "startTime":now_ms-(HISTORY+3)*HOUR_MS,"endTime":now_ms}})
+        if not isinstance(raw,list):
+            raise MarketDataError("Bad Hyperliquid response")
+        try:
+            bars=[{"end_ms":int(x["T"]),"open":float(x["o"]),"high":float(x["h"]),
+                   "low":float(x["l"]),"close":float(x["c"])} for x in raw]
+        except (KeyError,TypeError,ValueError) as exc:
+            raise MarketDataError("Bad Hyperliquid candles") from exc
+    else:
+        raise ValueError("Unknown exchange")
+    bars=[x for x in bars if x["end_ms"]<=now_ms][-HISTORY:]
+    validate(bars)
+    if now_ms-bars[-1]["end_ms"]>2*HOUR_MS:
+        raise MarketDataError("Stale hourly data")
+    return bars
 
 
 def validate(bars):
@@ -108,6 +142,7 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE_PCT, slip=SLIPPAGE_P
     daily_start=START
     day=None
     paused=False
+    pending_exit=False
     peak=START
     dd=0.0
     wins=[]
@@ -130,8 +165,11 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE_PCT, slip=SLIPPAGE_P
             units=stop=spent=0.0
             sold=True
         # Signal from prior completed bar executes at this open.
-        if units and exits[i-1]:
+        if units and pending_exit:
+            sell("DAILY LIMIT EXIT",b["open"])
+        elif units and exits[i-1]:
             sell("SIGNAL EXIT",b["open"])
+        pending_exit=False
         elif units and b["low"]<=stop:
             sell("STOP EXIT",min(b["open"],stop))
         if not units and not sold and not paused and buy[i-1]:
@@ -151,11 +189,7 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE_PCT, slip=SLIPPAGE_P
         eq=cash+units*b["close"]
         if eq<=daily_start*(1-DAILY_LIMIT):
             paused=True
-            # Liquidate at next open, not a magically known current close.
-            if units and i+1<last:
-                # This is an additional worst-case risk note in report, not a
-                # guarantee of loss containment on gaps.
-                pass
+            pending_exit=bool(units)
         peak=max(peak,eq)
         dd=max(dd,(peak-eq)/peak)
     # Final open position is marked at close; exit costs not yet included.
@@ -194,8 +228,8 @@ def render(all_results):
          "Stress test doubles both costs. Separate independent virtual $10k account",
          "per strategy/segment; no leverage, funding, realistic order book or latency.",
          "Virtual profit figures may include open positions without final exit fees.",
-         "The daily-loss pause blocks NEW entries but does not force an existing",
-         "position closed: important limitation; not production-grade risk enforcement.","",
+         "At a daily loss threshold, existing exposure exits at the next open;",
+         "large gaps can exceed risk caps. Not a production execution model.","",
          "| Venue | Strategy | Segment | Return | Drawdown | Buys | Closed | Win rate |",
          "|---|---|---|---:|---:|---:|---:|---:|"]
     for venue,results in all_results.items():
@@ -203,7 +237,7 @@ def render(all_results):
             for segment,r in segments.items():
                 win="N/A" if r["win_pct"] is None else f'{r["win_pct"]:.1f}%'
                 out.append(f'| {venue} | {strategy} | {segment} | {r["return_pct"]:+.4f}% | {r["drawdown_pct"]:.4f}% | {r["buys"]} | {r["closed"]} | {win} |')
-    out+=["","**No strategy is approved for live capital.** 120 hourly bars are",
+    out+=["","**No strategy is approved for live capital.** 600 hourly bars are"
           "not enough to cover different market regimes. More data and forward",
           "testing are necessary; a 0-trade result is not evidence of an edge.",
           "The SMA comparator and new candidate are standalone research versions,",
@@ -212,8 +246,8 @@ def render(all_results):
 
 
 def run(output=Path("trendilo-results/REPORT.md"),feeds=None):
-    feeds=feeds or {"Binance BTC spot":fetch_binance,
-                    "Hyperliquid BTC perp":fetch_hyperliquid}
+    feeds=feeds or {"Binance BTC spot":lambda now:fetch_history("binance",now),
+                    "Hyperliquid BTC perp":lambda now:fetch_history("hyperliquid",now)}
     now=int(time.time()*1000)
     all_results={}
     for venue,fetch in feeds.items():
