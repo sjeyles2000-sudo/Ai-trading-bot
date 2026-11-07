@@ -1,0 +1,34 @@
+name: Short-term strategy research (read-only)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - scalping-candlestick-paper-lab-2026-11-07
+permissions:
+  contents: read
+jobs:
+  historical-research-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run isolated strategy and paper safety checks
+        run: python -m unittest discover -s tests -v
+      - name: Compare public 5m and 15m BTC candles (no orders)
+        shell: bash
+        run: |
+          set -o pipefail
+          python short_term_lab.py 2>&1 | tee short-term-output.txt
+      - name: Upload research report for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: short-term-paper-research
+          path: |
+            backtest-results/short-term.md
+            short-term-output.txt
+          if-no-files-found: warn
+          retention-days: 7
