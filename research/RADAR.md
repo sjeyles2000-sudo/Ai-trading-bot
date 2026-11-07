@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-07 22:13 UTC
+Updated 2026-11-07 23:11 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.04% | 0.31x | $75,742.77 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.04% | 0.18x | $75,722.00 |
+| Binance BTC spot | NO_SIGNAL | -0.03% | 0.25x | $75,742.00 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | -0.04% | 0.19x | $75,724.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| base | BRIANBRAIN | 4.1h | $61,472 | $163,797 | `0xd3f09ED9cBe37171f59d9B12C4143b7Ea89c5DAC` |
+| solana | TAOLF | 2.2h | $133,013 | $1,430,159 | `3hWkYmr81vZbyVnTPzcSjSNxxZuSmSdrQUohx86Rrxqf` |
+| solana | GIGAHUG | 2.6h | $87,770 | $1,219,947 | `BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump` |
 
 ## Watched Hyperliquid wallets
 
