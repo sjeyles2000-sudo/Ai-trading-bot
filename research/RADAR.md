@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-07 13:29 UTC
+Updated 2026-11-07 14:20 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.01% | 3.05x | $75,877.92 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.03% | 0.20x | $75,846.00 |
+| Binance BTC spot | NO_SIGNAL | -0.02% | 0.36x | $75,930.78 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | -0.02% | 0.46x | $75,906.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,7 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| ethereum | WASTED | 11.2h | $361,904 | $6,287,373 | `0x083c2E89Ca8272B7A1edcb1292639867c8CF780C` |
-| ethereum | GATO | 11.5h | $135,379 | $611,053 | `0x60Af27Cf87111Ac349f50da5606411aCb3E5A05e` |
+| ethereum | WASTED | 12.0h | $349,307 | $6,585,068 | `0x083c2E89Ca8272B7A1edcb1292639867c8CF780C` |
 
 ## Watched Hyperliquid wallets
 
