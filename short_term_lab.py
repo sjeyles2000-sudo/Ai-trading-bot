@@ -217,13 +217,17 @@ def compare(bars, strategy, fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
     # This is a stability diagnostic, NOT parameter selection or three independent
     # market regimes. Never choose the best window or tune on these outcomes.
     windows = []
-    for index in range(3):
-        first = split + (len(bars)-split)*index//3
-        last = split + (len(bars)-split)*(index+1)//3
-        windows.append({"start": first, "end": last,
-                        "stats": simulate(bars, strategy, first_bar=first,
-                                          last_bar=last, fee_pct=fee_pct,
-                                          slippage_pct=slippage_pct)})
+    # Require at least 90 completed bars per segment (simulate's minimum).
+    # Smaller fixtures and real-world partial samples report N/A, not invented
+    # stability estimates from statistically tiny windows.
+    if len(bars)-split >= 270:
+        for index in range(3):
+            first = split + (len(bars)-split)*index//3
+            last = split + (len(bars)-split)*(index+1)//3
+            windows.append({"start": first, "end": last,
+                            "stats": simulate(bars, strategy, first_bar=first,
+                                              last_bar=last, fee_pct=fee_pct,
+                                              slippage_pct=slippage_pct)})
     return {"train": simulate(bars, strategy, last_bar=split,
                               fee_pct=fee_pct, slippage_pct=slippage_pct),
             "holdout": simulate(bars, strategy, first_bar=split,
