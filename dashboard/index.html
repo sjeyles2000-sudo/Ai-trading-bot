@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0f16">
+  <meta name="description" content="AI Trader: read-only paper trading results, research signals, wallet leaderboard and risk status.">
+  <title>AI Trader · Paper Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary">
+      <div class="brand"><div class="brand-mark" aria-hidden="true">A<span>·</span></div><div><b>AI TRADER</b><small>PAPER LAB / v1</small></div></div>
+      <nav class="nav" aria-label="Dashboard views">
+        <button type="button" class="nav-item active" data-tab="overview" aria-current="page"><span class="nav-symbol" aria-hidden="true">◫</span>Overview</button>
+        <button type="button" class="nav-item" data-tab="signals"><span class="nav-symbol" aria-hidden="true">⌁</span>Signals</button>
+        <button type="button" class="nav-item" data-tab="wallets"><span class="nav-symbol" aria-hidden="true">◎</span>Wallets</button>
+        <button type="button" class="nav-item" data-tab="research"><span class="nav-symbol" aria-hidden="true">◇</span>Research</button>
+      </nav>
+      <div class="sidebar-footer"><span class="status-dot"></span> READ-ONLY MODE <p>No credentials · No real orders</p></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="mini-logo">A·</span><b>AI TRADER</b></div>
+        <div class="breadcrumbs">WORKSPACE <span>/</span> <strong id="breadcrumb">OVERVIEW</strong></div>
+        <div class="top-right"><span class="mode-chip"><span class="status-dot"></span> PAPER ONLY</span><span class="utc-time" id="clock">--:-- UTC</span></div>
+      </header>
+      <main id="main" tabindex="-1">
+        <section class="intro">
+          <div class="eyebrow"><span class="pulse-dot"></span> MARKET INTELLIGENCE / RESEARCH</div>
+          <h1 id="view-heading">Your trading command centre<span>.</span></h1>
+          <p id="view-subtitle">Signals, public wallet activity and virtual portfolios — one transparent dashboard.</p>
+        </section>
+        <div id="source-banner" class="notice" role="status">Loading saved reports…</div>
+        <section id="overview" class="view active" aria-label="Overview">
+          <div class="section-heading"><div><span class="section-kicker">01 / PORTFOLIO STATUS</span><h2>Virtual performance</h2></div><span class="snapshot-time" id="paper-asof">Latest saved report: —</span></div>
+          <div class="metrics">
+            <article class="metric"><span class="metric-label">Combined paper equity</span><strong id="combined">$—</strong><small>USD · separate exchange accounts</small></article>
+            <article class="metric"><span class="metric-label">Paper P&amp;L</span><strong id="pnl">—</strong><small id="pnl-caption">Starting total $20,000 virtual USD</small></article>
+            <article class="metric"><span class="metric-label">Recorded transactions</span><strong id="trades">—</strong><small>No real order execution</small></article>
+            <article class="metric"><span class="metric-label">Market feed status</span><strong id="feed-status">—</strong><small id="feed-subtitle">Checking report timestamps</small></article>
+          </div>
+          <div class="twocol">
+            <article class="panel main-chart">
+              <div class="panel-head"><div><span class="section-kicker">PAPER ACCOUNT / USD</span><h3>Virtual equity history</h3></div><span class="micro-tag">HISTORICAL</span></div>
+              <div class="chart-wrap"><svg id="equity-chart" viewBox="0 0 760 250" role="img" aria-label="Paper account equity over time" preserveAspectRatio="none"><text x="380" y="125" text-anchor="middle" fill="#81909f">No recorded history yet</text></svg></div>
+              <p class="chart-note" id="chart-note">Only recorded paper-account snapshots are shown, never estimated future returns.</p>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><span class="section-kicker">MARKET WATCH</span><h3>Exchange accounts</h3></div></div>
+              <div id="market-accounts" class="account-list"><p class="empty">Loading…</p></div>
+            </article>
+          </div>
+          <div class="twocol lower">
+            <article class="panel">
+              <div class="panel-head"><div><span class="section-kicker">FOMO &amp; MOMENTUM</span><h3>Latest research signals</h3></div><span class="micro-tag">5 MINUTE</span></div>
+              <div id="signal-summary"><p class="empty">No current report.</p></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><span class="section-kicker">TRANSACTION AUDIT</span><h3>Recent paper fills</h3></div></div>
+              <div id="trade-summary"><p class="empty">No simulated fills recorded.</p></div>
+            </article>
+          </div>
+        </section>
+        <section id="signals" class="view" aria-label="Signals" hidden>
+          <div class="section-heading"><div><span class="section-kicker">02 / RESEARCH SIGNALS</span><h2>Signal intelligence</h2></div><span class="snapshot-time" id="radar-asof">Latest radar: —</span></div>
+          <div class="panel">
+            <div class="panel-head"><div><span class="section-kicker">OBSERVED / NOT PREDICTED</span><h3>Market alerts</h3></div></div>
+            <div id="signal-detail"></div>
+          </div>
+          <div class="section-heading compact"><div><span class="section-kicker">MULTI-SIGNAL DESIGN</span><h2>Seven research families</h2></div></div>
+          <p class="explanation">The social-media example claims 50 signals and exact probabilities. This first version displays only signals supported by your saved data. <strong>It does not fabricate probabilities, claim 85.7% accuracy, or run high-frequency trades.</strong></p>
+          <div id="families" class="family-grid"></div>
+        </section>
+        <section id="wallets" class="view" aria-label="Wallets" hidden>
+          <div class="section-heading"><div><span class="section-kicker">03 / PUBLIC ON-CHAIN RESEARCH</span><h2>Wallet leaderboard</h2></div><span class="snapshot-time" id="wallet-asof">Latest wallet report: —</span></div>
+          <p class="explanation">These are publicly reported Hyperliquid accounts selected by a preliminary screener, <strong>not endorsed traders</strong>. Past P&amp;L may be misleading due to leverage, funding, fees or deposits. No copy trading.</p>
+          <div class="panel"><div class="panel-head"><div><span class="section-kicker">REPORTED RESULTS / USD</span><h3>Watchlist candidates</h3></div><span class="micro-tag">NOT VERIFIED</span></div><div id="wallet-table" class="table-wrap"></div></div>
+          <div class="panel stacked"><div class="panel-head"><div><span class="section-kicker">PUBLIC OBSERVATIONS</span><h3>Recent wallet fills</h3></div></div><div id="wallet-fills" class="table-wrap"></div></div>
+        </section>
+        <section id="research" class="view" aria-label="Research" hidden>
+          <div class="section-heading"><div><span class="section-kicker">04 / DISCOVERY</span><h2>Token research</h2></div><span class="snapshot-time">Not a buy list</span></div>
+          <div class="warning">High-risk tokens can be manipulated or unsellable. The current scanner checks reported liquidity, volume and pair age only. It does <strong>not</strong> verify honeypots, authorities, insider concentration, LP locks or whether a coin is genuinely new.</div>
+          <div id="token-cards" class="token-grid"></div>
+          <div class="panel stacked">
+            <div class="panel-head"><div><span class="section-kicker">HOW THIS WORKS</span><h3>Data &amp; safety</h3></div></div>
+            <div class="source-list">
+              <div><b>Paper balances</b><span>Saved GitHub paper-results branch. Hourly schedule may be delayed.</span></div>
+              <div><b>Momentum / FOMO</b><span>Research radar's completed five-minute Binance and Hyperliquid candles.</span></div>
+              <div><b>Wallet research</b><span>Reported public Hyperliquid leaderboard and fills, not audited performance.</span></div>
+              <div><b>Token profiles</b><span>Recently profiled DEX Screener pairs — may contain promotional listings.</span></div>
+              <div><b>Security</b><span>Static read-only dashboard. No API keys, sign-in wallet, real trade button or signing capability.</span></div>
+            </div>
+          </div>
+        </section>
+        <footer class="footer"><span>AI TRADER PAPER LAB · RESEARCH ONLY</span><span>Educational simulation · No execution · Not financial advice</span></footer>
+      </main>
+      <nav class="bottom-nav" aria-label="Mobile views">
+        <button type="button" data-tab="overview" class="active"><span>◫</span>Home</button>
+        <button type="button" data-tab="signals"><span>⌁</span>Signals</button>
+        <button type="button" data-tab="wallets"><span>◎</span>Wallets</button>
+        <button type="button" data-tab="research"><span>◇</span>Research</button>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
