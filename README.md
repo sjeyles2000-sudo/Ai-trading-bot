@@ -84,3 +84,28 @@ an hourly scan at minute 37 UTC. Reports go to
 failed feeds are reported without fabricated signals. A scheduled scan is not
 real-time scalping infrastructure. No Telegram connection or push alerts are
 configured yet, and trading decisions remain manual.
+
+
+## Public leaderboard research (proposed PR #5)
+
+`python wallet_leaderboard.py` downloads Hyperliquid's public leaderboard
+**once per run** and selects at most five accounts for manual study.
+Selection requires positive reported daily, weekly and monthly PnL, at least
+$20k account value, $100k reported monthly traded volume, and a positive but
+not extreme reported monthly ROI (0–500%). Ranking is by reported monthly PnL.
+These metrics can be distorted by leverage, deposits, withdrawal effects,
+survivorship bias, attribution and missing history; a top trader is **not**
+necessarily worth copying. Reported ROI is not audited performance.
+
+The scanner then requests recent **public fills** for the shortlisted wallet
+addresses. It does not connect to those wallets, manage balances or submit
+trades. It saves a daily `research/WALLETS.md` report to the existing
+`research-results` branch when the scheduled GitHub Action becomes active
+on main. Its schedule is daily at 03:43 UTC; schedules can be delayed or
+skipped. The leaderboard JSON is a large public feed and may fail, change
+shape or become unavailable. A failed report does not turn into a signal.
+
+This is a **read-only wallet research feature**, not automated copy-trading,
+meme coin orders, real scalping infrastructure, or a profit guarantee.
+Public data sources: `stats-data.hyperliquid.xyz/Mainnet/leaderboard` and
+Hyperliquid's public `/info` userFills endpoint.
