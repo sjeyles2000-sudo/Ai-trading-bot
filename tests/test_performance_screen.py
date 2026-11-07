@@ -54,7 +54,7 @@ class PerformancePanelTests(unittest.TestCase):
     def test_snapshot_staleness_and_zero_trades_are_explicit(self):
         self.assertIn("freshHours = 3", self.script)
         self.assertIn("Stale paper snapshot", self.script)
-        self.assertIn("Recorded virtual P/L", self.script)
+        self.assertIn("recorded virtual P/L", self.script)
         self.assertIn("simulated transactions", self.script)
         self.assertIn("not a live exchange account", self.script)
         self.assertIn("negative holdout returns", self.page)
