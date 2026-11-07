@@ -30,6 +30,21 @@ The report is written to `backtest-results/short-term.md` **locally only**, not 
 
 The report includes the strategy decision tree, simulated return, drawdown, closed trades, win rate, profit factor, doubled-fee/slippage stress testing and critical limitations. The dashboard and trading logic on `main` are unchanged until a reviewed merge, and even a merge **does not enable live orders or replace the hourly strategy**.
 
+## Holdout stability upgrade
+
+The report now subdivides the **same untouched final 30% holdout** into
+three consecutive, non-overlapping windows, each starting with an independent
+$10,000 virtual account and using earlier bars only for indicator warm-up.
+The table shows return after assumed costs, drawdown and closed trade count for
+each window. The full holdout figure remains the primary comparison and the
+three window returns are **not additive**.
+
+For insufficient data (fewer than 270 holdout bars), the per-window table
+reports **N/A** instead of pretending to validate stability. These are
+diagnostics on the same BTC sample, not independent out-of-sample datasets
+or proof of profitable future trading. Do not pick the best-performing
+window or retune rules after inspecting these results.
+
 ## Interpretation
 
 A successful CI run proves the code completed and tested safely; it does **not** prove market profitability. The 4,000-candle request spans only about 14 days at 5 minutes or 42 days at 15 minutes. Binance history is retrieved in bounded pages; Hyperliquid uses its latest available public candles. These are still too short to establish robust profitability. The four trials share BTC exposure and are not independent market regimes. Results omit funding, real order-book execution, exchange latency and market impact. Apparent wins from very few trades are not evidence of a durable edge.
