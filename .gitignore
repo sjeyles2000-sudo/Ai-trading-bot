@@ -1,0 +1,8 @@
+# Never commit wallet secrets or runtime environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+__pycache__/
+.pytest_cache/
