@@ -159,6 +159,8 @@ class StrategyLabTests(unittest.TestCase):
             self.assertIn("holdout", text)
             self.assertIn("Critical review", text)
             self.assertIn("doubled trading costs", text)
+            self.assertIn("Passive BTC reference", text)
+            self.assertIn("percentage points", text)
             self.assertFalse((Path(temp)/"ledger").exists())
 
     def test_fetch_rejects_stale_and_never_needs_credentials(self):
