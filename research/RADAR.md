@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-07 20:11 UTC
+Updated 2026-11-07 21:13 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.03% | 0.42x | $75,788.79 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.02% | 1.22x | $75,765.00 |
+| Binance BTC spot | NO_SIGNAL | +0.06% | 2.15x | $75,656.47 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.06% | 6.20x | $75,639.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | Jose | 20.9h | $146,574 | $3,258,290 | `5NRzuqfyd4r7dHHKDpMY9HdGM2BMgSQhcZAbXTcfLoat` |
-| ethereum | WEALTH | 2.3h | $173,646 | $878,593 | `0x6372A7b953f386cE82d91B1cAF3802b5CD088ab7` |
+| base | BRIANBRAIN | 3.0h | $67,546 | $144,891 | `0xd3f09ED9cBe37171f59d9B12C4143b7Ea89c5DAC` |
+| solana | Jose | 21.9h | $145,163 | $3,732,070 | `5NRzuqfyd4r7dHHKDpMY9HdGM2BMgSQhcZAbXTcfLoat` |
 
 ## Watched Hyperliquid wallets
 
