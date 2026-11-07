@@ -7,7 +7,7 @@
   const id=x=>document.getElementById(x);
   const ALERT_TYPES={momentum:"Momentum research",fomo:"FOMO risk",paper:"Paper transaction",price:"BTC price movement"};
   const CACHE_TTL=2*60*60*1000;
-  let active=false,baseline=false,seen=new Set(),lastRadarStamp="",lastPaperStamp="";
+  let active=false,radarInitialized=false,paperInitialized=false,seen=new Set(),lastRadarStamp="";
   let priceAnchors={binance:null,hyperliquid:null};
   let ring=[];
   function readPreferences(){
@@ -66,7 +66,7 @@
     const stamp=recentReport(md);
     if(!stamp)return; // Discard stale or malformed research report
     const rows=splitTable(md,"## 5-minute momentum and FOMO alerts").slice(0,6);
-    if(!baseline){lastRadarStamp=stamp;return;}
+    if(!radarInitialized){radarInitialized=true;lastRadarStamp=stamp;return;}
     if(stamp===lastRadarStamp)return;
     lastRadarStamp=stamp;
     rows.forEach(row=>{
@@ -86,7 +86,7 @@
     const text=await fetchText("paper-results","ledger/trades.csv");
     const items=parseCsv(text);
     // First inspection establishes a baseline, not historical notifications.
-    if(!baseline){items.forEach(row=>seen.add("trade:"+fingerprint(row)));return;}
+    if(!paperInitialized){paperInitialized=true;items.forEach(row=>seen.add("trade:"+fingerprint(row)));return;}
     items.slice(-30).forEach(row=>{
       if(row.length<5)return;
       const time=Date.parse(row[0]);
@@ -102,8 +102,8 @@
     pollBusy=true;
     const outcomes=await Promise.allSettled([research(),paper()]);
     pollBusy=false;
-    if(!baseline){baseline=true;save();note("Alerts on. Watching for NEW research signals and paper transactions.");}
-    else if(outcomes.every(x=>x.status==="rejected"))note("Alerts on; report feeds unavailable, checking again later.");
+    save();
+    if(outcomes.every(x=>x.status==="rejected"))note("Alerts on; report feeds unavailable, checking again later.");
     else note("Alerts on. Last check "+new Date().toLocaleTimeString()+". Browser must remain open.");
   }
   // Movement alerts compare public quotes to rolling 5-minute anchors.
@@ -143,12 +143,12 @@
       id("alert-mode").textContent=active?"ON (browser open)":"OFF";
     }
     id("alerts-toggle").addEventListener("click",async()=>{
-      if(active){active=false;baseline=false;priceAnchors={binance:null,hyperliquid:null};save();updateButton();note("Alerts off.");return;}
+      if(active){active=false;radarInitialized=false;paperInitialized=false;priceAnchors={binance:null,hyperliquid:null};save();updateButton();note("Alerts off.");return;}
       if(!("Notification" in window)){note("This browser does not support desktop notifications. In-page alerts only.");}
       else if(Notification.permission==="default"){
         try{await Notification.requestPermission();}catch(_){}
       }
-      active=true;baseline=false;priceAnchors={binance:null,hyperliquid:null};
+      active=true;radarInitialized=false;paperInitialized=false;priceAnchors={binance:null,hyperliquid:null};
       save();updateButton();await poll();
       if("Notification" in window&&Notification.permission!=="granted")
         note("Alerts on, but browser pop-ups are blocked. New signals appear in the in-page alert log.");
