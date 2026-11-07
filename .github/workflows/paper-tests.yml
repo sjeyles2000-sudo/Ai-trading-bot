@@ -5,6 +5,7 @@ on:
     branches:
       - paper-market-data-upgrade-2026-11-07
       - fomo-signals-wallet-watch-2026-11-07
+      - public-wallet-leaderboard-2026-11-07
   pull_request:
     branches:
       - main
