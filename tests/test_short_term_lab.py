@@ -6,7 +6,8 @@ from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 from short_term_lab import (STRATEGIES, START_CASH, compare, ema, fetch_history,
-                            report, run, signals, simulate, validate)
+                            passive_btc_reference, report, run, signals,
+                            simulate, validate)
 from bot import MarketDataError
 
 START = 1793491200000
@@ -75,6 +76,35 @@ class StrategyLabTests(unittest.TestCase):
         self.assertEqual(len(results["train"]["equity"]), 245-32)
         self.assertEqual(len(results["holdout"]["equity"]), 350-245)
         self.assertEqual(results["holdout"]["return_pct"], 0.0)
+
+    def test_passive_reference_flat_prices_pay_costs(self):
+        bars = fixture()
+        result = passive_btc_reference(bars, 245, len(bars))
+        self.assertEqual(result["btc_price_change_pct"], 0)
+        self.assertLess(result["return_pct"], 0)
+        # Two-sided costs on a 2% account allocation, not on $10,000.
+        self.assertGreater(result["return_pct"], -0.01)
+
+    def test_passive_reference_uptrend_and_window_boundaries(self):
+        bars = fixture(count=350)
+        for i, bar in enumerate(bars):
+            price = 100 + 0.01*i
+            bar.update(open=price, high=price+0.1,
+                       low=price-0.1, close=price)
+        result = passive_btc_reference(bars, 245, 350)
+        self.assertGreater(result["btc_price_change_pct"], 0)
+        self.assertGreater(result["return_pct"], 0)
+        with self.assertRaises(ValueError):
+            passive_btc_reference(bars, 350, 350)
+
+    def test_compare_includes_cost_aware_reference_without_extra_trades(self):
+        bars = fixture()
+        result = compare(bars, "scalp_5m")
+        self.assertEqual(result["holdout"]["closed_trades"], 0)
+        self.assertLess(result["passive_reference"]["return_pct"], 0)
+        self.assertAlmostEqual(
+            result["excess_vs_passive_pct_points"],
+            result["holdout"]["return_pct"]-result["passive_reference"]["return_pct"])
 
     def test_three_holdout_windows_do_not_overlap(self):
         bars = fixture(count=1200)
