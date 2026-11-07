@@ -76,6 +76,26 @@ class StrategyLabTests(unittest.TestCase):
         self.assertEqual(len(results["holdout"]["equity"]), 350-245)
         self.assertEqual(results["holdout"]["return_pct"], 0.0)
 
+    def test_three_holdout_windows_do_not_overlap(self):
+        bars = fixture(count=1200)
+        result = compare(bars, "scalp_5m")
+        self.assertEqual(len(result["windows"]), 3)
+        windows = result["windows"]
+        self.assertEqual(windows[0]["start"], result["split"])
+        self.assertEqual(windows[-1]["end"], len(bars))
+        for first, second in zip(windows, windows[1:]):
+            self.assertEqual(first["end"], second["start"])
+        for window in windows:
+            self.assertGreaterEqual(window["end"] - window["start"], 90)
+            self.assertEqual(len(window["stats"]["equity"]),
+                             window["end"] - window["start"])
+            self.assertEqual(window["stats"]["closed_trades"], 0)
+            self.assertEqual(window["stats"]["return_pct"], 0)
+
+    def test_insufficient_bars_do_not_fake_stability_results(self):
+        result = compare(fixture(count=350), "scalp_5m")
+        self.assertEqual(result["windows"], [])
+
     def test_15m_engulfing_requires_trend_filter(self):
         bars = fixture("engulf_15m")
         # Pattern bullish but below its EMA trend must be rejected.
