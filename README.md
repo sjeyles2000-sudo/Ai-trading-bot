@@ -109,3 +109,28 @@ This is a **read-only wallet research feature**, not automated copy-trading,
 meme coin orders, real scalping infrastructure, or a profit guarantee.
 Public data sources: `stats-data.hyperliquid.xyz/Mainnet/leaderboard` and
 Hyperliquid's public `/info` userFills endpoint.
+
+
+## Offline visual dashboard and indicator research (proposed PR #6)
+
+This optional upgrade keeps all exchange connectivity **read-only**, all balances
+**virtual**, and the original paper trading decisions, position limits, stop-loss
+rules and daily-loss pauses **unchanged**. No live order path is added.
+
+After the pull request is reviewed and merged, a successful scheduled paper run
+writes `ledger/dashboard.html` alongside the virtual `ledger/REPORT.md`
+on the `paper-results` branch. Download `dashboard.html` and open it in a
+web browser to interactively switch between Binance spot and Hyperliquid
+perpetuals. It shows the latest **completed hourly** BTC candles, SMA20,
+KAMA, simulated trade markers, per-exchange equity, positions, and the
+RSI/MACD observation panel. It is a **static snapshot**, not live streaming;
+open an updated copy after subsequent scheduled runs.
+
+The three grouped indicator families are trend, adaptive (KAMA), and momentum
+(RSI + MACD). A bullish or bearish watch is **NOT an order**, calibrated
+prediction, or 70%-win-probability claim. These observations do not drive
+paper trades and have not been shown profitable. Charts use estimated
+virtual fills, not real execution. There are no third-party JavaScript
+dependencies, authenticated APIs or buy/sell controls.
+
+Offline tests: `python -m unittest discover -s tests -v`.
