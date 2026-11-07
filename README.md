@@ -18,3 +18,37 @@ Each run fetches approximately 120 historical one-hour candles for each market a
 Each market separately starts with a $10,000 *virtual* balance (not shared funds). The strategy uses 5/20-period moving averages with long-only entries, 2% max notional virtual account allocation per entry, 2% virtual price-based stop loss, and 1% UTC calendar-day virtual loss pause. It assumes hypothetical 0.1% per-side transaction fees and 0.05% per-side slippage. The simulated stop may fill below its stop threshold on gaps. Historical-candle calculations are simplified and cannot reliably model real-world latency, order-book liquidity, funding, leverage, liquidation, or execution quality. Binance spot BTC and Hyperliquid BTC perpetuals are different instruments. Backtesting does not demonstrate future profitability.
 
 Data sources: [Binance spot market-data endpoint](https://developers.binance.com/en/docs/binance-spot-api-docs/rest-api/market-data-endpoints) and [Hyperliquid /info candleSnapshot](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint).
+
+
+## Proposed scheduled, persistent demo mode (PR #2)
+
+After this change is reviewed and merged, GitHub Actions can run once per hour
+(17 minutes past the hour, UTC). GitHub schedules are approximate and may be delayed
+or skipped. No computer, Binance account, Hyperliquid account, wallet, API key,
+or hosting subscription is required.
+
+Run code: `python demo_runner.py` (virtual results in `ledger/` locally).
+GitHub workflow checks out a separate `paper-results` branch and saves virtual
+account state, virtual transactions (`ledger/trades.csv`), hourly account snapshots
+(`ledger/equity.csv`), and a human-readable `ledger/REPORT.md` there.
+See the `paper-results` branch after the FIRST successful scheduled or manually
+dispatched run. The initial results branch has no ledger until then.
+
+The virtual starting balance is **$10,000 USD per exchange**, independent for each
+exchange. Positions are long-only and simulation-only. Each run reads **public**
+exchange data; no authenticated or trade endpoints exist. Only completed hourly
+candles are processed. A repeated candle is not traded twice. On startup, the
+program begins with the latest completed candle; it never credits historical
+backtest profits to the new paper account. If saved position data is corrupt, too
+old for the available candle history, or either exchange is unavailable, that
+run fails and does not push any results. It does not automatically reset virtual
+positions to conceal data gaps. The daily loss limit uses UTC calendar days.
+
+This is an **estimated-fill educational simulation**, not exchange-native paper
+trading or a realistic execution emulator. Funding, leverage, liquidation,
+order-book depth, and strategy performance require further work. The recurring
+workflow is intentionally restricted to the default `main` branch. The test
+workflow uses mocked exchange responses and never places orders.
+
+**No live order functionality, trading credentials, or exchange write
+permissions are included.** Do not treat virtual performance as investment advice.

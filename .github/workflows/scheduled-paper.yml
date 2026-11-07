@@ -1,0 +1,53 @@
+name: Scheduled virtual paper trading
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+# This scheduled workflow only operates after it exists on default branch.
+# GitHub may delay or skip scheduled runs.
+permissions:
+  contents: write
+
+concurrency:
+  group: scheduled-paper-ledger
+  cancel-in-progress: false
+
+jobs:
+  virtual-paper:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out trading simulator
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check out persistent virtual results
+        uses: actions/checkout@v4
+        with:
+          ref: paper-results
+          path: paper-output
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test simulator
+        run: python -m unittest discover -s tests -v
+      - name: Fetch PUBLIC market data and update virtual ledger
+        run: python demo_runner.py paper-output
+      - name: Save virtual results on the paper-results branch
+        working-directory: paper-output
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ledger/state.json ledger/trades.csv ledger/equity.csv ledger/REPORT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Update virtual paper results"
+            git push origin HEAD:paper-results
+          else
+            echo "No virtual results changed"
+          fi
