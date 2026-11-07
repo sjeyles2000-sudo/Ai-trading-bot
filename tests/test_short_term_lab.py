@@ -108,6 +108,7 @@ class StrategyLabTests(unittest.TestCase):
             self.assertIn("HISTORICAL", text)
             self.assertIn("holdout", text)
             self.assertIn("Critical review", text)
+            self.assertIn("doubled trading costs", text)
             self.assertFalse((Path(temp)/"ledger").exists())
 
     def test_fetch_rejects_stale_and_never_needs_credentials(self):
@@ -124,12 +125,57 @@ class StrategyLabTests(unittest.TestCase):
 
     def test_ema_and_report_are_deterministic(self):
         self.assertEqual(ema([100.]*10, 8), [100.]*10)
-        inputs = {(market,strategy):compare(fixture(strategy), strategy)
-                  for market in ("binance", "hyperliquid") for strategy in STRATEGIES}
+        inputs = {}
+        for market in ("binance", "hyperliquid"):
+            for strategy in STRATEGIES:
+                bars = fixture(strategy)
+                result = compare(bars, strategy)
+                result["history_count"] = len(bars)
+                result["stress_holdout"] = simulate(
+                    bars, strategy, first_bar=result["split"],
+                    fee_pct=.002, slippage_pct=.001)
+                inputs[(market, strategy)] = result
         rendered = report(inputs, START)
         self.assertEqual(rendered.count("| holdout |"), 4)
         self.assertIn("no real orders", rendered)
         self.assertIn("N/A", rendered)
+
+
+    def test_cost_stress_is_worse_for_trades(self):
+        bars = fixture()
+        base = simulate(bars, "scalp_5m", signal_override=override(len(bars)))
+        stress = simulate(bars, "scalp_5m", signal_override=override(len(bars)),
+                          fee_pct=.002, slippage_pct=.001)
+        self.assertLess(stress["return_pct"], base["return_pct"])
+        self.assertEqual(base["closed_trades"], stress["closed_trades"])
+
+    def test_pagination_of_1000_binance_candles(self):
+        duration = STRATEGIES["scalp_5m"][1]
+        all_rows = []
+        for i in range(3500):
+            row = [0]*12
+            row[0] = START + duration*i
+            row[1], row[2], row[3], row[4], row[5] = (
+                "100", "101", "99", "100", "10")
+            row[6] = row[0] + duration - 1
+            all_rows.append(row)
+        now_ms = all_rows[-1][6] + 1
+        calls = []
+        def fake_read_json(url, payload=None):
+            from urllib.parse import parse_qs, urlparse
+            params = parse_qs(urlparse(url).query)
+            end = int(params["endTime"][0])
+            limit = int(params["limit"][0])
+            calls.append((end, limit))
+            available = [row for row in all_rows if row[0] <= end]
+            return available[-limit:]
+        with patch("short_term_lab.read_json", side_effect=fake_read_json):
+            bars = fetch_history("binance", "scalp_5m", now_ms)
+        self.assertEqual(len(bars), 3500)
+        self.assertGreaterEqual(len(calls), 4)
+        self.assertEqual(bars[0]["end_ms"], all_rows[0][6])
+        self.assertEqual(bars[-1]["end_ms"], all_rows[-1][6])
+
 
 
 if __name__ == "__main__":
