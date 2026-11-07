@@ -187,7 +187,7 @@ def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None):
 
 def compare(bars, strategy):
     validate(bars, STRATEGIES[strategy][1], minimum=300)
-    split = int(len(bars)*0.7)
+    split = (len(bars)*7)//10  # exact integer 70/30 boundary
     # Signals can use earlier bars as warmup, but the holdout virtual account
     # starts from fresh cash with ZERO carry-over positions or prior profits.
     return {"train": simulate(bars, strategy, last_bar=split),
