@@ -52,3 +52,35 @@ workflow uses mocked exchange responses and never places orders.
 
 **No live order functionality, trading credentials, or exchange write
 permissions are included.** Do not treat virtual performance as investment advice.
+
+
+## Read-only FOMO, wallet, scalping and meme-coin research radar (proposed PR #3)
+
+`python research_radar.py` gathers **completed five-minute public candles**
+for BTC on Binance spot and Hyperliquid perpetuals. It labels short-term
+price/volume patterns as `FOMO_RISK`, `BULLISH_WATCH`, `BEARISH_WATCH`, or
+`NO_SIGNAL`. These are **research flags, not automatic orders, copy-trading,
+or proven profitable signals**. A FOMO flag is a warning against chasing spikes.
+
+The research scanner also uses DEX Screener's **recently profiled tokens**
+and reported pair liquidity, age, and volume to build a watchlist.
+**Recently profiled is NOT the same as newly launched**, and paid promotions may
+influence what appears. No meme coin is automatically bought or assigned
+position size. Basic liquidity/age/volume thresholds do **not** establish
+whether a token is safe. Before any discretionary investment, investigate
+contract privileges, honeypots, ownership concentration, distribution,
+liquidity locks, fees, slippage, manipulation, and legal restrictions.
+
+For public Hyperliquid wallet activity, place up to 10 **manually verified**
+public 42-character hexadecimal wallet addresses in
+`config/wallet_watchlist.json` on the `research-results` branch as a JSON
+array of strings. Empty or absent watchlists are allowed. No wallet addresses
+are presumed to be top-performing. Reported wallet fills are not a complete
+proof of profit or skill; there is **no copy-trade execution**.
+
+After merging the radar workflow into `main`, scheduled GitHub Actions attempts
+an hourly scan at minute 37 UTC. Reports go to
+`research-results/research/RADAR.md`. Runs can be delayed, fail or be skipped;
+failed feeds are reported without fabricated signals. A scheduled scan is not
+real-time scalping infrastructure. No Telegram connection or push alerts are
+configured yet, and trading decisions remain manual.
