@@ -45,6 +45,25 @@ diagnostics on the same BTC sample, not independent out-of-sample datasets
 or proof of profitable future trading. Do not pick the best-performing
 window or retune rules after inspecting these results.
 
+## Rule-based benchmarking, not AI price guesses
+
+The holdout report compares each fixed, rule-based candidate against a
+**passive BTC reference** over exactly the same holdout interval. The
+reference hypothetically allocates only 2% of a fresh $10,000 virtual
+account to BTC at the first candle's open, then sells at the final close.
+Both sides pay the same assumed fee and slippage as the strategy.
+The comparison reports the BTC price change, reference portfolio return,
+active strategy portfolio return and the difference in percentage points.
+
+**Important limitations:** the reference stays exposed for the whole interval,
+while each short-term strategy trades intermittently and uses a stop; their
+risks are not matched. Reference results assume a final sale whereas
+strategy equity can still contain an open marked-to-market position. BTC
+perpetual funding and real execution quality are omitted. Beating a losing
+reference, especially with zero strategy trades, is **not proof** of a profitable
+quantitative edge. Do not use this diagnostic to pick the best variant on
+the same holdout sample.
+
 ## Interpretation
 
 A successful CI run proves the code completed and tested safely; it does **not** prove market profitability. The 4,000-candle request spans only about 14 days at 5 minutes or 42 days at 15 minutes. Binance history is retrieved in bounded pages; Hyperliquid uses its latest available public candles. These are still too short to establish robust profitability. The four trials share BTC exposure and are not independent market regimes. Results omit funding, real order-book execution, exchange latency and market impact. Apparent wins from very few trades are not evidence of a durable edge.
