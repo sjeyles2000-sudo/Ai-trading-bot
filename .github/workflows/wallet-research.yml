@@ -1,0 +1,48 @@
+name: Daily public wallet research
+
+on:
+  schedule:
+    - cron: '43 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: public-wallet-research
+  cancel-in-progress: false
+
+jobs:
+  wallet-research:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check out research results
+        uses: actions/checkout@v4
+        with:
+          ref: research-results
+          path: research-output
+          persist-credentials: true
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test read-only wallet research
+        run: python -m unittest discover -s tests -v
+      - name: Read leaderboard and public wallet fills
+        run: python wallet_leaderboard.py research-output
+      - name: Commit saved research report only
+        working-directory: research-output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/WALLETS.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Update public wallet research report"
+            git push origin HEAD:research-results
+          fi
