@@ -13,7 +13,7 @@ NOW = 1_803_000_000_000
 
 
 def bars(count=600):
-    start = NOW-(count+2)*DAY_MS
+    start = NOW-(count+1)*DAY_MS
     return [{
         "end_ms": start+(i+1)*DAY_MS-1,
         "open": 100.0, "high": 101.0, "low": 99.0,
