@@ -65,9 +65,11 @@ def validate_candles(raw, now_ms):
         raise MarketDataError("Too few completed candles")
     if now_ms - candles[-1]["end_ms"] > 3 * INTERVAL_MS:
         raise MarketDataError("Stale market data")
-    if any(b["end_ms"] - a["end_ms"] > INTERVAL_MS + 2000
+    # Reject wrongly labelled 5m/15m feeds as well as missing hourly bars.
+    # Allow 2 seconds of timestamp drift from public market data providers.
+    if any(abs((b["end_ms"] - a["end_ms"]) - INTERVAL_MS) > 2000
            for a, b in zip(candles, candles[1:])):
-        raise MarketDataError("Missing hourly candles")
+        raise MarketDataError("Non-hourly or missing candle interval")
     return candles
 
 
