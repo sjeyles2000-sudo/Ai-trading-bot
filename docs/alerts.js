@@ -38,9 +38,19 @@
     while(seen.size>100)seen.delete(seen.values().next().value);
     log(type,message);save();
     if("Notification" in window&&Notification.permission==="granted"){
-      try {const n=new Notification("AI Trader — "+ALERT_TYPES[type],{
-        body:message+" · Research/demo only. No real orders.",tag:"ai-trader-"+type+"-"+key.slice(-30)
-      });setTimeout(()=>n.close(),9000);}catch(_){}
+      const title="AI Trader — "+ALERT_TYPES[type];
+      const body=message+" · Research/demo only. No real orders.";
+      const tag="ai-trader-"+type+"-"+key.slice(-30);
+      // Service worker notifications are supported by Chrome on Android.
+      // Desktop fallback is only used when no service worker is available.
+      if("serviceWorker" in navigator){
+        navigator.serviceWorker.ready.then(registration=>
+          registration.showNotification(title,{body,tag,renotify:false})
+        ).catch(()=>{ /* In-page alert remains available. */ });
+      }else{
+        try {const n=new Notification(title,{body,tag});
+          setTimeout(()=>n.close(),9000);}catch(_){}
+      }
     }
   }
   const fingerprint=items=>items.join("|").trim();
@@ -155,6 +165,13 @@
     });
     updateButton();
     note("Alerts off. Press Enable to opt in. No automatic trades.");
+  }
+  // Registration is same-origin and scoped to this dashboard only.
+  // No push subscription: closed-page delivery is NOT implemented.
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("./sw.js", {scope:"./"}).catch(()=>{
+      // On-page alerts still work if worker registration fails.
+    });
   }
   configure(); // Always opt-in again per browser session, regardless of old settings.
   setInterval(poll,60000);
