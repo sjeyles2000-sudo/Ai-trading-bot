@@ -1,5 +1,7 @@
 """Scheduled, persistent, read-only PAPER trader. No credentials or order endpoints."""
 import csv
+
+from paper_dashboard import build_dashboard
 import json
 import math
 import sys
@@ -162,9 +164,11 @@ def run(data_dir, fetchers=None, now_ms=None):
     now_ms = int(time.time() * 1000) if now_ms is None else now_ms
     fetchers = fetchers if fetchers is not None else MARKETS
     updates, events, equities, prices = {}, [], [], {}
+    market_candles = {}
     # Fail closed: no state commits unless both exchange reads succeed.
     for key, (display, fetch) in fetchers.items():
         candles = fetch(now_ms)
+        market_candles[key] = candles
         new, trades, snapshots = process_candles(display, existing[key], candles)
         updates[key] = new
         events.extend(trades)
@@ -188,6 +192,13 @@ def run(data_dir, fetchers=None, now_ms=None):
              "", "Illustrative fills use assumed fees and slippage; not actual exchange execution or guaranteed performance."]
     report = "\n".join(rows) + "\n"
     (led / "REPORT.md").write_text(report, encoding="utf-8")
+    # Self-contained, read-only visualization of this virtual run.
+    # No chart or indicator changes the existing order simulation.
+    dashboard_markets = {key: {"name": display, "candles": market_candles[key],
+                               "state": updates[key]}
+                         for key, (display, _) in fetchers.items()}
+    dashboard = build_dashboard(dashboard_markets, led, now_ms)
+    (led / "dashboard.html").write_text(dashboard, encoding="utf-8")
     print(report)
     return updates
 

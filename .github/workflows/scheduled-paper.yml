@@ -44,7 +44,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ledger/state.json ledger/trades.csv ledger/equity.csv ledger/REPORT.md
+          git add ledger/state.json ledger/trades.csv ledger/equity.csv ledger/REPORT.md ledger/dashboard.html
           if ! git diff --cached --quiet; then
             git commit -m "Update virtual paper results"
             git push origin HEAD:paper-results
