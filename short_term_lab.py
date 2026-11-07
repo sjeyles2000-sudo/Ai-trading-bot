@@ -212,12 +212,23 @@ def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None,
 def compare(bars, strategy, fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
     validate(bars, STRATEGIES[strategy][1], minimum=300)
     split = (len(bars)*7)//10
-    # Holdout starts with fresh virtual cash, independent from train positions.
+    # Predefined, consecutive thirds of the untouched 30% holdout.
+    # Fresh virtual capital at every boundary; only earlier bars warm indicators.
+    # This is a stability diagnostic, NOT parameter selection or three independent
+    # market regimes. Never choose the best window or tune on these outcomes.
+    windows = []
+    for index in range(3):
+        first = split + (len(bars)-split)*index//3
+        last = split + (len(bars)-split)*(index+1)//3
+        windows.append({"start": first, "end": last,
+                        "stats": simulate(bars, strategy, first_bar=first,
+                                          last_bar=last, fee_pct=fee_pct,
+                                          slippage_pct=slippage_pct)})
     return {"train": simulate(bars, strategy, last_bar=split,
                               fee_pct=fee_pct, slippage_pct=slippage_pct),
             "holdout": simulate(bars, strategy, first_bar=split,
                                 fee_pct=fee_pct, slippage_pct=slippage_pct),
-            "split": split}
+            "windows": windows, "split": split}
 
 
 def report(results, now_ms):
@@ -261,7 +272,28 @@ def report(results, now_ms):
             lines.append(f"| {market} | {strategy} | {result['history_count']} | "
                          f"{result['holdout']['return_pct']:+.3f}% | "
                          f"{result['stress_holdout']['return_pct']:+.3f}% |")
+    lines.extend(["", "## Out-of-sample stability: three consecutive holdout windows", "",
+                  "The fixed final 30% holdout is subdivided chronologically into "
+                  "three disjoint windows. Each starts with fresh virtual $10,000; "
+                  "results are **not additive** to the continuous holdout result. "
+                  "Prior candles warm up indicators only. No parameters are tuned "
+                  "or strategies chosen using these windows.", "",
+                  "| Market | Strategy | Holdout window | Return after costs | Max drawdown | Closed trades |",
+                  "|---|---|---:|---:|---:|---:|"])
+    for market in MARKETS:
+        for strategy in STRATEGIES:
+            for index, window in enumerate(results[(market, strategy)]["windows"], start=1):
+                stats = window["stats"]
+                lines.append(f"| {market} | {strategy} | {index}/3 | "
+                             f"{stats['return_pct']:+.3f}% | "
+                             f"{stats['max_drawdown_pct']:.3f}% | "
+                             f"{stats['closed_trades']} |")
     lines += ["", "## Critical review", "",
+              "- **Stability diagnostic:** multiple non-overlapping windows can expose "
+              "fragility but the small samples and shared BTC exposure do not "
+              "establish independent market-regime validation.",
+              "- **Zero-trade windows:** a zero return with no closed trades is "
+              "insufficient evidence of a profitable strategy.",
               "- **Data limitations:** 4000 5m bars spans at most ~14 days and 4000 15m bars "
               "at most ~42 days. This is still insufficient to identify a reliable winner across market regimes.",
               "- **Trade model limitations:** no funding, order book depth, latency, spreads beyond "
