@@ -86,16 +86,14 @@ def simulate(bars, first=42, last=None, fee=FEE, slippage=SLIPPAGE):
         if day != utc_day:
             day, day_start, paused = utc_day, cash+units*bar["open"], False
         exited = False
-        if units and (bar["low"] <= stop or bar["close"] < sum(
-                b["close"] for b in bars[i-20:i])/20):
+        if units:
+            # Protective stop may trigger intrabar, with conservative gap fill.
+            # Trend exit is decided from yesterday's completed candle ONLY.
             stop_hit = bar["low"] <= stop
-            raw_exit = min(stop,bar["open"]) if stop_hit else bar["open"]
-            # For MA exits, use previous CLOSED bar signal (not today's close).
-            if not stop_hit:
-                prior_ma = sum(b["close"] for b in bars[i-21:i-1])/20
-                if bars[i-1]["close"] >= prior_ma:
-                    raw_exit = None
-            if raw_exit is not None:
+            prior_ma = sum(b["close"] for b in bars[i-21:i-1])/20
+            trend_exit = bars[i-1]["close"] < prior_ma
+            if stop_hit or trend_exit:
+                raw_exit = min(stop,bar["open"]) if stop_hit else bar["open"]
                 fill = raw_exit * (1-slippage)
                 proceeds = units * fill * (1-fee)
                 pnl = proceeds - cost
