@@ -1,0 +1,31 @@
+name: Trendilo-inspired isolated historical research
+on:
+  push:
+    branches:
+      - trendilo-research-2026-11-08
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and run all offline tests
+        run: |
+          python -m compileall -q bot.py trendilo_lab.py tests
+          python -m unittest discover -s tests -v
+      - name: Compare public 600-bar historical Binance and Hyperliquid candles
+        run: python trendilo_lab.py
+      - name: Attach isolated report (no paper account writes)
+        uses: actions/upload-artifact@v4
+        with:
+          name: trendilo-research-report
+          path: trendilo-results/REPORT.md
+          if-no-files-found: error
