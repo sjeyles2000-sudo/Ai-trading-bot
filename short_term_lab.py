@@ -18,7 +18,7 @@ MARKETS = ("binance", "hyperliquid")
 START_CASH = 10_000.0
 MAX_NOTIONAL = 0.02  # maximum 2% of virtual equity for each entry
 DAILY_PAUSE = 0.01
-HISTORY = 1000
+HISTORY = 4000  # bounded to Hyperliquid's most recent 5000 candles
 
 
 def validate(bars, duration, minimum=90):
@@ -43,22 +43,43 @@ def validate(bars, duration, minimum=90):
 
 
 def fetch_history(market, strategy, now_ms):
+    """Fetch up to 4000 completed OHLCV candles without trading privileges.
+
+    Binance limits each page to 1000 rows; paginate *backwards* with endTime
+    while deduplicating and verifying strict time continuity. Hyperliquid only
+    retains its most recent 5000 candles per interval.
+    """
     interval, duration, _ = STRATEGIES[strategy]
     if market == "binance":
-        params = urlencode({"symbol": "BTCUSDT", "interval": interval, "limit": HISTORY})
-        data = read_json(f"{BINANCE_URL}?{params}")
-        if not isinstance(data, list):
-            raise MarketDataError("Unexpected Binance response")
-        try:
-            bars = [{"end_ms": int(r[6]), "open": float(r[1]), "high": float(r[2]),
-                     "low": float(r[3]), "close": float(r[4]), "volume": float(r[5])}
-                    for r in data]
-        except (TypeError, ValueError, IndexError, OverflowError) as exc:
-            raise MarketDataError("Malformed Binance OHLCV") from exc
+        all_rows = []
+        cursor = now_ms
+        while len(all_rows) < HISTORY + 1:
+            remaining = HISTORY + 1 - len(all_rows)
+            limit = min(1000, remaining)
+            params = urlencode({"symbol": "BTCUSDT", "interval": interval,
+                                "endTime": cursor, "limit": limit})
+            data = read_json(f"{BINANCE_URL}?{params}")
+            if not isinstance(data, list) or not data or len(data) > limit:
+                raise MarketDataError("Unexpected Binance candle page")
+            try:
+                new_rows = [{"open_ms": int(r[0]), "end_ms": int(r[6]),
+                             "open": float(r[1]), "high": float(r[2]),
+                             "low": float(r[3]), "close": float(r[4]),
+                             "volume": float(r[5])} for r in data]
+            except (TypeError, ValueError, IndexError, OverflowError) as exc:
+                raise MarketDataError("Malformed Binance OHLCV") from exc
+            if new_rows[0]["open_ms"] > cursor or (
+                    all_rows and new_rows[-1]["open_ms"] >= all_rows[0]["open_ms"]):
+                raise MarketDataError("Binance pagination cursor did not advance")
+            all_rows = new_rows + all_rows
+            cursor = new_rows[0]["open_ms"] - 1
+            if len(data) < limit:
+                break
+        bars = [{k:v for k,v in row.items() if k != "open_ms"} for row in all_rows]
     elif market == "hyperliquid":
         data = read_json(HYPERLIQUID_URL, {
             "type": "candleSnapshot", "req": {"coin": "BTC", "interval": interval,
-            "startTime": now_ms - (HISTORY + 2) * duration, "endTime": now_ms}})
+            "startTime": now_ms - (HISTORY + 3)*duration, "endTime": now_ms}})
         if not isinstance(data, list):
             raise MarketDataError("Unexpected Hyperliquid response")
         try:
@@ -71,7 +92,7 @@ def fetch_history(market, strategy, now_ms):
         raise ValueError("Unknown market")
     bars = [b for b in bars if b["end_ms"] <= now_ms][-HISTORY:]
     validate(bars, duration, minimum=300)
-    if now_ms - bars[-1]["end_ms"] > 2 * duration:
+    if now_ms - bars[-1]["end_ms"] > 2*duration:
         raise MarketDataError("Market feed stale")
     return bars
 
@@ -113,9 +134,12 @@ def signals(bars, strategy):
     return buy, exit_, reasons
 
 
-def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None):
+def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None,
+             fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
     """Independent long-only account. All signal fills occur at NEXT bar open."""
     duration, stop_pct = STRATEGIES[strategy][1:]
+    if not (0 <= fee_pct <= 0.01 and 0 <= slippage_pct <= 0.01):
+        raise ValueError("Invalid hypothetical cost assumption")
     validate(bars, duration)
     last_bar = len(bars) if last_bar is None else last_bar
     if not (32 <= first_bar < last_bar <= len(bars)):
@@ -137,8 +161,8 @@ def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None):
 
         def sell(action, raw_price):
             nonlocal cash, units, stop, paid, exited
-            price = raw_price*(1-SLIPPAGE_PCT)
-            amount = units*price*(1-FEE_PCT)
+            price = raw_price*(1-slippage_pct)
+            amount = units*price*(1-fee_pct)
             pnl = amount-paid
             cash += amount
             pnls.append(pnl)
@@ -157,8 +181,8 @@ def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None):
         if not units and not exited and not paused and entry[i-1]:
             budget = min(cash, cash*MAX_NOTIONAL)
             if budget > 0:
-                price = bar["open"]*(1+SLIPPAGE_PCT)
-                units = budget/(price*(1+FEE_PCT))
+                price = bar["open"]*(1+slippage_pct)
+                units = budget/(price*(1+fee_pct))
                 paid = budget
                 cash -= budget
                 stop = price*(1-stop_pct)
@@ -185,13 +209,14 @@ def simulate(bars, strategy, first_bar=32, last_bar=None, signal_override=None):
             "open_position": bool(units), "events": events, "equity": equity}
 
 
-def compare(bars, strategy):
+def compare(bars, strategy, fee_pct=FEE_PCT, slippage_pct=SLIPPAGE_PCT):
     validate(bars, STRATEGIES[strategy][1], minimum=300)
-    split = (len(bars)*7)//10  # exact integer 70/30 boundary
-    # Signals can use earlier bars as warmup, but the holdout virtual account
-    # starts from fresh cash with ZERO carry-over positions or prior profits.
-    return {"train": simulate(bars, strategy, last_bar=split),
-            "holdout": simulate(bars, strategy, first_bar=split),
+    split = (len(bars)*7)//10
+    # Holdout starts with fresh virtual cash, independent from train positions.
+    return {"train": simulate(bars, strategy, last_bar=split,
+                              fee_pct=fee_pct, slippage_pct=slippage_pct),
+            "holdout": simulate(bars, strategy, first_bar=split,
+                                fee_pct=fee_pct, slippage_pct=slippage_pct),
             "split": split}
 
 
@@ -225,9 +250,20 @@ def report(results, now_ms):
                 pf = "N/A" if s["profit_factor"] is None else f"{s['profit_factor']:.2f}"
                 lines.append(f"| {market} | {strategy} | {name} | {s['return_pct']:+.3f}% | "
                              f"{s['max_drawdown_pct']:.3f}% | {s['closed_trades']} | {win} | {pf} |")
+    lines.extend(["", "## Holdout robustness: doubled trading costs", "",
+                  "The same fixed signals are independently rerun with 0.20% fees + 0.10% "
+                  "slippage PER SIDE; positive base results are not enough if stress is negative.",
+                  "", "| Market | Strategy | Completed bars | Base holdout | 2x cost holdout |",
+                  "|---|---|---:|---:|---:|"])
+    for market in MARKETS:
+        for strategy in STRATEGIES:
+            result = results[(market, strategy)]
+            lines.append(f"| {market} | {strategy} | {result['history_count']} | "
+                         f"{result['holdout']['return_pct']:+.3f}% | "
+                         f"{result['stress_holdout']['return_pct']:+.3f}% |")
     lines += ["", "## Critical review", "",
-              "- **Data limitations:** 1000 5m bars is ~3.5 days; 1000 15m bars is ~10.4 days. "
-              "This is insufficient to identify a reliable winner across market regimes.",
+              "- **Data limitations:** 4000 5m bars spans at most ~14 days and 4000 15m bars "
+              "at most ~42 days. This is still insufficient to identify a reliable winner across market regimes.",
               "- **Trade model limitations:** no funding, order book depth, latency, spreads beyond "
               "assumed slippage, liquidation, real fills or actual market impact.",
               "- **No cherry-picking:** do not tune on holdout data then call it unbiased. "
@@ -246,7 +282,13 @@ def run(path=Path("backtest-results/short-term.md"), now_ms=None, fetcher=fetch_
     # Fail closed: all four feeds/results must validate before writing anything.
     for market in MARKETS:
         for strategy in STRATEGIES:
-            results[(market, strategy)] = compare(fetcher(market, strategy, now_ms), strategy)
+            bars = fetcher(market, strategy, now_ms)
+            result = compare(bars, strategy)
+            result["history_count"] = len(bars)
+            result["stress_holdout"] = simulate(
+                bars, strategy, first_bar=result["split"],
+                fee_pct=FEE_PCT*2, slippage_pct=SLIPPAGE_PCT*2)
+            results[(market, strategy)] = result
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(report(results, now_ms), encoding="utf-8")
