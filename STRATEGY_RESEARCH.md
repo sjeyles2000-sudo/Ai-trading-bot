@@ -46,3 +46,25 @@ results, including isolated holdout and doubled-cost stress. Refuse to
 promote any candidate without positive net holdout/stress results,
 adequate number of trades, acceptable drawdowns and sustained forward
 paper results. This branch is for research, not trading.
+
+## First actual historical results (GitHub Actions, 8 Nov 2026)
+
+Source: https://github.com/sjeyles2000-sudo/Ai-trading-bot/actions/runs/42433072522
+
+| Venue | Candidate | Train | Untouched holdout | Doubled-cost holdout | Closed holdout trades |
+|---|---|---:|---:|---:|---:|
+| Binance BTC spot | Breakout | +0.092% | **-0.125%** | -0.178% | 9 |
+| Binance BTC spot | Pullback | +0.028% | **-0.020%** | -0.050% | 5 |
+| Binance BTC spot | SMA | -0.173% | -0.302% | -0.521% | 37 |
+| Hyperliquid BTC perpetual | Breakout | +0.104% | **-0.125%** | -0.179% | 9 |
+| Hyperliquid BTC perpetual | Pullback | +0.044% | **-0.022%** | -0.052% | 5 |
+| Hyperliquid BTC perpetual | SMA | -0.162% | -0.319% | -0.543% | 38 |
+
+**Decision:** Neither candidate passed the positive holdout and double-cost
+stress requirements. Pullback lost less than breakout but only generated
+five closed test trades per venue. Do **not** merge any strategy into the
+running paper trader or deploy it live based on these findings. Continue
+with additional non-overlapping market regimes, longer samples, proper
+funding-aware perpetual testing and forward paper trading. The apparent
+similarity between Binance and Hyperliquid results reflects highly
+correlated BTC prices, not two independent strategy validations.
