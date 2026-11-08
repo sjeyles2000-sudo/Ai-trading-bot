@@ -11,6 +11,51 @@ def bars(prices):
              "low":float(p)*.99,"close":float(p)} for i,p in enumerate(prices)]
 
 class TrendiloResearchTests(unittest.TestCase):
+    def test_historical_pagination_uses_complete_closed_candles(self):
+        from urllib.parse import parse_qs, urlsplit
+        from trendilo_lab import fetch_history, HOUR_MS
+        # A complete synthetic 4,005-hour public history; the latest bar is closed.
+        now = 1_800_000_000_000
+        first = now - 4005 * HOUR_MS
+        raw = []
+        for i in range(4005):
+            start = first + i * HOUR_MS
+            p = 100 + i / 1000
+            raw.append([start, str(p), str(p+1), str(p-1), str(p),
+                        "0", start+HOUR_MS-1])
+        calls = []
+        def reader(url):
+            query = parse_qs(urlsplit(url).query)
+            limit = int(query["limit"][0])
+            end = int(query["endTime"][0])
+            calls.append((end, limit))
+            return [row for row in raw if row[0] <= end][-limit:]
+        result = fetch_history("binance", now, reader=reader)
+        self.assertEqual(len(result), 4000)
+        self.assertEqual(len(calls), 5)
+        self.assertEqual(result[-1]["end_ms"], now-1)
+        self.assertEqual(result[0]["end_ms"], now-4000*HOUR_MS)
+        self.assertEqual(result[0]["open"], 100.005)
+
+    def test_historical_pagination_rejects_missing_bars(self):
+        from urllib.parse import parse_qs, urlsplit
+        from trendilo_lab import fetch_history, HOUR_MS
+        now = 1_800_000_000_000
+        first = now - 4005 * HOUR_MS
+        raw = []
+        for i in range(4005):
+            if i == 2200:
+                continue
+            start=first+i*HOUR_MS
+            raw.append([start,"100","101","99","100","0",start+HOUR_MS-1])
+        def reader(url):
+            query=parse_qs(urlsplit(url).query)
+            limit=int(query["limit"][0])
+            end=int(query["endTime"][0])
+            return [row for row in raw if row[0]<=end][-limit:]
+        with self.assertRaises(ValueError):
+            fetch_history("binance", now, reader=reader)
+
     def test_flat_market_has_no_magic_profit(self):
         b=bars([100]*240)
         r=compare(b)
