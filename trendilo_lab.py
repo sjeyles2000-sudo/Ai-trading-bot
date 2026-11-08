@@ -16,35 +16,58 @@ POSITION = .02
 DAILY_LIMIT = .01
 WARMUP = 60
 HOUR_MS = 3_600_000
-HISTORY = 600
+HISTORY = 4000
 
 
-def fetch_history(market, now_ms):
-    """Public, unauthenticated, completed Binance/Hyperliquid BTC 1h bars."""
+def fetch_history(market, now_ms, reader=read_json):
+    """Fetch 4,000 completed, consecutive public BTC 1h bars per venue.
+
+    Binance history is retrieved backwards in at most five bounded pages.
+    Hyperliquid provides recent 5,000 candles. No exchange credentials.
+    """
     if market == "binance":
-        url = BINANCE_URL + "?" + urlencode({"symbol":"BTCUSDT","interval":"1h","limit":HISTORY+3})
-        raw = read_json(url)
-        if not isinstance(raw,list):
-            raise MarketDataError("Bad Binance response")
-        try:
-            bars = [{"end_ms":int(x[6]),"open":float(x[1]),"high":float(x[2]),
-                     "low":float(x[3]),"close":float(x[4])} for x in raw]
-        except (TypeError,ValueError,IndexError) as exc:
-            raise MarketDataError("Bad Binance candles") from exc
+        pages = []
+        cursor = now_ms
+        while len(pages) < HISTORY + 3:
+            limit = min(1000, HISTORY + 3 - len(pages))
+            url = BINANCE_URL + "?" + urlencode(
+                {"symbol":"BTCUSDT","interval":"1h",
+                 "endTime":cursor,"limit":limit})
+            raw = reader(url)
+            if not isinstance(raw,list) or not raw or len(raw)>limit:
+                raise MarketDataError("Invalid or empty Binance history page")
+            try:
+                parsed=[{"open_ms":int(x[0]),"end_ms":int(x[6]),
+                         "open":float(x[1]),"high":float(x[2]),
+                         "low":float(x[3]),"close":float(x[4])} for x in raw]
+            except (TypeError,ValueError,IndexError,OverflowError) as exc:
+                raise MarketDataError("Bad Binance candles") from exc
+            if any(b["open_ms"]<=a["open_ms"] for a,b in zip(parsed,parsed[1:])):
+                raise MarketDataError("Nonascending Binance candle page")
+            if pages and parsed[-1]["open_ms"]>=pages[0]["open_ms"]:
+                raise MarketDataError("Binance history cursor failed to move")
+            pages=parsed+pages
+            cursor=parsed[0]["open_ms"]-1
+            if len(raw)<limit:
+                break
+        bars=[{key:value for key,value in p.items() if key!="open_ms"} for p in pages]
     elif market == "hyperliquid":
-        raw=read_json(HYPERLIQUID_URL,{"type":"candleSnapshot",
+        raw=reader(HYPERLIQUID_URL,{"type":"candleSnapshot",
             "req":{"coin":"BTC","interval":"1h",
-                   "startTime":now_ms-(HISTORY+3)*HOUR_MS,"endTime":now_ms}})
+                   "startTime":now_ms-(HISTORY+4)*HOUR_MS,"endTime":now_ms}})
         if not isinstance(raw,list):
             raise MarketDataError("Bad Hyperliquid response")
         try:
-            bars=[{"end_ms":int(x["T"]),"open":float(x["o"]),"high":float(x["h"]),
-                   "low":float(x["l"]),"close":float(x["c"])} for x in raw]
-        except (KeyError,TypeError,ValueError) as exc:
+            bars=[{"end_ms":int(x["T"]),"open":float(x["o"]),
+                   "high":float(x["h"]),"low":float(x["l"]),
+                   "close":float(x["c"])} for x in raw]
+        except (KeyError,TypeError,ValueError,OverflowError) as exc:
             raise MarketDataError("Bad Hyperliquid candles") from exc
     else:
         raise ValueError("Unknown exchange")
     bars=[x for x in bars if x["end_ms"]<=now_ms][-HISTORY:]
+    if len(bars)!=HISTORY:
+        raise MarketDataError("Incomplete 4000-hour research history")
     validate(bars)
     if now_ms-bars[-1]["end_ms"]>2*HOUR_MS:
         raise MarketDataError("Stale hourly data")
@@ -237,8 +260,9 @@ def render(all_results):
             for segment,r in segments.items():
                 win="N/A" if r["win_pct"] is None else f'{r["win_pct"]:.1f}%'
                 out.append(f'| {venue} | {strategy} | {segment} | {r["return_pct"]:+.4f}% | {r["drawdown_pct"]:.4f}% | {r["buys"]} | {r["closed"]} | {win} |')
-    out+=["","**No strategy is approved for live capital.** 600 hourly bars are"
-          "not enough to cover different market regimes. More data and forward",
+    out+=["","**No strategy is approved for live capital.** 4000 hourly bars are
+          " (~167 days), but these still span limited market conditions. ""
+          "More data and forward",
           "testing are necessary; a 0-trade result is not evidence of an edge.",
           "The SMA comparator and new candidate are standalone research versions,",
           "not a simulation of every production risk rule. No changes to demo_runner.py.",""]
