@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-07 23:11 UTC
+Updated 2026-11-08 00:09 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.03% | 0.25x | $75,742.00 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.04% | 0.19x | $75,724.00 |
+| Binance BTC spot | NO_SIGNAL | -0.09% | 0.56x | $75,822.95 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | -0.09% | 0.41x | $75,812.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,9 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | TAOLF | 2.2h | $133,013 | $1,430,159 | `3hWkYmr81vZbyVnTPzcSjSNxxZuSmSdrQUohx86Rrxqf` |
-| solana | GIGAHUG | 2.6h | $87,770 | $1,219,947 | `BWh8q5etuPwekJ2JEDkbMxMQWy4FysoJ8LEwE3rFpump` |
+| ethereum | DacityCoin | 3.6h | $256,404 | $2,115,284 | `0xBe7038A9f31C86A8b09879D90e55ad77Ff0d8f8b` |
+| solana | GTA6 | 2.1h | $58,406 | $104,355 | `3kQbP4tTBtUQ13TifHEon7X6ms9MhYtTr43m612owo5P` |
+| solana | TAOLF | 3.2h | $108,513 | $2,339,505 | `3hWkYmr81vZbyVnTPzcSjSNxxZuSmSdrQUohx86Rrxqf` |
 
 ## Watched Hyperliquid wallets
 
