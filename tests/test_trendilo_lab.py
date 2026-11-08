@@ -34,7 +34,7 @@ class TrendiloResearchTests(unittest.TestCase):
         self.assertEqual(len(result), 4000)
         self.assertEqual(len(calls), 5)
         self.assertEqual(result[-1]["end_ms"], now-1)
-        self.assertEqual(result[0]["end_ms"], now-4000*HOUR_MS)
+        self.assertEqual(result[0]["end_ms"], now-4000*HOUR_MS-1)
         self.assertEqual(result[0]["open"], 100.005)
 
     def test_historical_pagination_rejects_missing_bars(self):
