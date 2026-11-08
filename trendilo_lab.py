@@ -260,10 +260,11 @@ def render(all_results):
             for segment,r in segments.items():
                 win="N/A" if r["win_pct"] is None else f'{r["win_pct"]:.1f}%'
                 out.append(f'| {venue} | {strategy} | {segment} | {r["return_pct"]:+.4f}% | {r["drawdown_pct"]:.4f}% | {r["buys"]} | {r["closed"]} | {win} |')
-    out+=["","**No strategy is approved for live capital.** 4000 hourly bars are
-          " (~167 days), but these still span limited market conditions. ""
-          "More data and forward",
-          "testing are necessary; a 0-trade result is not evidence of an edge.",
+    out+=["",
+          "**No strategy is approved for live capital.** Four thousand hourly",
+          "bars (about 167 days) still span limited market conditions.",
+          "More data and forward testing are necessary; a zero-trade",
+          "result is not evidence of an edge.",
           "The SMA comparator and new candidate are standalone research versions,",
           "not a simulation of every production risk rule. No changes to demo_runner.py.",""]
     return "\n".join(out)
