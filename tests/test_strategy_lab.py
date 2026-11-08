@@ -53,7 +53,7 @@ class StrategyLabTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             lab.simulate(bars,"anything")
         with self.assertRaises(ValueError):
-            lab.simulate(bars,"pullback",first=600,last=601)
+            lab.simulate(bars,"pullback",first=600,last=600)
 
     def test_all_candidates_on_trending_and_choppy_bars(self):
         prices=[100+.025*i+2*((i%10)-5)/10 for i in range(800)]
