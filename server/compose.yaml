@@ -1,0 +1,24 @@
+services:
+  paper-worker:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    environment:
+      TRADING_MODE: paper
+      PAPER_STATE_DIR: /data
+      ENABLE_LIVE_TRADING: "false"
+    volumes:
+      - paper_state:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
+    mem_limit: 512m
+    # Do not expose ports, secrets, API keys or wallet credentials.
+volumes:
+  paper_state:
