@@ -2,7 +2,7 @@
 
 **Research-only. No real orders, credentials, account connections, wallet actions, or updates to the running paper bot.**
 
-This is an independent, simplified Trendilo-style hypothesis, not the actual original indicator or a reproduction of any paid/proprietary strategy. Public completed Binance BTC/USDT spot and Hyperliquid BTC perpetual 1-hour candles (up to 600 each) are evaluated, with no live trading.
+This is an independent, simplified Trendilo-style hypothesis, not the actual original indicator or a reproduction of any paid/proprietary strategy. Public completed Binance BTC/USDT spot and Hyperliquid BTC perpetual 1-hour candles (up to 4,000 each) are evaluated, with no live trading.
 
 - Oscillator: ALMA 20 of completed one-bar percentage returns.
 - Bands: prior 20 oscillator readings' mean ± 1.5 standard deviations.
@@ -16,6 +16,6 @@ This is an independent, simplified Trendilo-style hypothesis, not the actual ori
 
 Use `python -m unittest discover -s tests -v` for offline tests, then `python trendilo_lab.py` to fetch public research data. The latter requires network access and may fail closed when a market is unavailable; no report should be interpreted as an all-clear for real-money trading.
 
-600 hours (~25 days) is **far too short** to establish an investment edge across regimes. A zero-trade or positive short-window result is not proof. Compare after costs; then use substantially longer untouched samples and sustained forward testing before even discussing real trades.
+4,000 hours (~167 days) still cannot establish a durable edge across market regimes. A zero-trade or positive short-window result is not proof. Compare after costs; then use substantially longer untouched samples and sustained forward testing before even discussing real trades.
 
 This feature branch is intentionally separate from the running virtual ledger. Do not merge any trading logic into the live paper simulator without further review.
