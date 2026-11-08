@@ -21,7 +21,7 @@ jobs:
         run: |
           python -m compileall -q bot.py trendilo_lab.py tests
           python -m unittest discover -s tests -v
-      - name: Compare public 600-bar historical Binance and Hyperliquid candles
+      - name: Compare public 4000-bar historical Binance and Hyperliquid candles
         run: python trendilo_lab.py
       - name: Attach isolated report (no paper account writes)
         uses: actions/upload-artifact@v4
