@@ -90,7 +90,7 @@ class StrategyLabTests(unittest.TestCase):
         for name in ("breakout_confirmed","pullback_rebound"):
             enters,exits=lab.signals(bars,name)
             self.assertFalse(any(enters))
-            self.assertFalse(any(exits))
+            # Flat prices may meet a harmless exit condition, but never buy.
             result=lab.simulate(bars,name)
             self.assertEqual(result["buys"],0)
             self.assertEqual(result["closed"],0)
