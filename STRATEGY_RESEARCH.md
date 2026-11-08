@@ -68,3 +68,46 @@ with additional non-overlapping market regimes, longer samples, proper
 funding-aware perpetual testing and forward paper trading. The apparent
 similarity between Binance and Hyperliquid results reflects highly
 correlated BTC prices, not two independent strategy validations.
+
+## Second round: additional fixed rule variants (8 November 2026)
+
+Research workflow and full 4,000-candle report:
+https://github.com/sjeyles2000-sudo/Ai-trading-bot/actions/runs/42433446676
+
+Two **experimental** versions were added **after examining the original
+holdout**. They are therefore not independently validated by that same
+holdout or by the four overlapping-in-time historical robustness blocks.
+
+- **Confirmed breakout:** original breakout + positive upper-quartile
+  candle close, rising SMA200 over 16 hours, and 20-hour average true range
+  in the fixed normalized 0.2%-3.5% band.
+- **Rebound-confirmed pullback:** original oversold and below-SMA20
+  conditions must hold on the previous closed bar; on the current closed
+  bar require recovery to an upward close, with the same rising SMA200
+  and volatility limits.
+
+### Reused holdout results, for diagnostics only
+
+| Venue | Variant | Net return | Double-cost net | Closed trades |
+|---|---|---:|---:|---:|
+| Binance spot | Confirmed breakout | **-0.078%** | -0.114% | 6 |
+| Binance spot | Rebound pullback | **-0.007%** | -0.037% | 5 |
+| Hyperliquid perp | Confirmed breakout | **-0.078%** | -0.114% | 6 |
+| Hyperliquid perp | Rebound pullback | **-0.008%** | -0.038% | 5 |
+
+The rebound pullback showed a nominal **80% winning-trade rate** in each
+venue's five-trade reused holdout, **but still lost money overall**. This
+directly illustrates why win rate without average win/loss and trading
+costs can mislead. With double costs, win rate fell to 20%.
+
+Four successive, separately reset 800-hour blocks showed both positive
+and negative ordinary returns for different variants. Crucially, none
+established consistently positive returns under double-cost stress
+across all four blocks. These historical blocks are **not** four fresh
+independent market-regime datasets; both venues track the same BTC market.
+
+**Decision:** No strategy promotion, no real money, no hosted deployment,
+no exchange credentials. The next truly useful test is a prospectively
+fixed strategy on fresh future data (or older market history never
+consulted in development), with funding/fee/impact assumptions and
+independent review before any live decision.
