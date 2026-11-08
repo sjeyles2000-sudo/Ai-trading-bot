@@ -36,6 +36,11 @@ jobs:
           python-version: '3.11'
       - name: Test simulator
         run: python -m unittest discover -s tests -v
+      - name: Record previous trade rows for safe deduplication
+        run: |
+          if [ -f paper-output/ledger/trades.csv ]; then
+            cp paper-output/ledger/trades.csv "${RUNNER_TEMP}/previous-paper-trades.csv"
+          fi
       - name: Fetch PUBLIC market data and update virtual ledger
         run: python demo_runner.py paper-output
       - name: Save virtual results on the paper-results branch
@@ -51,3 +56,8 @@ jobs:
           else
             echo "No virtual results changed"
           fi
+      - name: Optional ntfy alerts for newly recorded paper trades
+        continue-on-error: true
+        env:
+          NTFY_TOPIC_URL: ${{ secrets.NTFY_TOPIC_URL }}
+        run: python ntfy_paper_alerts.py "${RUNNER_TEMP}/previous-paper-trades.csv" paper-output/ledger/trades.csv
