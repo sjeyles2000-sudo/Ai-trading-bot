@@ -145,7 +145,7 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE, slip=SLIP):
     cash, units, paid, stop = START, 0.0, 0.0, 0.0
     wins, closed_pnl, buys = 0, [], 0
     peak, dd = START, 0.0
-    paused, day, day_start = False, None, START
+    paused, day, day_start, pending_daily_exit = False, None, START, False
     equity_curve = []
     for i in range(first, last):
         b = bars[i]
@@ -165,12 +165,15 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE, slip=SLIP):
             units, stop, paid = 0.0, 0.0, 0.0
             sold = True
 
-        if units and exits[i-1]:
+        if units and pending_daily_exit:
+            sell(b["open"])
+        elif units and exits[i-1]:
             sell(b["open"])
         elif units and b["open"] <= stop:
             sell(b["open"])       # gap down below stop
         elif units and b["low"] <= stop:
             sell(stop)
+        pending_daily_exit = False
         if not units and not sold and not paused and enters[i-1]:
             allocation = min(cash, (cash + units * b["open"]) * ALLOCATION)
             if allocation > 0:
@@ -188,9 +191,8 @@ def simulate(bars, strategy, first=None, last=None, fee=FEE, slip=SLIP):
         if equity <= day_start * (1-DAY_LIMIT):
             paused = True
             if units:
-                # Approximate next-open exit: decision at close t, execute t+1.
-                # No extra entry may occur while paused for current UTC day.
-                pass
+                # Exit next bar open, never at a known close at same timestamp.
+                pending_daily_exit = True
         peak = max(peak, equity)
         dd = max(dd, 100 * (peak - equity) / peak)
         equity_curve.append(equity)
