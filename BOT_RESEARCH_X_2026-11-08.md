@@ -76,8 +76,17 @@ https://github.com/sjeyles2000-sudo/Ai-trading-bot/pull/16
 The old 600-hour test was much too short. The updated code requests 4,000
 completed 1-hour candles per market with bounded Binance paging and
 fail-closed checks for gaps, then generates a new isolated report. The
-new results must be reviewed before drawing any conclusions; this file
-does not assert the revised model is profitable.
+4,000-hour historical experiment **passed its software checks** but found
+**negative out-of-sample returns** after assumed trading costs:
+- Binance Trendilo-inspired: -0.0110%, 11 closed virtual trades;
+  double-cost stress: -0.0809%.
+- Hyperliquid Trendilo-inspired: -0.0174%, 11 closed virtual trades;
+  double-cost stress: -0.0821%.
+- Both beat the similarly tested 5/20 SMA baseline in this window, but
+  neither passed a positive-return holdout test.
+Full report: https://github.com/sjeyles2000-sudo/Ai-trading-bot/actions/runs/42432655299
+
+**Do not deploy this candidate for live trading.**
 
 Read-only server draft PR #18:
 https://github.com/sjeyles2000-sudo/Ai-trading-bot/pull/18
