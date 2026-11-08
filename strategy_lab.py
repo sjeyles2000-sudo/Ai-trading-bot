@@ -21,7 +21,7 @@ SLIP = .0005                     # hypothetical slippage each side
 STOP = .025                      # price-based stop; gaps can lose more
 DAY_LIMIT = .01                  # virtual daily loss pause
 WARMUP = 220
-STRATEGIES = ("breakout", "pullback", "sma")
+STRATEGIES = ("breakout", "pullback", "sma", "breakout_confirmed", "pullback_rebound")
 FIELDS = ("open", "high", "low", "close")
 
 
@@ -116,13 +116,49 @@ def signals(bars, strategy):
         sma200 = statistics.fmean(closes[i-199:i+1])
         prior20 = statistics.fmean(closes[i-20:i])
         trend = price > sma200 and sma50 > sma200
+        # Fixed, predeclared experimental regime filter. The 200-hour SMA
+        # sixteen hours ago is computed from candles <= i-16, not future data.
+        earlier_200 = statistics.fmean(closes[i-215:i-15])
+        rising_long_trend = sma200 > earlier_200
+        ranges = []
+        for j in range(i-19, i+1):
+            prev_close = closes[j-1]
+            b = bars[j]
+            tr = max(b["high"] - b["low"],
+                     abs(b["high"] - prev_close),
+                     abs(b["low"] - prev_close))
+            ranges.append(tr / prev_close)
+        normal_volatility = .002 <= statistics.fmean(ranges) <= .035
+        regime = trend and rising_long_trend and normal_volatility
         if strategy == "breakout":
             top = max(x["high"] for x in bars[i-20:i])
             enters[i] = trend and price > top
             exits[i] = price < sma50
+        elif strategy == "breakout_confirmed":
+            # Breakout on a positive candle closing in its upper 25%.
+            # All thresholds fixed before evaluating historical results.
+            candle = bars[i]
+            high20 = max(x["high"] for x in bars[i-20:i])
+            bar_range = candle["high"] - candle["low"]
+            upper_close = bar_range > 0 and (
+                (price - candle["low"]) / bar_range >= .75
+            )
+            enters[i] = (regime and price > high20 and
+                         price > closes[i-1] and upper_close)
+            exits[i] = price < sma50
         elif strategy == "pullback":
             # Mean reversion only within a longer bullish trend.
             enters[i] = trend and price < sma20 * .99 and rsi2(closes, i) < 20
+            exits[i] = price >= sma20 or price < sma200
+        elif strategy == "pullback_rebound":
+            # Require a completed reversal candle after a low RSI2 pullback:
+            # do not buy while the falling candle is still forming.
+            previous_sma20 = statistics.fmean(closes[i-20:i])
+            was_oversold = (closes[i-1] < previous_sma20 * .99
+                            and rsi2(closes, i-1) < 20)
+            candle_up = price > bars[i]["open"] and price > closes[i-1]
+            enters[i] = (regime and was_oversold and candle_up
+                         and price < sma20)
             exits[i] = price >= sma20 or price < sma200
         else:
             fast = statistics.fmean(closes[i-4:i+1])
@@ -229,6 +265,21 @@ def compare(bars):
         opening = bars[first]["open"] * (1+SLIP)
         ending = bars[last-1]["close"] * (1-SLIP)
         return 100 * (allocation * (ending/opening * (1-FEE)/(1+FEE)-1))
+    # Fixed consecutive, independent-capital windows. These use already
+    # inspected history and are *robustness diagnostics*, not fresh evidence.
+    if len(bars) >= 3200:
+        windows = [(800, 1600), (1600, 2400), (2400, 3200),
+                   (3200, len(bars))]
+    else:
+        windows = [(split, len(bars))]
+    results["folds"] = {
+        name: [
+            {"start": a, "end": b, "ordinary": simulate(bars, name, a, b),
+             "stress": simulate(bars, name, a, b, fee=2*FEE, slip=2*SLIP)}
+            for a, b in windows
+        ]
+        for name in STRATEGIES
+    }
     results["benchmarks"] = {
         "2pct_btc_holdout_pct": benchmark(split, len(bars), ALLOCATION),
         "100pct_btc_holdout_pct": benchmark(split, len(bars), 1),
@@ -249,6 +300,12 @@ def render(result):
         "Breakout: 20h high, SMA50>SMA200 confirmation; exit under SMA50.",
         "Pullback: RSI(2)<20, close <99% SMA20 in SMA50>SMA200 uptrend;",
         "exit at SMA20 or below SMA200. SMA: independent 5/20 crossover.",
+        "Experimental breakout_confirmed: prior 20h high + bullish upper-",
+        "quartile close, SMA200 rising over 16h and 0.2%-3.5% average TR.",
+        "Experimental pullback_rebound: previous bar oversold RSI(2)<20",
+        "and 1% below SMA20, now rising close; same trend/volatility gates.",
+        "Both experimental rules were designed after the first holdout",
+        "was inspected: reused holdout CANNOT validate an untested edge.",
         "Same-bar stop is pessimistically eligible; no funding, liquidation,",
         "spread depth, realistic execution queues, or guaranteed stop fills.",
         "No hyperparameter optimization, cross-validation, or live execution.",
@@ -261,10 +318,25 @@ def render(result):
                 win = "N/A" if value["win_pct"] is None else f'{value["win_pct"]:.1f}%'
                 pf = "N/A" if value["profit_factor"] is None else f'{value["profit_factor"]:.2f}'
                 lines.append(f'| {venue} | {name} | {period} | {value["return_pct"]:+.3f}% | {value["max_dd_pct"]:.3f}% | {value["closed"]} | {win} | {pf} |')
+        lines += ["", f"### {venue}: chronological block robustness (same previously seen history)",
+                  "| Candidate | Block (bar indices) | Net return | Doubled-cost net return | Closed trades |",
+                  "|---|---|---:|---:|---:|"]
+        for name in STRATEGIES:
+            for fold in strategies["folds"][name]:
+                ordinary, stress = fold["ordinary"], fold["stress"]
+                lines.append(
+                    f'| {name} | {fold["start"]}-{fold["end"]} | '
+                    f'{ordinary["return_pct"]:+.3f}% | '
+                    f'{stress["return_pct"]:+.3f}% | {ordinary["closed"]} |'
+                )
         bench = strategies["benchmarks"]
         lines.append(f'| {venue} | 2% BTC buy/hold | holdout | {bench["2pct_btc_holdout_pct"]:+.3f}% | — | 1 | — | — |')
         lines.append(f'| {venue} | 100% BTC buy/hold (not risk matched) | holdout | {bench["100pct_btc_holdout_pct"]:+.3f}% | — | 1 | — | — |')
-    lines += ["", "**Decision policy:** never promote a candidate if holdout or",
+    lines += ["", "**Important:** the latest holdout has been repeatedly inspected,",
+              "including while designing the experimental regime filters.",
+              "Neither these folds nor that reused holdout are genuinely untouched",
+              "validation for the new variants. Require new forward paper data.",
+              "", "**Decision policy:** never promote a candidate if holdout or"
               "double-cost stress net return is nonpositive, if trades are",
               "too few to estimate reliability, or if drawdowns are unacceptable.",
               "Positive historical performance alone does not authorise live",
