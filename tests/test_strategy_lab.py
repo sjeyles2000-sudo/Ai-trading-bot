@@ -85,6 +85,38 @@ class StrategyLabTests(unittest.TestCase):
         self.assertEqual(len(queries),5)
         self.assertEqual(result[-1]["end_ms"],now-1)
 
+    def test_new_regime_variants_reject_flat_prices(self):
+        bars=synthetic([100]*800)
+        for name in ("breakout_confirmed","pullback_rebound"):
+            enters,exits=lab.signals(bars,name)
+            self.assertFalse(any(enters))
+            self.assertFalse(any(exits))
+            result=lab.simulate(bars,name)
+            self.assertEqual(result["buys"],0)
+            self.assertEqual(result["closed"],0)
+
+    def test_new_variants_no_future_lookahead(self):
+        bars=synthetic([100+.04*i+1.5*((i%11)-5)/11 for i in range(800)])
+        for name in ("breakout_confirmed","pullback_rebound"):
+            a,b=lab.signals(bars,name)
+            altered=[dict(x) for x in bars]
+            altered[-1]["high"] += 20
+            altered[-1]["close"] += 20
+            c,d=lab.signals(altered,name)
+            self.assertEqual(a[:-1],c[:-1])
+            self.assertEqual(b[:-1],d[:-1])
+
+    def test_chronological_blocks_disjoint_with_double_cost(self):
+        bars=synthetic([100+.025*i+1.1*((i%15)-7)/7 for i in range(4000)])
+        result=lab.compare(bars)
+        for name in lab.STRATEGIES:
+            blocks=result["folds"][name]
+            self.assertEqual([(x["start"],x["end"]) for x in blocks],
+                             [(800,1600),(1600,2400),(2400,3200),(3200,4000)])
+            for block in blocks:
+                self.assertGreaterEqual(block["ordinary"]["closed"],0)
+                self.assertGreaterEqual(block["stress"]["closed"],0)
+
     def test_missing_exchange_fails_before_report(self):
         with TemporaryDirectory() as temp:
             path=Path(temp)/"report.md"
