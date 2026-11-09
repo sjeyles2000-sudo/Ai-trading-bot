@@ -1,0 +1,39 @@
+name: Qullamaggie-inspired historical research (read-only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - qulla-breakout-research-2026-11-07
+
+permissions:
+  contents: read
+
+jobs:
+  daily-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Offline regression and paper safety checks
+        run: python -m unittest discover -s tests -v
+      - name: Fetch public daily candles and run fixed strategy (NO ORDERS)
+        shell: bash
+        run: |
+          set -o pipefail
+          python run_qulla_history.py 2>&1 | tee qulla-research-output.txt
+      - name: Save results for user review (temporary artifact, not paper ledger)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qulla-history-readonly
+          path: |
+            backtest-results/qulla-daily.md
+            qulla-research-output.txt
+          if-no-files-found: warn
+          retention-days: 7
