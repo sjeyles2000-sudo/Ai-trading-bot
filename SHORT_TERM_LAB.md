@@ -96,3 +96,27 @@ research branch only and may produce an artifact called
 `minute-breakout-paper-research`. **No strategy promotion and no live orders.**
 The original persistent scheduled `main` trader and all virtual ledger files
 remain unchanged. Check the actual workflow results before claiming any gains.
+
+
+### First measured 1-minute breakout results (9 November 2026)
+
+Verified GitHub Actions run:
+https://github.com/sjeyles2000-sudo/Ai-trading-bot/actions/runs/42586144153
+
+Data: most recent 4,000 completed 1-minute BTC candles per venue,
+chronological 70/30 training/holdout, estimated per-side fee 0.10%,
+slippage 0.05%, 2% virtual entry allocation. These are historical
+hypotheses, not live orders, not a copy of any private MambaFx strategy.
+
+| Venue | Candidate | Net holdout | Net holdout (double cost) | Holdout closed trades |
+|---|---|---:|---:|---:|
+| Binance BTC spot | With completed 5m trend filter | -0.0902% | -0.1498% | 13 |
+| Binance BTC spot | Without trend filter | -0.1759% | -0.3081% | 29 |
+| Hyperliquid BTC perpetual | With completed 5m trend filter | -0.0785% | -0.1501% | 12 |
+| Hyperliquid BTC perpetual | Without trend filter | -0.1457% | -0.2967% | 26 |
+
+**Decision: REJECT deployment.** The filter lost less in this sample,
+but all four net holdout results and all doubled-cost tests are negative.
+The sample is ~2.8 days; no proof of any profitable edge. Do not
+optimise on this inspected holdout and then describe it as unseen evidence.
+No main-branch scheduled-trading changes, account access or real orders.
