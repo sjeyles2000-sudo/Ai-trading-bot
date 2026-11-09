@@ -8,6 +8,8 @@
 <title>AI Trader | Virtual Trading Monitor</title>
 <link rel="stylesheet" href="./style.css">
 <script defer src="./dashboard.js"></script>
+<script defer src="./trade-metrics.js"></script>
+<script defer src="./performance.js"></script>
 <script defer src="./alerts.js"></script>
 </head>
 <body>
@@ -37,6 +39,18 @@
 <section class="panel"><h2>Simulated transactions</h2><p id="trades-status" class="hint">Loading virtual ledger…</p><div id="trades-list" class="list"></div></section>
 <section class="panel"><h2>Public wallet research</h2><p id="wallet-status" class="hint">Loading read-only leaderboard…</p><div id="wallets-list" class="list"></div></section>
 </div>
+<section class="panel" id="performance-panel">
+<div class="between"><h2>Paper performance &amp; risk</h2><span class="tag">READ ONLY</span></div>
+<p class="hint" id="performance-status" role="status">Checking saved virtual history…</p>
+<div id="performance-list" class="performance-grid" aria-live="polite"></div>
+<p class="hint">Recorded profit/loss is measured against each market's initial US$10,000 virtual balance. Maximum drawdown uses the saved hourly equity snapshots, so faster losses may not be visible. Completed round-trip results include estimated fees and use rounded saved prices and quantities; open positions have no completed-trade win rate. Transaction counts include buys and sells. Report ages are not continuous-execution guarantees. No live trades are placed.</p>
+</section>
+<section class="panel" id="strategy-panel">
+<div class="between"><h2>Strategy comparison · research only</h2><span class="tag">NOT DEPLOYED</span></div>
+<p>5-minute EMA/volume scalping versus 15-minute candlestick engulfing, tested separately on Binance and Hyperliquid. The latest 4,000-candle research on 7 November 2026 showed <strong>negative holdout returns in all four trials</strong>, including more negative outcomes when fees and slippage doubled.</p>
+<p class="hint">This is a dated historical finding, not a live signal or a validated profitable strategy. The research is held in draft GitHub pull request #11 and does not control the live hourly paper simulation.</p>
+<p><a id="strategy-lab-link" href="https://github.com/sjeyles2000-sudo/Ai-trading-bot/pull/11" target="_blank" rel="noopener noreferrer">Review historical strategy research and tests</a></p>
+</section>
 <section class="panel" id="alerts-panel">
 <div class="between"><h2>Automatic research alerts</h2><span class="tag" id="alert-mode">OFF</span></div>
 <p class="hint" id="alert-status" role="status">Alerts off. Press Enable to opt in. No automatic trades.</p>

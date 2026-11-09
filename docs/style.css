@@ -7,3 +7,10 @@
 #alerts-toggle:focus-visible{outline:3px solid #c7e6ff;outline-offset:4px}
 #alert-log{margin-top:16px}
 @media(max-width:700px){.alert-grid{grid-template-columns:1fr}}
+
+/* Read-only performance and strategy health panels */
+#performance-panel,#strategy-panel{margin:17px 0}
+.performance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.performance-grid .line{align-items:center}
+.performance-grid .line strong{text-align:right}
+@media(max-width:700px){.performance-grid{grid-template-columns:1fr}}
