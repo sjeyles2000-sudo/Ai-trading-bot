@@ -86,7 +86,11 @@ def process_candles(market, account, candles):
         if index < LONG_WINDOW:
             raise MarketDataError("Not enough completed history for a paper decision")
         c = candles[index]
-        prev = candles[index - LONG_WINDOW:index + 1]
+        # A completed bar determines the next bar's opening order decision.
+        # Never let this bar's close influence a trade filled on this bar.
+        if index < LONG_WINDOW + 1:
+            raise MarketDataError("Insufficient prior candles for next-open signal")
+        prev = candles[index - LONG_WINDOW - 1:index]
         short = sum(x["close"] for x in prev[-SHORT_WINDOW:]) / SHORT_WINDOW
         long = sum(x["close"] for x in prev[-LONG_WINDOW:]) / LONG_WINDOW
         prev_short = sum(x["close"] for x in prev[-SHORT_WINDOW - 1:-1]) / SHORT_WINDOW
@@ -108,13 +112,16 @@ def process_candles(market, account, candles):
             state["stop_price"] = 0.0
             state["trades"] += 1
             exited = True
-            events.append([timestamp(c["end_ms"]), market, side,
+            # Signal exits fill at the next bar open. Stops and loss gates
+            # can trigger intrabar, so their exact fill time is unknown.
+            fill_ms = c["end_ms"] - INTERVAL_MS + 1 if side == "SIGNAL SELL" else c["end_ms"]
+            events.append([timestamp(fill_ms), market, side,
                            f"{quantity:.8f}", f"{fill:.4f}", f"{fee:.4f}", f"{state['cash']:.4f}"])
 
         if state["units"] > 0 and c["low"] <= state["stop_price"]:
             sell("STOP SELL", min(c["open"], state["stop_price"]) * (1 - SLIPPAGE_PCT))
         elif state["units"] > 0 and short < long:
-            sell("SIGNAL SELL", c["close"] * (1 - SLIPPAGE_PCT))
+            sell("SIGNAL SELL", c["open"] * (1 - SLIPPAGE_PCT))
 
         equity = state["cash"] + state["units"] * c["close"]
         if equity <= state["day_start_equity"] * (1 - DAILY_LOSS_LIMIT_PCT):
@@ -126,7 +133,7 @@ def process_candles(market, account, candles):
             equity = state["cash"]
             allocation = min(state["cash"], equity * MAX_POSITION_PCT)
             if allocation > 0:
-                fill = c["close"] * (1 + SLIPPAGE_PCT)
+                fill = c["open"] * (1 + SLIPPAGE_PCT)
                 qty = allocation / (fill * (1 + FEE_PCT))
                 fee = qty * fill * FEE_PCT
                 state["cash"] -= allocation
@@ -134,7 +141,7 @@ def process_candles(market, account, candles):
                 state["entry_price"] = fill
                 state["stop_price"] = fill * (1 - STOP_LOSS_PCT)
                 state["trades"] += 1
-                events.append([timestamp(c["end_ms"]), market, "BUY", f"{qty:.8f}",
+                events.append([timestamp(c["end_ms"] - INTERVAL_MS + 1), market, "BUY", f"{qty:.8f}",
                                f"{fill:.4f}", f"{fee:.4f}",
                                f"{state['cash'] + qty * c['close']:.4f}"])
         state["last_candle_ms"] = c["end_ms"]
