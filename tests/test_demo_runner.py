@@ -56,7 +56,7 @@ class TestDemoRunner(TestCase):
         self.assertGreater(after["units"], 0)
 
     def test_bearish_signal_exits_at_following_open(self):
-        data = candles([100] * 30 + [110, 110, 80, 79])
+        data = candles([100] * 30 + [110, 110, 50, 79])
         # Use a very low existing stop to isolate the SMA signal exit.
         state = demo.empty_account()
         state.update(cash=9800.0, units=2.0, entry_price=100.0,
