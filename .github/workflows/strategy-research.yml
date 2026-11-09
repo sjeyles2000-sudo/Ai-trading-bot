@@ -1,0 +1,32 @@
+name: Isolated BTC breakout and pullback research
+
+on:
+  push:
+    branches:
+      - trend-pullback-backtest-2026-11-08
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run offline safety and lookahead regression tests
+        run: |
+          python -m compileall -q bot.py strategy_lab.py tests
+          python -m unittest discover -s tests -v
+      - name: Fetch 4000 public hourly BTC bars and compare candidates
+        run: python strategy_lab.py
+      - name: Attach read-only strategy report
+        uses: actions/upload-artifact@v4
+        with:
+          name: breakout-pullback-research
+          path: strategy-results/REPORT.md
+          if-no-files-found: error
