@@ -1,0 +1,25 @@
+name: Paper-only container and deployment safety
+on:
+  push:
+    branches:
+      - paper-server-deployment-2026-11-08
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and run offline regression tests
+        run: |
+          python -m compileall -q bot.py demo_runner.py paper_dashboard.py server tests
+          python -m unittest discover -s tests -v
+      - name: Build paper-only image (do not run without persistent volume)
+        run: docker build -f server/Dockerfile -t paper-trader:test .
