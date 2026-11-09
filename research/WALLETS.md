@@ -1,6 +1,6 @@
 # Public wallet research leaderboard
 
-Fetched: 2026-11-08 04:33 UTC
+Fetched: 2026-11-09 04:44 UTC
 
 **RESEARCH ONLY — NO REAL ORDERS, NO COPY TRADING.**
 
@@ -11,11 +11,11 @@ can invalidate apparent performance. ROI is a source-reported fraction.
 
 | Wallet | Account value USD | 30d PnL USD | 30d ROI | 30d volume USD |
 |---|---:|---:|---:|---:|
-| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $212,009,404 | $84,416,867 | 44.6% | $335,467,465 |
-| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $210,336,851 | $66,375,060 | 36.0% | $498,646,797 |
-| \`0x024294c53a69c1e6b39810b3fac87385752fffa1\` | $45,971,390 | $32,019,251 | 245.2% | $1,244,919,506 |
-| \`0xf5d81a135f756ca16544e53c20fc20643ec3ad53\` | $96,406,698 | $28,589,114 | 37.6% | $41,967,497,751 |
-| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $113,538,998 | $24,386,967 | 21.2% | $22,939,246,881 |
+| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $204,072,818 | $102,455,999 | 55.3% | $349,354,094 |
+| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $202,848,562 | $82,606,552 | 46.2% | $525,231,730 |
+| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $116,285,928 | $29,002,007 | 25.3% | $22,935,922,083 |
+| \`0x7fdafde5cfb5465924316eced2d3715494c517d1\` | $44,909,895 | $27,550,412 | 50.0% | $2,382,876,376 |
+| \`0xfe7ce058edc7cfcde9ef8262ba51f8d4796ab7ae\` | $42,435,024 | $24,958,991 | 94.0% | $326,562,663 |
 
 ## Recent public fills (last 24h)
 
@@ -23,29 +23,37 @@ Fills are **observations**, not authorized buy signals or evidence of profit.
 
 | Wallet | UTC | Coin | Fill direction | Price USD | Quantity |
 |---|---|---|---|---:|---:|
-| \`0x5b5d51203a…\` | 11-08 04:33 | XPL | Close Short | $0.0563 | 114151.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:32 | XPL | Close Short | $0.0563 | 3135.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:32 | XPL | Close Short | $0.0563 | 1584.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:31 | XPL | Close Short | $0.0563 | 13285.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:31 | XPL | Close Short | $0.0563 | 17987.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:31 | XPL | Close Short | $0.0564 | 5170.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:29 | XPL | Close Short | $0.0566 | 353.0000 |
-| \`0x5b5d51203a…\` | 11-08 04:29 | XPL | Close Short | $0.0566 | 5658.0000 |
-| \`0xb83de012db…\` | 11-08 04:33 | @107 | Buy | $77.2030 | 0.1500 |
-| \`0xb83de012db…\` | 11-08 04:33 | @107 | Buy | $77.2030 | 9.0000 |
-| \`0xb83de012db…\` | 11-08 04:33 | @107 | Buy | $77.2030 | 2.1700 |
-| \`0xb83de012db…\` | 11-08 04:33 | @107 | Buy | $77.2030 | 1.6400 |
-| \`0xb83de012db…\` | 11-08 04:33 | HYPE | Open Short | $77.1730 | 1.6400 |
-| \`0xb83de012db…\` | 11-08 04:33 | HYPE | Open Short | $77.1730 | 0.1500 |
-| \`0xb83de012db…\` | 11-08 04:33 | HYPE | Open Short | $77.1730 | 11.1700 |
-| \`0xb83de012db…\` | 11-08 04:33 | @107 | Buy | $77.2040 | 1.0900 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 0.0600 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 0.4500 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 0.2500 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 0.4300 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 0.4300 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 1.0500 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | ZEC | Close Long | $1,259.6000 | 0.5100 |
-| \`0xf5d81a135f…\` | 11-08 04:33 | PONS | Close Long | $0.1691 | 70.0000 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4029 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4028 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4029 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4028 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4029 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4028 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4025 |
+| \`0x5b5d51203a…\` | 11-09 04:44 | ETH | Close Short | $2,138.5000 | 1.4030 |
+| \`0xb83de012db…\` | 11-09 04:43 | SUI | Close Short | $0.8331 | 588.2000 |
+| \`0xb83de012db…\` | 11-09 04:43 | SUI | Close Short | $0.8328 | 12.2000 |
+| \`0xb83de012db…\` | 11-09 04:43 | SUI | Close Short | $0.8331 | 599.3000 |
+| \`0xb83de012db…\` | 11-09 04:43 | SUI | Close Short | $0.8332 | 601.0000 |
+| \`0xb83de012db…\` | 11-09 04:43 | SOL | Close Short | $87.3640 | 79.8000 |
+| \`0xb83de012db…\` | 11-09 04:43 | SOL | Close Short | $87.3630 | 0.6900 |
+| \`0xb83de012db…\` | 11-09 04:43 | SOL | Close Short | $87.3630 | 65.6700 |
+| \`0xb83de012db…\` | 11-09 04:43 | SOL | Close Short | $87.3630 | 105.6700 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | xyz:GOLD | Open Short | $4,129.4000 | 0.2288 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | xyz:GOLD | Open Short | $4,129.4000 | 0.0460 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | xyz:GOLD | Open Short | $4,129.4000 | 0.0988 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | xyz:GOLD | Open Short | $4,129.4000 | 0.0993 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | xyz:GOLD | Open Short | $4,129.4000 | 0.1044 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | ZEC | Close Short | $1,231.3000 | 1.2900 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | xyz:BRENTOIL | Close Short | $97.5200 | 59.4400 |
+| \`0x7fdafde5cf…\` | 11-09 04:43 | XMR | Close Short | $602.0200 | 0.2340 |
+| \`0xfe7ce058ed…\` | 11-09 04:43 | xyz:PURRDAT | Close Short | $8.5194 | 386.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:43 | xyz:PURRDAT | Close Short | $8.5163 | 16.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:43 | xyz:PURRDAT | Close Short | $8.5063 | 4.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:43 | xyz:PURRDAT | Close Short | $8.5061 | 147.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:43 | xyz:PURRDAT | Close Short | $8.5008 | 13.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:43 | xyz:PURRDAT | Close Short | $8.5008 | 16.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:41 | xyz:PURRDAT | Close Short | $8.5288 | 28.0000 |
+| \`0xfe7ce058ed…\` | 11-09 04:41 | xyz:PURRDAT | Close Short | $8.5283 | 98.0000 |
 
 The public feed is not audited or guaranteed complete. No wallets are connected or controlled.
