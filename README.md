@@ -2,6 +2,28 @@
 
 This project retrieves **public completed hourly Bitcoin candles** from Binance BTC/USDT spot and Hyperliquid BTC perpetuals. It replays historical simulated orders with **virtual cash only**. It never authenticates to an account, signs a trade, or calls an order endpoint. **Real trading is not supported.**
 
+## Proposed next-open signal execution correction (draft review)
+
+The persistent hourly paper simulator currently uses the *same candle's close* for
+both SMA signal evaluation and hypothetical entry/exit prices. This research branch
+changes signal decisions to use **only the preceding completed hourly candle** and
+simulates BUY and signal-based SELL fills at the **following bar's open**, including
+assumed fees and slippage. Stops still use the current bar's low, with conservative
+gap-down pricing. Daily loss checks still use current mark-to-market equity.
+
+Paper records label signal-based fills with the following hourly bar's opening
+timestamp; stop and daily-loss events remain stamped at bar end because their
+exact intrabar trigger time is unknown. This is **not** a tick-level execution
+model: a newly opened position is not evaluated for a same-hour stop until the
+following hour. That remaining limitation is a reason to keep this PR in review.
+
+**Before merge:** run all offline tests and branch CI; assess potential
+impact on existing paper ledger semantics and historical comparability.
+Merging would change prospective simulated execution. It will not repair
+past paper trade records or establish profitability. It does not connect
+exchange credentials, wallets, real-order endpoints, or leveraged execution.
+**Real trading remains hard-disabled.**
+
 ## Running locally
 
 Requires Python 3.10+ only (standard library):
