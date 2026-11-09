@@ -1,0 +1,32 @@
+name: Experimental one-minute BTC breakout research
+
+on:
+  push:
+    branches:
+      - scalping-candlestick-paper-lab-2026-11-07
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  minute-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate no-network strategy tests
+        run: |
+          python -m compileall -q bot.py minute_breakout_lab.py tests
+          python -m unittest discover -s tests -v
+      - name: Compare public Binance and Hyperliquid minute BTC research
+        run: python minute_breakout_lab.py
+      - name: Upload read-only research report
+        uses: actions/upload-artifact@v4
+        with:
+          name: minute-breakout-paper-research
+          path: minute-research/REPORT.md
+          if-no-files-found: error
