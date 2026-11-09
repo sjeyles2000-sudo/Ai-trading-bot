@@ -71,3 +71,28 @@ A successful CI run proves the code completed and tested safely; it does **not**
 **Latest read-only test (7 November 2026):** the new comparison passed all 49 repository checks and fetched 4,000 completed candles for each of the four cases. Every out-of-sample holdout return was negative after assumed transaction costs; the doubled-cost stress case was worse for all four. The full report is an artifact of the GitHub Actions workflow, not a profit guarantee.
 
 **Do not allocate real capital based on this report.** Extend the dataset further with separate training and validation periods, include sideways/trending/stressed regimes, model funding and venue-specific costs, then run longer forward paper tests with monitored risk limits.
+
+
+## Experimental one-minute breakout comparison (9 November 2026)
+
+A new **separate, research-only** module `minute_breakout_lab.py` investigates
+a documented breakout hypothesis motivated by the MambaFx scalping discussion,
+**not** a verified reproduction of the presenter's actual private trade rules.
+It compares 1-minute close above the preceding ten 1-minute highs **with**
+versus **without** a filter based on completed five-minute candles and EMA50.
+Virtual entries use the following 1-minute open, with local-low price stops,
+a 3R target hypothesis, stop-first ambiguous bars, maximum 30-minute hold,
+2% virtual notional, 0.1% modeled fees plus 0.05% slippage per side, and
+doubled cost stress. Research uses up to 4,000 recently completed 1-minute BTC
+candles separately for Binance spot and Hyperliquid perpetual; the short
+~2.8-day history and shared BTC price risk cannot validate profitability.
+Real spreads, funding, queue position, market impact and liquidation are
+not modeled. Indicators are *not* trained or tuned on the holdout.
+
+Offline tests include no future lookahead, conservative same-bar stop ordering,
+zero-trade reporting, invalid candle rejection and fail-closed missing-feed
+behavior. The new `minute-breakout-research.yml` workflow runs on the
+research branch only and may produce an artifact called
+`minute-breakout-paper-research`. **No strategy promotion and no live orders.**
+The original persistent scheduled `main` trader and all virtual ledger files
+remain unchanged. Check the actual workflow results before claiming any gains.
