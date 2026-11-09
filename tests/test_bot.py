@@ -41,6 +41,19 @@ class PaperTradingTests(unittest.TestCase):
         with self.assertRaises(bot.MarketDataError):
             bot.validate_candles(sample_candles(), NOW + 5 * bot.INTERVAL_MS)
 
+    def test_rejects_five_minute_candles_mislabeled_as_hourly(self):
+        candles = sample_candles()
+        five_minutes_ms = bot.INTERVAL_MS // 12
+        for i, candle in enumerate(candles):
+            candle["end_ms"] = NOW - (len(candles) - i) * five_minutes_ms - 1
+        with self.assertRaisesRegex(bot.MarketDataError, "Non-hourly"):
+            bot.validate_candles(candles, NOW)
+
+    def test_accepts_small_hourly_timestamp_drift(self):
+        candles = sample_candles()
+        candles[10]["end_ms"] += 500
+        self.assertEqual(len(bot.validate_candles(candles, NOW)), 30)
+
     def test_ignores_incomplete_candle(self):
         rows = sample_candles()
         rows.append({**rows[-1], "end_ms": NOW + bot.INTERVAL_MS})
