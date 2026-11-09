@@ -8,6 +8,7 @@
 <title>AI Trader | Virtual Trading Monitor</title>
 <link rel="stylesheet" href="./style.css">
 <script defer src="./dashboard.js"></script>
+<script defer src="./trade-metrics.js"></script>
 <script defer src="./performance.js"></script>
 <script defer src="./alerts.js"></script>
 </head>
@@ -42,7 +43,7 @@
 <div class="between"><h2>Paper performance &amp; risk</h2><span class="tag">READ ONLY</span></div>
 <p class="hint" id="performance-status" role="status">Checking saved virtual history…</p>
 <div id="performance-list" class="performance-grid" aria-live="polite"></div>
-<p class="hint">Recorded profit/loss is measured against each market's initial US$10,000 virtual balance. Maximum drawdown uses the saved hourly equity snapshots, so faster losses may not be visible. Transaction counts include buys and sells. Report ages are not continuous-execution guarantees. No live trades are placed.</p>
+<p class="hint">Recorded profit/loss is measured against each market's initial US$10,000 virtual balance. Maximum drawdown uses the saved hourly equity snapshots, so faster losses may not be visible. Completed round-trip results include estimated fees and use rounded saved prices and quantities; open positions have no completed-trade win rate. Transaction counts include buys and sells. Report ages are not continuous-execution guarantees. No live trades are placed.</p>
 </section>
 <section class="panel" id="strategy-panel">
 <div class="between"><h2>Strategy comparison · research only</h2><span class="tag">NOT DEPLOYED</span></div>
