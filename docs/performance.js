@@ -88,6 +88,23 @@
       metricRow(list,name+" · maximum sampled drawdown",
         Number.isFinite(dd) ? dd.toFixed(3)+"%" : "No data");
       metricRow(list,name+" · simulated transactions",String(relevantTrades.length));
+      try {
+        const stats=window.PaperTradeStats.summarize(trades,name);
+        metricRow(list,name+" · completed round trips",String(stats.closed));
+        metricRow(list,name+" · realised net trade P/L (approx.)",
+          money(stats.net),stats.net<0?"bad":stats.net>0?"good":"");
+        metricRow(list,name+" · recorded fees (approx.)",money(stats.fees));
+        metricRow(list,name+" · win rate",
+          stats.winRate===null?"N/A — no closed trades":stats.winRate.toFixed(1)+"%");
+        metricRow(list,name+" · profit factor",
+          stats.profitFactor===null?"N/A — no recorded losses":stats.profitFactor.toFixed(2));
+        if (stats.hasOpenPosition) {
+          metricRow(list,name+" · open position","Excluded from realised trade statistics","warning");
+        }
+      } catch (error) {
+        metricRow(list,name+" · completed trade statistics",
+          "Unavailable — incomplete or inconsistent trade ledger","warning");
+      }
       const h=health(last?.t);
       metricRow(list,name+" · report age",h.text,h.cls);
     }
