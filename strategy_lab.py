@@ -11,6 +11,7 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 from bot import BINANCE_URL, HYPERLIQUID_URL, MarketDataError, read_json
+from profitability_gate import screen as profitability_screen
 
 HOUR = 3_600_000
 BARS = 4000
@@ -330,6 +331,15 @@ def render(result):
                     f'{stress["return_pct"]:+.3f}% | {ordinary["closed"]} |'
                 )
         bench = strategies["benchmarks"]
+        lines += ["", f"### {venue}: fee-aware profitability screen (research only)",
+                  "| Candidate | Decision | Reason(s) |", "|---|---|---|"]
+        for name in STRATEGIES:
+            gate = profitability_screen(
+                strategies[name]["holdout"], strategies[name]["stress"],
+                bench["2pct_btc_holdout_pct"])
+            reasons = "; ".join(gate["reasons"]) if gate["reasons"] else (
+                "Historical screen only; independent forward paper testing required")
+            lines.append(f"| {name} | {gate['decision']} | {reasons} |")
         lines.append(f'| {venue} | 2% BTC buy/hold | holdout | {bench["2pct_btc_holdout_pct"]:+.3f}% | — | 1 | — | — |')
         lines.append(f'| {venue} | 100% BTC buy/hold (not risk matched) | holdout | {bench["100pct_btc_holdout_pct"]:+.3f}% | — | 1 | — | — |')
     lines += ["", "**Important:** the latest holdout has been repeatedly inspected,",
