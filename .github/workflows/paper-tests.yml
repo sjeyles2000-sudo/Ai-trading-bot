@@ -30,6 +30,8 @@ jobs:
       - name: Validate dashboard JavaScript syntax
         run: |
           node --check docs/dashboard.js
+          node --check docs/trade-metrics.js
+          node --check docs/performance.js
           node --check docs/alerts.js
           node --check docs/sw.js
       - name: Run isolated paper-trading tests (mocked market data)
