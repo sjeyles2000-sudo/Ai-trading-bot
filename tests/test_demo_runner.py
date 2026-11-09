@@ -32,16 +32,40 @@ class TestDemoRunner(TestCase):
         self.assertEqual(s2, [])
 
     def test_virtual_entry_stop_and_safe_position_sizing(self):
-        prices = [100] * 30 + [104] + [95] + [95] * 3
+        # Close on bar 30 triggers an entry at bar 31 open; bar 32 stops it.
+        prices = [100] * 30 + [104, 104, 90] + [90] * 3
         data = candles(prices)
         state = demo.empty_account()
         state["last_candle_ms"] = data[29]["end_ms"]
         after, trades, snapshots = demo.process_candles("test", state, data)
         self.assertEqual([e[2] for e in trades], ["BUY", "STOP SELL"])
         self.assertEqual(after["units"], 0)
-        self.assertEqual(len(snapshots), 5)
+        self.assertEqual(len(snapshots), 6)
         self.assertGreaterEqual(after["cash"], 0)
         self.assertLessEqual(float(trades[0][3]) * float(trades[0][4]), 200)
+
+    def test_uses_completed_signal_and_next_open_not_same_close(self):
+        data = candles([100] * 30 + [110, 105])
+        state = demo.empty_account()
+        state["last_candle_ms"] = data[29]["end_ms"]
+        after, events, snapshots = demo.process_candles("test", state, data)
+        self.assertEqual(len(snapshots), 2)
+        self.assertEqual([event[2] for event in events], ["BUY"])
+        self.assertAlmostEqual(float(events[0][4]), 105 * (1 + demo.SLIPPAGE_PCT), places=3)
+        self.assertEqual(events[0][0], demo.timestamp(data[31]["end_ms"] - INTERVAL_MS + 1))
+        self.assertGreater(after["units"], 0)
+
+    def test_bearish_signal_exits_at_following_open(self):
+        data = candles([100] * 30 + [110, 110, 80, 79])
+        # Use a very low existing stop to isolate the SMA signal exit.
+        state = demo.empty_account()
+        state.update(cash=9800.0, units=2.0, entry_price=100.0,
+                     stop_price=1.0, last_candle_ms=data[31]["end_ms"])
+        after, events, snapshots = demo.process_candles("test", state, data)
+        self.assertEqual([e[2] for e in events], ["SIGNAL SELL"])
+        self.assertAlmostEqual(float(events[0][4]), 79 * (1 - demo.SLIPPAGE_PCT), places=3)
+        self.assertEqual(events[0][0], demo.timestamp(data[33]["end_ms"] - INTERVAL_MS + 1))
+        self.assertEqual(after["units"], 0)
 
     def test_stale_state_fails_closed(self):
         data = candles([100] * 30)
