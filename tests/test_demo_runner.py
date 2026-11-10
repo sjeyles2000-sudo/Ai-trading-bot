@@ -67,6 +67,46 @@ class TestDemoRunner(TestCase):
         self.assertEqual(events[0][0], demo.timestamp(data[33]["end_ms"] - INTERVAL_MS + 1))
         self.assertEqual(after["units"], 0)
 
+    def test_same_hour_stop_after_next_open_buy(self):
+        data = candles([100] * 30 + [110, 105])
+        # The signal forms at bar 30 close; bar 31 opens at 105.
+        # Its low falls 0.5% below open, so override it to cross the
+        # 2% protective stop placed AFTER the opening entry.
+        data[-1]["low"] = 99.0
+        state = demo.empty_account()
+        state["last_candle_ms"] = data[29]["end_ms"]
+        after, events, _ = demo.process_candles("test", state, data)
+        self.assertEqual([e[2] for e in events], ["BUY", "STOP SELL"])
+        self.assertEqual(after["units"], 0.0)
+        self.assertLess(float(events[1][4]), float(events[0][4]))
+        self.assertLess(after["cash"], 10000)
+
+    def test_gap_through_stop_fills_at_open(self):
+        data = candles([100] * 30 + [90])
+        state = demo.empty_account()
+        state.update(cash=9800.0, units=2.0, entry_price=100.0,
+                     stop_price=98.0, last_candle_ms=data[29]["end_ms"])
+        after, events, _ = demo.process_candles("test", state, data)
+        self.assertEqual([e[2] for e in events], ["STOP SELL"])
+        self.assertAlmostEqual(float(events[0][4]), 90 * (1-demo.SLIPPAGE_PCT), places=3)
+        self.assertEqual(events[0][0],
+                         demo.timestamp(data[30]["end_ms"] - INTERVAL_MS + 1))
+        self.assertEqual(after["units"], 0.0)
+
+    def test_opening_signal_exit_precedes_intrabar_low(self):
+        data = candles([100] * 30 + [110, 110, 50, 79])
+        state = demo.empty_account()
+        state.update(cash=9800.0, units=2.0, entry_price=100.0,
+                     stop_price=1.0, last_candle_ms=data[32]["end_ms"],
+                     utc_day=demo.timestamp(data[33]["end_ms"])[:10],
+                     day_start_equity=9800.0)
+        # Prior bar 32 closes at 50 -> bearish crossover before bar 33.
+        # An intrabar low cannot cause a fill before its opening signal.
+        after, events, _ = demo.process_candles("test", state, data)
+        self.assertEqual([e[2] for e in events], ["SIGNAL SELL"])
+        self.assertAlmostEqual(float(events[0][4]), 79*(1-demo.SLIPPAGE_PCT), places=3)
+        self.assertEqual(after["units"], 0.0)
+
     def test_stale_state_fails_closed(self):
         data = candles([100] * 30)
         state = demo.empty_account()
