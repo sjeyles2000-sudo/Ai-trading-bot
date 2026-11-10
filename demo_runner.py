@@ -102,7 +102,7 @@ def process_candles(market, account, candles):
             state["day_start_equity"] = state["cash"] + state["units"] * c["open"]
         exited = False
 
-        def sell(side, fill):
+        def sell(side, fill, at_open=False):
             nonlocal exited
             quantity = state["units"]
             fee = quantity * fill * FEE_PCT
@@ -112,26 +112,24 @@ def process_candles(market, account, candles):
             state["stop_price"] = 0.0
             state["trades"] += 1
             exited = True
-            # Signal exits fill at the next bar open. Stops and loss gates
-            # can trigger intrabar, so their exact fill time is unknown.
-            fill_ms = c["end_ms"] - INTERVAL_MS + 1 if side == "SIGNAL SELL" else c["end_ms"]
+            # Opening fills have known bar-open timing; intrabar stops and
+            # close-based daily loss fills are stamped at bar end.
+            fill_ms = c["end_ms"] - INTERVAL_MS + 1 if at_open else c["end_ms"]
             events.append([timestamp(fill_ms), market, side,
                            f"{quantity:.8f}", f"{fill:.4f}", f"{fee:.4f}", f"{state['cash']:.4f}"])
 
-        if state["units"] > 0 and c["low"] <= state["stop_price"]:
-            sell("STOP SELL", min(c["open"], state["stop_price"]) * (1 - SLIPPAGE_PCT))
-        elif state["units"] > 0 and short < long:
-            sell("SIGNAL SELL", c["open"] * (1 - SLIPPAGE_PCT))
+        # Opening fills use signals from the PRECEDING completed bar.
+        # A pre-existing position can gap through its stop at this open.
+        if state["units"] > 0:
+            if c["open"] <= state["stop_price"]:
+                sell("STOP SELL", c["open"] * (1 - SLIPPAGE_PCT), at_open=True)
+            elif short < long:
+                sell("SIGNAL SELL", c["open"] * (1 - SLIPPAGE_PCT), at_open=True)
 
-        equity = state["cash"] + state["units"] * c["close"]
-        if equity <= state["day_start_equity"] * (1 - DAILY_LOSS_LIMIT_PCT):
-            if state["units"] > 0:
-                sell("DAILY LIMIT SELL", c["close"] * (1 - SLIPPAGE_PCT))
-            state["paused"] = True
-
-        if not exited and state["units"] == 0 and not state["paused"] and short > long and prev_short <= prev_long:
-            equity = state["cash"]
-            allocation = min(state["cash"], equity * MAX_POSITION_PCT)
+        # A new entry occurs at the open, not after reading this bar's close.
+        if (not exited and state["units"] == 0 and not state["paused"]
+                and short > long and prev_short <= prev_long):
+            allocation = min(state["cash"], state["cash"] * MAX_POSITION_PCT)
             if allocation > 0:
                 fill = c["open"] * (1 + SLIPPAGE_PCT)
                 qty = allocation / (fill * (1 + FEE_PCT))
@@ -141,9 +139,22 @@ def process_candles(market, account, candles):
                 state["entry_price"] = fill
                 state["stop_price"] = fill * (1 - STOP_LOSS_PCT)
                 state["trades"] += 1
-                events.append([timestamp(c["end_ms"] - INTERVAL_MS + 1), market, "BUY", f"{qty:.8f}",
-                               f"{fill:.4f}", f"{fee:.4f}",
-                               f"{state['cash'] + qty * c['close']:.4f}"])
+                events.append([timestamp(c["end_ms"] - INTERVAL_MS + 1), market,
+                               "BUY", f"{qty:.8f}", f"{fill:.4f}",
+                               f"{fee:.4f}", f"{state['cash'] + qty * c['open']:.4f}"])
+
+        # The hourly low is observed after the opening fill. Check stops for
+        # BOTH pre-existing and newly entered positions, on the same bar.
+        if state["units"] > 0 and c["low"] <= state["stop_price"]:
+            sell("STOP SELL", state["stop_price"] * (1 - SLIPPAGE_PCT))
+
+        # Loss gate is evaluated at bar close using mark-to-market equity.
+        # It pauses future entries; it cannot rewind an order filled at open.
+        equity = state["cash"] + state["units"] * c["close"]
+        if equity <= state["day_start_equity"] * (1 - DAILY_LOSS_LIMIT_PCT):
+            if state["units"] > 0:
+                sell("DAILY LIMIT SELL", c["close"] * (1 - SLIPPAGE_PCT))
+            state["paused"] = True
         state["last_candle_ms"] = c["end_ms"]
         equity_rows.append([timestamp(c["end_ms"]), market,
                             f"{state['cash'] + state['units'] * c['close']:.4f}",
