@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-14 07:40 UTC
+Updated 2026-11-14 09:24 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.15% | 1.24x | $67,072.20 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.15% | 1.70x | $67,036.00 |
+| Binance BTC spot | NO_SIGNAL | +0.08% | 0.28x | $67,168.00 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.07% | 0.13x | $67,132.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,7 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| bsc | Jacket | 3.5h | $441,164 | $13,719,985 | `0x8436f5Fa0592c91ce8A856C604cC4f76A3223F5a` |
-| ethereum | vensa | 2.7h | $50,211 | $545,537 | `0xd665b272959DA6C435aAC69657F6d3FE3C5abd68` |
+| bsc | Jacket | 5.2h | $379,743 | $15,469,758 | `0x8436f5Fa0592c91ce8A856C604cC4f76A3223F5a` |
 
 ## Watched Hyperliquid wallets
 
