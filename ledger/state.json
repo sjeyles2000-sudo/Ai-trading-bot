@@ -4,23 +4,23 @@
       "cash": 9996.811089480656,
       "day_start_equity": 9996.811089480656,
       "entry_price": 0.0,
-      "last_candle_ms": 1794610799999,
+      "last_candle_ms": 1794617999999,
       "paused": false,
       "stop_price": 0.0,
       "trades": 6,
       "units": 0.0,
-      "utc_day": "2026-11-13"
+      "utc_day": "2026-11-14"
     },
     "hyperliquid": {
       "cash": 9996.858341156707,
       "day_start_equity": 9996.858341156707,
       "entry_price": 0.0,
-      "last_candle_ms": 1794610799999,
+      "last_candle_ms": 1794617999999,
       "paused": false,
       "stop_price": 0.0,
       "trades": 6,
       "units": 0.0,
-      "utc_day": "2026-11-13"
+      "utc_day": "2026-11-14"
     }
   },
   "version": 1
