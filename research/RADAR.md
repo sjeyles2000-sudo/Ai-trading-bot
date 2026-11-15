@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-15 18:11 UTC
+Updated 2026-11-15 19:23 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.07% | 0.52x | $64,597.56 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.07% | 0.09x | $64,571.00 |
+| Binance BTC spot | NO_SIGNAL | +0.34% | 0.54x | $64,939.27 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.33% | 1.69x | $64,912.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | SWJ | 5.8h | $60,574 | $526,002 | `13EAww2eo8g1Xp9U7qrLNg1WoHFHKbs9xy2EQJjfpump` |
-| bsc | Jacket | 2.5h | $86,536 | $1,189,006 | `0x76c31c7ADD0b6b8736660228B6718d57e0f57777` |
+| ethereum | ANT | 43.0h | $74,744 | $218,777 | `0x0b84Cd2A58159057Fe71A1A9438a72C5C97Ab985` |
+| solana | SWJ | 7.0h | $51,946 | $584,603 | `13EAww2eo8g1Xp9U7qrLNg1WoHFHKbs9xy2EQJjfpump` |
 
 ## Watched Hyperliquid wallets
 
