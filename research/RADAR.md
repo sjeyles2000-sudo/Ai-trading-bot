@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-15 12:16 UTC
+Updated 2026-11-15 13:32 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.00% | 1.06x | $65,352.00 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.01% | 0.30x | $65,337.00 |
+| Binance BTC spot | NO_SIGNAL | +0.02% | 1.48x | $65,566.00 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.01% | 1.76x | $65,554.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | GETAJOB | 21.0h | $62,092 | $912,372 | `ZGW9B644VgfmmKtBTv1xjWGarkjEhFrcUrQEaqepump` |
-| bsc | Macca | 27.3h | $407,762 | $21,662,501 | `0xfF0d881212C24305EFf16A9fa0e8B7cB18dA7128` |
+| ethereum | Macca | 24.1h | $245,097 | $3,075,920 | `0x37f5dAd784304aC1911B95046134c1B74e4D72A9` |
+| solana | GETAJOB | 22.2h | $62,378 | $933,097 | `ZGW9B644VgfmmKtBTv1xjWGarkjEhFrcUrQEaqepump` |
 
 ## Watched Hyperliquid wallets
 
