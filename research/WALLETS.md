@@ -1,6 +1,6 @@
 # Public wallet research leaderboard
 
-Fetched: 2026-11-14 04:32 UTC
+Fetched: 2026-11-15 04:35 UTC
 
 **RESEARCH ONLY — NO REAL ORDERS, NO COPY TRADING.**
 
@@ -11,11 +11,11 @@ can invalidate apparent performance. ROI is a source-reported fraction.
 
 | Wallet | Account value USD | 30d PnL USD | 30d ROI | 30d volume USD |
 |---|---:|---:|---:|---:|
-| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $121,645,721 | $127,606,635 | 65.8% | $560,248,930 |
-| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $145,279,778 | $98,509,330 | 54.9% | $647,939,847 |
-| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $126,986,337 | $35,581,053 | 30.1% | $23,662,693,154 |
-| \`0x7fdafde5cfb5465924316eced2d3715494c517d1\` | $29,139,334 | $30,597,566 | 51.8% | $2,332,793,050 |
-| \`0xb695651daa495f59dd2725c6fe98322d8b51a92d\` | $34,543,186 | $30,370,088 | 63.4% | $123,262,039 |
+| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $88,273,129 | $149,707,527 | 80.5% | $627,173,282 |
+| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $120,227,427 | $123,667,658 | 75.9% | $657,439,408 |
+| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $128,958,300 | $38,595,960 | 31.3% | $23,442,759,063 |
+| \`0x45d26f28196d226497130c4bac709d808fed4029\` | $53,285,445 | $37,274,945 | 148.9% | $1,911,494 |
+| \`0xb695651daa495f59dd2725c6fe98322d8b51a92d\` | $27,430,178 | $35,013,742 | 76.3% | $124,145,789 |
 
 ## Recent public fills (last 24h)
 
@@ -23,37 +23,37 @@ Fills are **observations**, not authorized buy signals or evidence of profit.
 
 | Wallet | UTC | Coin | Fill direction | Price USD | Quantity |
 |---|---|---|---|---:|---:|
-| \`0x5b5d51203a…\` | 11-14 04:26 | SOL | Close Short | $75.6160 | 42.5700 |
-| \`0x5b5d51203a…\` | 11-14 04:26 | SOL | Close Short | $75.6110 | 1.4600 |
-| \`0x5b5d51203a…\` | 11-14 04:26 | SOL | Close Short | $75.6100 | 26.4500 |
-| \`0x5b5d51203a…\` | 11-14 04:26 | SOL | Close Short | $75.6100 | 26.4500 |
-| \`0x5b5d51203a…\` | 11-14 04:26 | SOL | Close Short | $75.6080 | 2.8200 |
-| \`0x5b5d51203a…\` | 11-14 04:26 | SOL | Close Short | $75.6080 | 2.8200 |
-| \`0x5b5d51203a…\` | 11-14 04:25 | SOL | Close Short | $75.5950 | 29.1100 |
-| \`0x5b5d51203a…\` | 11-14 04:25 | SOL | Close Short | $75.5750 | 0.2800 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 14.6300 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 52.3000 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 14.9400 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 39.6800 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 105.0900 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 33.5200 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 15.0400 |
-| \`0xb83de012db…\` | 11-14 04:30 | @107 | Sell | $68.0500 | 1.7100 |
-| \`0x7fdafde5cf…\` | 11-14 04:31 | BTC | Open Short | $66,841.0000 | 0.0002 |
-| \`0x7fdafde5cf…\` | 11-14 04:31 | BTC | Open Short | $66,841.0000 | 0.0102 |
-| \`0x7fdafde5cf…\` | 11-14 04:31 | BTC | Open Short | $66,841.0000 | 0.0247 |
-| \`0x7fdafde5cf…\` | 11-14 04:31 | LIT | Close Short | $3.0918 | 6.0000 |
-| \`0x7fdafde5cf…\` | 11-14 04:31 | LIT | Close Short | $3.0911 | 89.0000 |
-| \`0x7fdafde5cf…\` | 11-14 04:30 | LIT | Close Short | $3.0913 | 263.0000 |
-| \`0x7fdafde5cf…\` | 11-14 04:30 | LIT | Close Short | $3.0918 | 60.0000 |
-| \`0x7fdafde5cf…\` | 11-14 04:30 | LIT | Close Short | $3.0920 | 28.0000 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1200 | 3.3900 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1200 | 7.1200 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1200 | 9.0200 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1200 | 9.2500 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1200 | 9.0000 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1300 | 9.3800 |
-| \`0xb695651daa…\` | 11-14 04:31 | xyz:ANT | Open Long | $101.1500 | 2.8400 |
-| \`0xb695651daa…\` | 11-14 04:24 | HYPE | Close Short | $68.1370 | 1.0000 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 7.2300 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 17.7400 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 15.0900 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 18.2000 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 11.6700 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5100 | 55.9300 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5100 | 13.9900 |
+| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5120 | 11.0900 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3400 | 56.0500 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3820 | 6.3600 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3800 | 16.6300 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3800 | 16.6300 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3770 | 16.4200 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.4070 | 53.0100 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.4070 | 3.0000 |
+| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.4190 | 3.1000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0566 | 111.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0566 | 7889.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0568 | 8000.0000 |
+| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
+| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9600 | 2.9700 |
+| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 4.1000 |
+| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 1.0200 |
+| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 0.9500 |
+| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 1.1200 |
+| \`0xb695651daa…\` | 11-15 04:30 | xyz:ANT | Open Long | $100.9800 | 1.7500 |
+| \`0xb695651daa…\` | 11-15 04:30 | xyz:ANT | Open Long | $100.9900 | 7.1900 |
+| \`0xb695651daa…\` | 11-15 04:28 | xyz:ANT | Open Long | $100.9800 | 1.8300 |
 
 The public feed is not audited or guaranteed complete. No wallets are connected or controlled.
