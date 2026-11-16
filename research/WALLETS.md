@@ -1,6 +1,6 @@
 # Public wallet research leaderboard
 
-Fetched: 2026-11-15 04:35 UTC
+Fetched: 2026-11-16 05:04 UTC
 
 **RESEARCH ONLY — NO REAL ORDERS, NO COPY TRADING.**
 
@@ -11,11 +11,11 @@ can invalidate apparent performance. ROI is a source-reported fraction.
 
 | Wallet | Account value USD | 30d PnL USD | 30d ROI | 30d volume USD |
 |---|---:|---:|---:|---:|
-| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $88,273,129 | $149,707,527 | 80.5% | $627,173,282 |
-| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $120,227,427 | $123,667,658 | 75.9% | $657,439,408 |
-| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $128,958,300 | $38,595,960 | 31.3% | $23,442,759,063 |
-| \`0x45d26f28196d226497130c4bac709d808fed4029\` | $53,285,445 | $37,274,945 | 148.9% | $1,911,494 |
-| \`0xb695651daa495f59dd2725c6fe98322d8b51a92d\` | $27,430,178 | $35,013,742 | 76.3% | $124,145,789 |
+| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $85,191,023 | $140,108,532 | 71.8% | $650,814,559 |
+| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $96,911,015 | $114,078,632 | 65.0% | $733,397,705 |
+| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $129,508,985 | $37,047,023 | 29.9% | $23,014,014,649 |
+| \`0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00\` | $92,585,940 | $26,134,973 | 48.6% | $14,204,205,197 |
+| \`0x0b8aa35c28b7c6ab18f11dc168f437a8a69fd4f8\` | $46,773,735 | $19,441,506 | 97.0% | $1,071,169,990 |
 
 ## Recent public fills (last 24h)
 
@@ -23,37 +23,29 @@ Fills are **observations**, not authorized buy signals or evidence of profit.
 
 | Wallet | UTC | Coin | Fill direction | Price USD | Quantity |
 |---|---|---|---|---:|---:|
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 7.2300 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 17.7400 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 15.0900 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 18.2000 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5000 | 11.6700 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5100 | 55.9300 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5100 | 13.9900 |
-| \`0x5b5d51203a…\` | 11-15 04:35 | SOL | Close Short | $71.5120 | 11.0900 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3400 | 56.0500 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3820 | 6.3600 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3800 | 16.6300 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3800 | 16.6300 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.3770 | 16.4200 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.4070 | 53.0100 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.4070 | 3.0000 |
-| \`0xb83de012db…\` | 11-15 04:32 | SOL | Close Short | $71.4190 | 3.1000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0566 | 111.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0566 | 7889.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0568 | 8000.0000 |
-| \`0x45d26f2819…\` | 11-14 22:24 | DOGE | Close Short | $0.0567 | 8000.0000 |
-| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9600 | 2.9700 |
-| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 4.1000 |
-| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 1.0200 |
-| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 0.9500 |
-| \`0xb695651daa…\` | 11-15 04:34 | xyz:ANT | Open Long | $100.9700 | 1.1200 |
-| \`0xb695651daa…\` | 11-15 04:30 | xyz:ANT | Open Long | $100.9800 | 1.7500 |
-| \`0xb695651daa…\` | 11-15 04:30 | xyz:ANT | Open Long | $100.9900 | 7.1900 |
-| \`0xb695651daa…\` | 11-15 04:28 | xyz:ANT | Open Long | $100.9800 | 1.8300 |
+| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 46.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 4626.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 4350.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 2458.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:01 | XPL | Close Short | $0.0435 | 11516.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:00 | XPL | Close Short | $0.0435 | 11507.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:00 | XPL | Close Short | $0.0435 | 11482.0000 |
+| \`0x5b5d51203a…\` | 11-16 05:00 | XPL | Close Short | $0.0435 | 1881.0000 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.7600 | 0.3200 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.7600 | 0.6600 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.8600 | 5.3200 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.8600 | 0.3300 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.5300 | 3.8000 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.4300 | 1.7800 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.3600 | 0.0800 |
+| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.5700 | 3.5200 |
+| \`0xecb63caa47…\` | 11-16 05:04 | POPCAT | Close Short | $0.0279 | 691.0000 |
+| \`0xecb63caa47…\` | 11-16 05:04 | ASTER | Close Short | $0.5451 | 397.0000 |
+| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 18.0620 |
+| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 0.9090 |
+| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 2.8990 |
+| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 2.2200 |
+| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 3.6990 |
+| \`0xecb63caa47…\` | 11-16 05:04 | kPEPE | Open Short | $0.0038 | 263774.0000 |
 
 The public feed is not audited or guaranteed complete. No wallets are connected or controlled.
