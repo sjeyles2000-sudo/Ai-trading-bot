@@ -1,6 +1,6 @@
 # Public wallet research leaderboard
 
-Fetched: 2026-11-16 05:04 UTC
+Fetched: 2026-11-17 04:38 UTC
 
 **RESEARCH ONLY — NO REAL ORDERS, NO COPY TRADING.**
 
@@ -11,11 +11,11 @@ can invalidate apparent performance. ROI is a source-reported fraction.
 
 | Wallet | Account value USD | 30d PnL USD | 30d ROI | 30d volume USD |
 |---|---:|---:|---:|---:|
-| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $85,191,023 | $140,108,532 | 71.8% | $650,814,559 |
-| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $96,911,015 | $114,078,632 | 65.0% | $733,397,705 |
-| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $129,508,985 | $37,047,023 | 29.9% | $23,014,014,649 |
-| \`0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00\` | $92,585,940 | $26,134,973 | 48.6% | $14,204,205,197 |
-| \`0x0b8aa35c28b7c6ab18f11dc168f437a8a69fd4f8\` | $46,773,735 | $19,441,506 | 97.0% | $1,071,169,990 |
+| \`0x5b5d51203a0f9079f8aeb098a6523a13f298c060\` | $7,131,106 | $131,645,518 | 64.6% | $881,457,721 |
+| \`0xb83de012dba672c76a7dbbbf3e459cb59d7d6e36\` | $14,971,591 | $105,378,301 | 56.8% | $911,707,635 |
+| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $113,128,240 | $35,773,123 | 28.8% | $23,556,704,389 |
+| \`0xdf954bbe619273a56e0cfa90dad8382195dc7d72\` | $64,458,702 | $30,567,987 | 79.7% | $271,859,802 |
+| \`0xfc27136e42af1732ddc9ce2605ea9bff1b959d9d\` | $39,121,881 | $25,749,541 | 70.7% | $2,118,766,979 |
 
 ## Recent public fills (last 24h)
 
@@ -23,29 +23,37 @@ Fills are **observations**, not authorized buy signals or evidence of profit.
 
 | Wallet | UTC | Coin | Fill direction | Price USD | Quantity |
 |---|---|---|---|---:|---:|
-| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 46.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 4626.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 4350.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:02 | XPL | Close Short | $0.0435 | 2458.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:01 | XPL | Close Short | $0.0435 | 11516.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:00 | XPL | Close Short | $0.0435 | 11507.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:00 | XPL | Close Short | $0.0435 | 11482.0000 |
-| \`0x5b5d51203a…\` | 11-16 05:00 | XPL | Close Short | $0.0435 | 1881.0000 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.7600 | 0.3200 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.7600 | 0.6600 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.8600 | 5.3200 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $885.8600 | 0.3300 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.5300 | 3.8000 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.4300 | 1.7800 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.3600 | 0.0800 |
-| \`0xb83de012db…\` | 11-16 05:04 | ZEC | Close Short | $884.5700 | 3.5200 |
-| \`0xecb63caa47…\` | 11-16 05:04 | POPCAT | Close Short | $0.0279 | 691.0000 |
-| \`0xecb63caa47…\` | 11-16 05:04 | ASTER | Close Short | $0.5451 | 397.0000 |
-| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 18.0620 |
-| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 0.9090 |
-| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 2.8990 |
-| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 2.2200 |
-| \`0xecb63caa47…\` | 11-16 05:04 | xyz:AAPL | Open Long | $356.8200 | 3.6990 |
-| \`0xecb63caa47…\` | 11-16 05:04 | kPEPE | Open Short | $0.0038 | 263774.0000 |
+| \`0x5b5d51203a…\` | 11-17 00:00 | PURR/USDC | Spot Dust Conversion | $0.0939 | 0.9444 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0500 | 2.4600 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0500 | 5.0400 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0500 | 3.0600 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0300 | 6.7300 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0300 | 4.2200 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0200 | 2.2500 |
+| \`0x5b5d51203a…\` | 11-16 22:25 | ZEC | Close Short | $908.0100 | 1.4600 |
+| \`0xb83de012db…\` | 11-17 00:00 | @210 | Spot Dust Conversion | $0.0453 | 0.0099 |
+| \`0xb83de012db…\` | 11-17 00:00 | PURR/USDC | Spot Dust Conversion | $0.0939 | 0.0752 |
+| \`0xb83de012db…\` | 11-16 22:57 | xyz:MU | Close Long | $719.1400 | 4.2700 |
+| \`0xb83de012db…\` | 11-16 22:57 | xyz:MU | Close Long | $719.1500 | 2.0300 |
+| \`0xb83de012db…\` | 11-16 22:57 | xyz:MU | Close Long | $719.1500 | 0.7820 |
+| \`0xb83de012db…\` | 11-16 22:57 | xyz:MU | Close Long | $719.1600 | 21.9710 |
+| \`0xb83de012db…\` | 11-16 22:57 | xyz:MU | Close Long | $719.1700 | 1.3900 |
+| \`0xb83de012db…\` | 11-16 22:57 | xyz:MU | Close Long | $719.2000 | 0.2080 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | RENDER | Open Short | $1.3933 | 30.0000 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | VVV | Open Short | $21.2850 | 0.5000 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | MELANIA | Open Long | $0.0466 | 5380.1000 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | xyz:ANT | Close Long | $96.6130 | 2.5000 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | xyz:ANT | Close Long | $96.6080 | 2.4900 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | NEAR | Close Short | $3.2579 | 15.0000 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | xyz:ANT | Close Long | $96.6010 | 2.5100 |
+| \`0xdf954bbe61…\` | 11-17 04:38 | xyz:ANT | Close Long | $96.6030 | 2.6000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 43.0000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 115.2000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 19.7000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 0.8000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 2.5000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 0.9000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 4.7000 |
+| \`0xfc27136e42…\` | 11-17 04:37 | xyz:DRAM | Close Short | $39.5520 | 57.6000 |
 
 The public feed is not audited or guaranteed complete. No wallets are connected or controlled.
