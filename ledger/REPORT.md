@@ -2,12 +2,12 @@
 
 **VIRTUAL FUNDS ONLY — NO REAL ORDERS.**
 
-Updated UTC: 2026-11-18 13:36
+Updated UTC: 2026-11-18 15:15
 
 | Market | Paper balance (USD) | Change from $10k | Virtual BTC | Simulated transactions | Latest candle UTC |
 |---|---:|---:|---:|---:|---|
-| Binance BTC/USDT spot | $9,980.49 | -0.20% | 0.003077 | 17 | 2026-11-18T12:59:59Z |
-| Hyperliquid BTC perpetual | $9,979.85 | -0.20% | 0.003078 | 19 | 2026-11-18T12:59:59Z |
+| Binance BTC/USDT spot | $9,979.75 | -0.20% | 0.000000 | 18 | 2026-11-18T14:59:59Z |
+| Hyperliquid BTC perpetual | $9,979.10 | -0.21% | 0.000000 | 20 | 2026-11-18T14:59:59Z |
 
 Trade log: [trades.csv](trades.csv) · Equity history: [equity.csv](equity.csv)
 
