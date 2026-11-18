@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-17 23:26 UTC
+Updated 2026-11-18 00:26 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.17% | 0.74x | $64,961.25 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.20% | 0.56x | $64,922.00 |
+| Binance BTC spot | NO_SIGNAL | -0.23% | 0.81x | $64,820.22 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | -0.22% | 1.20x | $64,801.00 |
 
 ## Recently profiled token research candidates
 
