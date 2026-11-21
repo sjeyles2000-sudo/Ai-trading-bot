@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-21 16:22 UTC
+Updated 2026-11-21 17:21 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.04% | 0.71x | $59,862.87 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.06% | 0.64x | $59,820.00 |
+| Binance BTC spot | NO_SIGNAL | +0.06% | 1.55x | $60,210.00 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.05% | 0.80x | $60,177.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,9 +21,10 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | ROCKET | 4.7h | $80,739 | $153,750 | `6C9r2gzu8Pr54hTevHo3x5gSj9JqtpApj7obJnrtpump` |
-| solana | RIEMANN | 12.4h | $55,576 | $634,526 | `dkpuQdjegjU8zcwYrBzYrLW11wvtjwonBsQhjLApump` |
-| bsc | SLC | 4.2h | $278,106 | $19,941,158 | `0xa181C912c3EB5D21d4497FF39202fd4ED0cA6D0F` |
+| solana | ROCKET | 5.7h | $77,505 | $173,891 | `6C9r2gzu8Pr54hTevHo3x5gSj9JqtpApj7obJnrtpump` |
+| solana | NOHR | 2.0h | $98,374 | $793,809 | `Jd3NCawdFiDNWpLiTtsMqoeoBMjC1ZQMrMScRVzpump` |
+| solana | RIEMANN | 13.4h | $86,847 | $817,915 | `dkpuQdjegjU8zcwYrBzYrLW11wvtjwonBsQhjLApump` |
+| bsc | SLC | 5.2h | $216,856 | $20,016,689 | `0xa181C912c3EB5D21d4497FF39202fd4ED0cA6D0F` |
 
 ## Watched Hyperliquid wallets
 
