@@ -1,25 +1,25 @@
 {
   "markets": {
     "binance": {
-      "cash": 9775.765761187695,
+      "cash": 9970.792874083376,
       "day_start_equity": 9973.845196249458,
-      "entry_price": 60588.689205,
-      "last_candle_ms": 1795316399999,
+      "entry_price": 0.0,
+      "last_candle_ms": 1795319999999,
       "paused": false,
-      "stop_price": 59376.915420900004,
-      "trades": 21,
-      "units": 0.0032894938014879594,
+      "stop_price": 0.0,
+      "trades": 22,
+      "units": 0.0,
       "utc_day": "2026-11-22"
     },
     "hyperliquid": {
-      "cash": 9775.130991734328,
+      "cash": 9970.145440941365,
       "day_start_equity": 9973.123777296316,
-      "entry_price": 60578.274,
-      "last_candle_ms": 1795316399999,
+      "entry_price": 0.0,
+      "last_candle_ms": 1795319999999,
       "paused": false,
-      "stop_price": 59366.70852,
-      "trades": 23,
-      "units": 0.0032898457298903058,
+      "stop_price": 0.0,
+      "trades": 24,
+      "units": 0.0,
       "utc_day": "2026-11-22"
     }
   },
