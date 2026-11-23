@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-22 23:21 UTC
+Updated 2026-11-23 00:21 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.16% | 1.18x | $61,083.36 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.16% | 0.48x | $61,051.00 |
+| Binance BTC spot | NO_SIGNAL | +0.06% | 0.83x | $61,255.82 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.06% | 0.31x | $61,227.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,8 +21,11 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | UCASH | 12.1h | $77,238 | $1,793,603 | `7cFiqdT46zs7ooHWLFiLSaSQKLMibtokh9dBinsspump` |
-| solana | cateball | 14.2h | $112,548 | $1,136,181 | `4npJ3avxnGhCzKbWQpLrQXAHsjWzKr4JqBsbu5Fspump` |
+| solana | UCASH | 13.1h | $82,928 | $1,825,575 | `7cFiqdT46zs7ooHWLFiLSaSQKLMibtokh9dBinsspump` |
+| solana | COPIUM | 2.6h | $55,406 | $444,450 | `BAKsQrynzwadyACDMsg3J5R8a4CTvj1u7kEYyjq7pump` |
+| bsc | 蚂蚁 | 2.7h | $91,820 | $1,216,278 | `0xBAb2701D3C30Ff32c773AA4F4A72ED6935D47777` |
+| solana | FSDV15 | 2.6h | $107,026 | $1,444,388 | `3BcJ4SSCfbxDMrWcUDucyCWxMjmy4M2ECCtvxu86pump` |
+| solana | MINELIUS | 2.8h | $212,099 | $2,705,815 | `E9rWKjVhHMxQkxfREr7Li8Yy46rVcWiWHoKVQAe9pump` |
 
 ## Watched Hyperliquid wallets
 
