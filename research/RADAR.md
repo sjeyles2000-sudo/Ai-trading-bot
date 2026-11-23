@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-23 08:58 UTC
+Updated 2026-11-23 10:40 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.05% | 0.32x | $61,502.54 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.05% | 0.26x | $61,477.00 |
+| Binance BTC spot | NO_SIGNAL | +0.14% | 0.47x | $61,432.00 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.14% | 0.11x | $61,412.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,9 +21,7 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| bsc | ANTS | 20.1h | $686,599 | $16,874,620 | `0x74346aE29A2823DA37695d35A6d47cC4F57C06b4` |
-| ethereum | WOJACK | 48.2h | $228,736 | $955,049 | `0x1d71ffe68520Ea660Bf7ef453d02345Dffd9775a` |
-| solana | PumpMeme | 3.6h | $86,761 | $980,112 | `93uamrbDerKbUh8MSjNF1wDtxYvEUD1CS9BcHn1apump` |
+| bsc | ANTS | 21.8h | $312,133 | $19,024,403 | `0x74346aE29A2823DA37695d35A6d47cC4F57C06b4` |
 
 ## Watched Hyperliquid wallets
 
