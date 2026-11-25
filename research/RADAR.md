@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-25 12:40 UTC
+Updated 2026-11-25 14:44 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.14% | 1.02x | $58,720.01 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.15% | 2.20x | $58,690.00 |
+| Binance BTC spot | NO_SIGNAL | -0.95% | 1.44x | $57,843.18 |
+| Hyperliquid BTC perpetual | BEARISH_WATCH | -0.99% | 2.94x | $57,793.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,7 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| bsc | LULU | 11.1h | $2,481,344 | $29,474,829 | `0x31022359C0577381bAe49F2544d1C23642119c26` |
+| — | No candidates passing preliminary filters | — | — | — | — |
 
 ## Watched Hyperliquid wallets
 
