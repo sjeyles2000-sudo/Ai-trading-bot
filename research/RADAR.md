@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-25 09:47 UTC
+Updated 2026-11-25 11:31 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | -0.07% | 0.52x | $58,895.81 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | -0.06% | 0.22x | $58,859.00 |
+| Binance BTC spot | NO_SIGNAL | -0.24% | 2.33x | $58,649.32 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | -0.23% | 4.49x | $58,617.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| bsc | IGNIS | 41.0h | $81,141 | $312,645 | `0x2D81A59dF5bEe318d74F47F25c04313443B4f183` |
+| bsc | LULU | 9.9h | $1,693,449 | $24,742,559 | `0x31022359C0577381bAe49F2544d1C23642119c26` |
+| bsc | IGNIS | 42.8h | $115,162 | $567,684 | `0x2D81A59dF5bEe318d74F47F25c04313443B4f183` |
 
 ## Watched Hyperliquid wallets
 
