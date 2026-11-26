@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-26 00:27 UTC
+Updated 2026-11-26 01:57 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.61% | 1.13x | $60,931.16 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.65% | 1.22x | $60,930.00 |
+| Binance BTC spot | NO_SIGNAL | +0.37% | 0.43x | $60,930.67 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | +0.37% | 0.28x | $60,917.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,8 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | Grodia | 2.0h | $84,833 | $953,066 | `6HS1aeSk7osT5B1CzLp1HTRTAweFr5wurfMHS4vppump` |
+| solana | MONEY | 2.1h | $62,540 | $1,821,812 | `DeACAbp2GMzapB6Z2K8qdkTZupmNbKc6EZx9bnbCpump` |
+| solana | UHI | 2.6h | $70,673 | $464,155 | `Bnw5JRPek5JvJhzUiB9yrs2cmzt4bLeFqSRzDzSppump` |
 
 ## Watched Hyperliquid wallets
 
