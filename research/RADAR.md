@@ -1,6 +1,6 @@
 # Crypto research radar
 
-Updated 2026-11-27 04:43 UTC
+Updated 2026-11-27 06:34 UTC
 
 **RESEARCH ONLY — NO REAL TRADES OR AUTOMATIC MEME-COIN BUYS.**
 Signals are alerts, not predictions; a high FOMO score can mean extreme downside risk.
@@ -9,8 +9,8 @@ Signals are alerts, not predictions; a high FOMO score can mean extreme downside
 
 | Market | Alert | 15m move | Relative 5m volume | Last quote |
 |---|---|---:|---:|---:|
-| Binance BTC spot | NO_SIGNAL | +0.16% | 1.30x | $61,606.42 |
-| Hyperliquid BTC perpetual | NO_SIGNAL | +0.15% | 1.06x | $61,590.00 |
+| Binance BTC spot | NO_SIGNAL | -0.32% | 0.54x | $61,725.91 |
+| Hyperliquid BTC perpetual | NO_SIGNAL | -0.32% | 0.32x | $61,719.00 |
 
 ## Recently profiled token research candidates
 
@@ -21,7 +21,7 @@ No position sizing or buy action is authorized for these tokens.
 
 | Chain | Symbol | Pair age | Liquidity (USD) | 24h volume (USD) | Address |
 |---|---|---:|---:|---:|---|
-| solana | SpaceXCoin | 2.3h | $55,412 | $624,328 | `G2XqmSc8vJpLLwaLVXUeNkxsrhVT8vQ3Pje8MqeDpump` |
+| — | No candidates passing preliminary filters | — | — | — | — |
 
 ## Watched Hyperliquid wallets
 
