@@ -1,6 +1,6 @@
 # Public wallet research leaderboard
 
-Fetched: 2026-11-27 04:43 UTC
+Fetched: 2026-11-28 04:41 UTC
 
 **RESEARCH ONLY — NO REAL ORDERS, NO COPY TRADING.**
 
@@ -11,11 +11,11 @@ can invalidate apparent performance. ROI is a source-reported fraction.
 
 | Wallet | Account value USD | 30d PnL USD | 30d ROI | 30d volume USD |
 |---|---:|---:|---:|---:|
-| \`0x484bc1608211d0604bf70bae72792a56884562f8\` | $47,437,612 | $13,672,665 | 151.3% | $90,010,831 |
-| \`0x4ba3979955f52158c0e4e3378b18985475182ce2\` | $22,491,023 | $12,245,120 | 232.5% | $75,986,757 |
-| \`0xd4c1f7e8d876c4749228d515473d36f919583d1d\` | $1,755,222 | $7,444,950 | 84.5% | $799,703,365 |
-| \`0xdfd526409007db0d524a62dedaaba7706736d88e\` | $24,566,041 | $7,152,207 | 86.3% | $31,140,374 |
-| \`0x77375a8c9d13bf79afb2a87f1b0ac1dfd5f5bf66\` | $45,053,769 | $6,667,269 | 83.7% | $278,186,774 |
+| \`0x87f9cd15f5050a9283b8896300f7c8cf69ece2cf\` | $124,328,481 | $46,583,404 | 33.8% | $25,455,117,635 |
+| \`0x7fdafde5cfb5465924316eced2d3715494c517d1\` | $31,759,528 | $37,682,538 | 76.0% | $2,335,071,882 |
+| \`0xecb63caa47c7c4e77f60f1ce858cf28dc2b82b00\` | $85,083,249 | $29,034,119 | 50.5% | $16,478,474,919 |
+| \`0x0b8aa35c28b7c6ab18f11dc168f437a8a69fd4f8\` | $38,152,187 | $21,703,656 | 99.2% | $1,042,578,023 |
+| \`0x15a4f009bb324a3fb9e36137136b201e3fe0dfdb\` | $42,929,748 | $17,971,020 | 58.0% | $202,414,021 |
 
 ## Recent public fills (last 24h)
 
@@ -23,21 +23,37 @@ Fills are **observations**, not authorized buy signals or evidence of profit.
 
 | Wallet | UTC | Coin | Fill direction | Price USD | Quantity |
 |---|---|---|---|---:|---:|
-| \`0xd4c1f7e8d8…\` | 11-27 04:22 | BTC | Close Long | $61,487.0000 | 0.1301 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:22 | BTC | Close Long | $61,485.0000 | 0.0593 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:20 | BTC | Close Long | $61,445.0000 | 0.0552 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:16 | BTC | Close Long | $61,496.0000 | 0.0005 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:16 | BTC | Close Long | $61,496.0000 | 0.0003 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:16 | BTC | Close Long | $61,496.0000 | 0.0013 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:13 | BTC | Close Long | $61,494.0000 | 0.0002 |
-| \`0xd4c1f7e8d8…\` | 11-27 04:13 | BTC | Close Long | $61,494.0000 | 0.0051 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 20.9300 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 3.2400 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 9.2500 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 29.6900 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 8.9200 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 155.2300 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 15.1000 |
-| \`0x77375a8c9d…\` | 11-27 04:36 | HYPE | Open Long | $66.0580 | 87.1900 |
+| \`0x87f9cd15f5…\` | 11-27 14:49 | BTC | Close Short | $59,508.0000 | 0.0004 |
+| \`0x87f9cd15f5…\` | 11-27 14:49 | BTC | Long > Short | $59,499.0000 | 0.9456 |
+| \`0x87f9cd15f5…\` | 11-27 14:49 | BTC | Close Long | $59,533.0000 | 0.0034 |
+| \`0x87f9cd15f5…\` | 11-27 14:49 | BTC | Close Long | $59,533.0000 | 0.0042 |
+| \`0x87f9cd15f5…\` | 11-27 14:49 | BTC | Close Long | $59,524.0000 | 0.3131 |
+| \`0x87f9cd15f5…\` | 11-27 14:48 | BTC | Close Long | $59,509.0000 | 0.0002 |
+| \`0x87f9cd15f5…\` | 11-27 14:48 | BTC | Close Long | $59,509.0000 | 1.2361 |
+| \`0x87f9cd15f5…\` | 11-27 14:48 | BTC | Close Long | $59,486.0000 | 0.0468 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0157 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0354 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:CRCL | Open Short | $49.7140 | 2.1620 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0175 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0032 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0263 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0032 |
+| \`0x7fdafde5cf…\` | 11-28 04:41 | xyz:GOLD | Open Short | $3,665.9000 | 0.0340 |
+| \`0xecb63caa47…\` | 11-28 04:41 | @272 | Sell | $750.7400 | 0.4218 |
+| \`0xecb63caa47…\` | 11-28 04:41 | @1192 | Buy | $91.7330 | 0.1000 |
+| \`0xecb63caa47…\` | 11-28 04:41 | WLFI | Open Long | $0.0259 | 7964.0000 |
+| \`0xecb63caa47…\` | 11-28 04:41 | @272 | Sell | $750.3700 | 0.3240 |
+| \`0xecb63caa47…\` | 11-28 04:41 | @156 | Sell | $71.5770 | 0.2600 |
+| \`0xecb63caa47…\` | 11-28 04:41 | SPX | Close Long | $0.2745 | 58.4000 |
+| \`0xecb63caa47…\` | 11-28 04:41 | @272 | Sell | $750.3400 | 0.3426 |
+| \`0xecb63caa47…\` | 11-28 04:41 | CRV | Close Short | $0.1741 | 207.0000 |
+| \`0x0b8aa35c28…\` | 11-27 14:31 | HYPE | Close Short | $64.9630 | 20.7600 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0850 | 3.6400 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0850 | 2.6700 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0850 | 2.6700 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0840 | 2.6700 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0840 | 2.6700 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0830 | 23.2000 |
+| \`0x0b8aa35c28…\` | 11-27 14:30 | HYPE | Close Short | $65.0830 | 23.2000 |
 
 The public feed is not audited or guaranteed complete. No wallets are connected or controlled.
